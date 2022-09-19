@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Tag:HasID
+    public abstract class HasID
     {
-        public string Name { get; set; }
-        public List<TagPost> TagPosts { get; set; }
+        public int ID { get; set; }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Comment:HasID
+    public class TagPost
     {
-        public string Content { get; set; }
+        public int TagID { get; set; }
+        public Tag Tag { get; set; }
         public int PostID { get; set; }
         public Post Post { get; set; }
-
     }
 }

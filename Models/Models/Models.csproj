@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Admin.cs" />
     <Compile Include="Comment.cs" />
+    <Compile Include="HasID.cs" />
     <Compile Include="Post.cs" />
     <Compile Include="Tag.cs" />
+    <Compile Include="TagPost.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Post
+    public class Post:HasID
     {
-        public int PostID { get; set; }
-        public string PostTitle { get; set; }
-        public string PostContent { get; set; }
-        public int TagID { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+
         public int UserID { get; set; }
+        public User User { get; set; }
+
         public int PostLikes { get; set; }
+
+
         public List<Comment> Comments { get; set; }
-        public List<Tag> Tags { get; set; }
+        public List<TagPost> TagPosts { get; set; }
 
     }
 }

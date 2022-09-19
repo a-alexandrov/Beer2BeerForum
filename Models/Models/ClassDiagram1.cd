@@ -1,38 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Models.Admin">
-    <Position X="2.5" Y="3.5" Width="1.5" />
+    <Position X="2" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Admin.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.User">
-    <Position X="2.5" Y="0.75" Width="1.5" />
+  <Class Name="Models.Comment">
+    <Position X="3.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAEAAACAAAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAg=</HashCode>
-      <FileName>User.cs</FileName>
+      <HashCode>AAAAAAAAAgAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Comment.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.Tag">
-    <Position X="4.5" Y="3.5" Width="2" />
+  <Class Name="Models.HasID" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAQAAAAAAAAAACAA=</HashCode>
-      <FileName>Tag.cs</FileName>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HasID.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Models.Post">
-    <Position X="5.5" Y="0.75" Width="2.25" />
+    <Position X="5.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAEAAEAAAggAAgAAAUAAAAAAAAAAIAA=</HashCode>
+      <HashCode>AAAJAAAAAgAAAEAAAAAAAggAAAAAAAAAAAAAAAAAIAA=</HashCode>
       <FileName>Post.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.Comment">
-    <Position X="6.75" Y="3.5" Width="2" />
+  <Class Name="Models.Tag">
+    <Position X="7.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAgAAAAAAAAAAA=</HashCode>
-      <FileName>Comment.cs</FileName>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.TagPost">
+    <Position X="9" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAEAAAAAAAAACAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>TagPost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Models.User">
+    <Position X="2" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAEAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>User.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
