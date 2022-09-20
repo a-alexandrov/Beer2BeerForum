@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Post:HasID
+    public class Post:BaseEntity
     {
         public string Title { get; set; }
         public string Content { get; set; }

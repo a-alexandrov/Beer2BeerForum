@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Tag:HasID
+    public class Tag:BaseEntity
     {
         public string Name { get; set; }
         public List<TagPost> TagPosts { get; set; }

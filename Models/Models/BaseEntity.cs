@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public abstract class HasID
+    public abstract class BaseEntity
     {
         public int ID { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class User:HasID
+    public class User:BaseEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
