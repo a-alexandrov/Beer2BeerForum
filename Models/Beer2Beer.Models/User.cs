@@ -1,11 +1,19 @@
-﻿namespace Beer2Beer
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Beer2Beer
 {
-    public class User:BaseEntity
+    public class User: BaseEntity
     {
+        public bool IsBlocked { get; set; } = false;
+
         public string FirstName { get; set; }
-        public string LastName { get; set; }
+
+        public string LastName{ get; set; }
+
         public string Email { get; set; }
+
         public string Username { get; set; }
+
         public string PasswordHash { get; set; }
     }
 }
