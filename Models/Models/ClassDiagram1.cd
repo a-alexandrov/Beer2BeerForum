@@ -1,48 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Models.Admin">
+  <Class Name="Beer2Beer.Admin">
     <Position X="2" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Admin.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.Comment">
+  <Class Name="Beer2Beer.Comment">
     <Position X="3.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Comment.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.HasID" Collapsed="true">
+  <Class Name="Beer2Beer.HasID" Collapsed="true">
     <Position X="4.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>HasID.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.Post">
+  <Class Name="Beer2Beer.Post">
     <Position X="5.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAJAAAAAgAAAEAAAAAAAggAAAAAAAAAAAAAAAAAIAA=</HashCode>
       <FileName>Post.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.Tag">
+  <Class Name="Beer2Beer.Tag">
     <Position X="7.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Tag.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.TagPost">
+  <Class Name="Beer2Beer.TagPost">
     <Position X="9" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAAEAAAAAAAAACAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>TagPost.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Models.User">
+  <Class Name="Beer2Beer.User">
     <Position X="2" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAEAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
