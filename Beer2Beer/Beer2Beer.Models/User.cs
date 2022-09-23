@@ -15,5 +15,7 @@ namespace Beer2Beer
         public string Username { get; set; }
 
         public string PasswordHash { get; set; }
+
+        public string AvatarPath { get; set; }
     }
 }
