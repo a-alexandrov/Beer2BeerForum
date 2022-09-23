@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Beer2Beer
 {
@@ -15,7 +14,7 @@ namespace Beer2Beer
         public int PostLikes { get; set; }
 
         public List<Comment> Comments { get; set; }
-        public List<TagPost> TagPosts { get; set; }
 
+        public List<TagPost> TagPosts { get; set; }
     }
 }

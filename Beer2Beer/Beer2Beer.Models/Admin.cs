@@ -1,7 +1,6 @@
-﻿
-namespace Beer2Beer
+﻿namespace Beer2Beer
 {
-    public class Admin:User
+    public class Admin: User
     {
         public string PhoneNumber { get; set; }
     }
