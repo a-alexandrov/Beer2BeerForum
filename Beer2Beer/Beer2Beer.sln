@@ -3,11 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beer2Beer.Models", "Beer2Beer.Models\Beer2Beer.Models.csproj", "{12F4B2C6-654F-4EE6-BC62-C4E82BDC2FFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beer2Beer.Models", "Beer2Beer.Models\Beer2Beer.Models.csproj", "{12F4B2C6-654F-4EE6-BC62-C4E82BDC2FFA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataLayer", "DataLayer", "{866A0B0C-63D6-4B3F-80F1-91107F654C64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beer2Beer.Data", "Beer2Beer.Data\Beer2Beer.Data.csproj", "{8125B0D8-625A-4D3B-8A7B-AEB1F7CCA40F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beer2Beer.Data", "Beer2Beer.Data\Beer2Beer.Data.csproj", "{8125B0D8-625A-4D3B-8A7B-AEB1F7CCA40F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLayer", "BusinessLayer", "{483A5974-844E-4F5F-A087-8D3A89524A86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beer2Beer.Services", "Beer2Beer.Services\Beer2Beer.Services.csproj", "{83A8F0BF-0C1C-4A58-9E11-9A32CFFF7763}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentationLayer", "presentationLayer", "{7758A182-9D2F-4732-88C1-17C30D153693}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beer2Beer.MVC", "Beer2Beer.MVC\Beer2Beer.MVC.csproj", "{1BAA9FD5-D0FD-4FDE-B1FF-21524260DFAF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beer2Beer.DTO", "Beer2Beer.DTO\Beer2Beer.DTO.csproj", "{783E27FD-FB98-4CD0-A60F-FA3F169BB20E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +33,18 @@ Global
 		{8125B0D8-625A-4D3B-8A7B-AEB1F7CCA40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8125B0D8-625A-4D3B-8A7B-AEB1F7CCA40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8125B0D8-625A-4D3B-8A7B-AEB1F7CCA40F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83A8F0BF-0C1C-4A58-9E11-9A32CFFF7763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83A8F0BF-0C1C-4A58-9E11-9A32CFFF7763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83A8F0BF-0C1C-4A58-9E11-9A32CFFF7763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83A8F0BF-0C1C-4A58-9E11-9A32CFFF7763}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BAA9FD5-D0FD-4FDE-B1FF-21524260DFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BAA9FD5-D0FD-4FDE-B1FF-21524260DFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BAA9FD5-D0FD-4FDE-B1FF-21524260DFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BAA9FD5-D0FD-4FDE-B1FF-21524260DFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{783E27FD-FB98-4CD0-A60F-FA3F169BB20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{783E27FD-FB98-4CD0-A60F-FA3F169BB20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{783E27FD-FB98-4CD0-A60F-FA3F169BB20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{783E27FD-FB98-4CD0-A60F-FA3F169BB20E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +52,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{12F4B2C6-654F-4EE6-BC62-C4E82BDC2FFA} = {866A0B0C-63D6-4B3F-80F1-91107F654C64}
 		{8125B0D8-625A-4D3B-8A7B-AEB1F7CCA40F} = {866A0B0C-63D6-4B3F-80F1-91107F654C64}
+		{83A8F0BF-0C1C-4A58-9E11-9A32CFFF7763} = {483A5974-844E-4F5F-A087-8D3A89524A86}
+		{1BAA9FD5-D0FD-4FDE-B1FF-21524260DFAF} = {7758A182-9D2F-4732-88C1-17C30D153693}
+		{783E27FD-FB98-4CD0-A60F-FA3F169BB20E} = {483A5974-844E-4F5F-A087-8D3A89524A86}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6827358-3592-47D6-BFFB-CE78B7B6B7C2}
