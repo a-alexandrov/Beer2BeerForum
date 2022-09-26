@@ -1,4 +1,4 @@
-﻿namespace Beer2Beer
+﻿namespace Beer2Beer.Models
 {
     public abstract class BaseEntity
     {

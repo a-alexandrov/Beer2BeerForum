@@ -1,13 +1,19 @@
-﻿using System;
+﻿using Beer2Beer.Data.Contracts;
 using System.Threading.Tasks;
+using AutoMapper;
+using Beer2Beer.Models;
 
 namespace Beer2Beer.Services
 {
     public class UserService
     {
-        public UserService(context)
+        private readonly IBeer2BeerDbContext context;
+        private readonly IMapper mapper;
+
+        public UserService(IBeer2BeerDbContext context, IMapper mapper)
         {
-                
+            this.context = context;
+            this.mapper = mapper;
         }
 
         public async Task CreateUser(string userName, string firstName, string lastName, string password)
@@ -20,10 +26,9 @@ namespace Beer2Beer.Services
                 PasswordHash = password
             };
 
-            context.Users.Add(user);
+            this.context.DbSet<User>().Add(user);
 
-
-            await context.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
         }
     }
 }

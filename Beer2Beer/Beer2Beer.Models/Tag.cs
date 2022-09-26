@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Beer2Beer
+namespace Beer2Beer.Models
 {
     public class Tag: BaseEntity
     {
