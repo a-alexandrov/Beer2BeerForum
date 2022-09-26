@@ -10,6 +10,9 @@ namespace QuizOverflow.Services.MappingProfiles
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+
+            CreateMap<Post, PostDto>();
+            CreateMap<PostDto, Post>();
         }
     }
 }
