@@ -4,14 +4,16 @@ using Beer2Beer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Beer2Beer.Data.Migrations
 {
     [DbContext(typeof(Beer2BeerDbContext))]
-    partial class Beer2BeerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220927150013_AddCreatedOnToBaseEntity")]
+    partial class AddCreatedOnToBaseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,9 +80,6 @@ namespace Beer2Beer.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CommentsCount")
-                        .HasColumnType("int");
 
                     b.Property<string>("Content")
                         .IsRequired()

@@ -13,6 +13,8 @@ namespace Beer2Beer.Models
 
         public int PostLikes { get; set; }
 
+        public int CommentsCount { get; set; }
+
         public List<Comment> Comments { get; set; }
 
         public List<TagPost> TagPosts { get; set; }
