@@ -48,7 +48,7 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetPostsByMostComments(int count = 10)
         {
             var posts = await this.context.DbSet<Post>()
-                .OrderByDescending(p => p.CreatedOn)
+                .OrderByDescending(p => p.CommentsCount)
                 .Take(count)
                 .ToListAsync();
 
@@ -56,6 +56,28 @@ namespace Beer2Beer.Services
 
             return postDtos;
         }
+
+        public async Task<List<PostDto>> GetAllPosts()
+        {
+            var posts = await this.context.DbSet<Post>()
+                .ToListAsync();
+
+            var postDtos = mapper.Map<List<PostDto>>(posts);
+
+            return postDtos;
+        }
+
+        public async Task<PostDto> ChangePostName(string newName)
+        {
+            //Unsure how to get current post
+            var post = await this.context.DbSet<Post>()
+                .ToListAsync();
+
+            var postDto = mapper.Map<PostDto>(post);
+
+            return postDto;
+        }
+
 
     }
 }
