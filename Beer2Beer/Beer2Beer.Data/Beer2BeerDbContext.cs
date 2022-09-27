@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Beer2Beer.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Beer2Beer.Data
 {
-    internal class Beer2BeerDbContext : DbContext
+    public class Beer2BeerDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -14,9 +15,14 @@ namespace Beer2Beer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasOne<Admin>()
+                .WithOne(a => a.User)
+              .HasForeignKey<Admin>(a => a.ID);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         }
 
         DbSet<Admin> Admins { get; set; }
@@ -25,5 +31,6 @@ namespace Beer2Beer.Data
         DbSet<Tag> Tags { get; set; }
         DbSet<TagPost> TagPosts { get; set; }
         DbSet<User> Users { get; set; }
+
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Beer2Beer.Models
 {
-    public class User: BaseEntity
+    public class User : BaseEntity
     {
         public bool IsBlocked { get; set; } = false;
 
         public string FirstName { get; set; }
 
-        public string LastName{ get; set; }
+        public string LastName { get; set; }
 
         public string Email { get; set; }
 

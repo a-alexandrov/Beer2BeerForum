@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Beer2Beer.Models\Beer2Beer.Models.csproj" />
+  </ItemGroup>
+
 </Project>
