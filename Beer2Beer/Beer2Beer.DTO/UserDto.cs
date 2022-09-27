@@ -8,6 +8,8 @@ namespace Beer2Beer.DTO
     {
         public bool IsBlocked { get; set; } = false;
 
+        public bool IsAdmin { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -16,7 +18,7 @@ namespace Beer2Beer.DTO
 
         public string Username { get; set; }
 
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
         public string AvatarPath { get; set; }
 
