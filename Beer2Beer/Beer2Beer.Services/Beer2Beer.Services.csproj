@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Beer2Beer.Data\Beer2Beer.Data.csproj" />
+    <ProjectReference Include="..\Beer2Beer.DTO\Beer2Beer.DTO.csproj" />
+    <ProjectReference Include="..\Beer2Beer.Models\Beer2Beer.Models.csproj" />
+  </ItemGroup>
+
+</Project>
