@@ -149,6 +149,20 @@ namespace Beer2Beer.Services
             }
             else {
                 user.IsAdmin = true;
+                var admin = new Admin
+                {
+                    UserID = user.ID,
+                    User = user
+                };
+                if (this.context.DbSet<Admin>().Contains(admin))
+                {
+                    var existingAdmin=this.context.DbSet<Admin>().FirstOrDefault(a=>a.ID==admin.ID);
+                    existingAdmin.IsDeleted = false;
+                }
+                else
+                {
+                    this.context.DbSet<Admin>().Add(admin);
+                }
             }
             await this.context.SaveChangesAsync();
         }
@@ -163,6 +177,9 @@ namespace Beer2Beer.Services
             else
             {
                 user.IsAdmin = false;
+                var admin = this.context.DbSet<Admin>()
+                    .FirstOrDefault(a => a.UserID == user.ID);
+                admin.IsDeleted = false;
             }
             await this.context.SaveChangesAsync();
         }
