@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Linq;
+using System.Reflection;
 
 namespace Beer2Beer.Web
 {
@@ -26,6 +28,10 @@ namespace Beer2Beer.Web
             });
 
             services.AddControllersWithViews();
+
+            //register servises using reflection.
+            this.RegisterServises(services);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +70,23 @@ namespace Beer2Beer.Web
             {
                 c.SwaggerEndpoint("/swagger/v2/swagger.json", "Beer2BeerAPI");
             });
+        }
+
+        public void RegisterServises(IServiceCollection services)
+        {
+            var servicesToRegister = Assembly.Load("Beer2Beer.Services")
+                                      .GetTypes()
+                                      .Select(s => new
+                                      {
+                                          Interface = s.GetInterface($"I{s.Name}"),
+                                          Implementation = s
+                                      })
+                                      .ToList();
+
+            foreach (var type in servicesToRegister)
+            {
+                services.AddScoped(type.Interface, type.Implementation);
+            }
         }
     }
 }
