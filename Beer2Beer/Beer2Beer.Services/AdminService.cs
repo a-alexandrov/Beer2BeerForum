@@ -1,13 +1,13 @@
-﻿using Beer2Beer.Data.Contracts;
-using System.Threading.Tasks;
-using AutoMapper;
-using Beer2Beer.Models;
+﻿using AutoMapper;
+using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Beer2Beer.Services
 {
@@ -24,7 +24,7 @@ namespace Beer2Beer.Services
         public async Task<UserDto> FindUserByUserName(string username)
         {
 
-            var user = this.context.DbSet<User>()
+            var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == username);
             await IsUserNull(user);
             var userDto = mapper.Map<UserDto>(user);
@@ -35,7 +35,7 @@ namespace Beer2Beer.Services
         public async Task<UserDto> FindUserByEmail(string email)
         {
 
-            var user = this.context.DbSet<User>()
+            var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Email == email);
             await IsUserNull(user);
             var userDto = mapper.Map<UserDto>(user);
@@ -47,7 +47,7 @@ namespace Beer2Beer.Services
         public async Task<List<UserDto>> FindUsersByFirstName(string firstName)
         {
 
-            var users = await this.context.DbSet<User>()
+            var users = await this.context.Set<User>()
             .Where(u => u.FirstName == firstName)
                 .ToListAsync();
 
@@ -58,7 +58,7 @@ namespace Beer2Beer.Services
         }
         public async Task Promote(string username)
         {
-            var user = this.context.DbSet<User>()
+            var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == username);
             if (user.IsAdmin)
             {
@@ -72,21 +72,21 @@ namespace Beer2Beer.Services
                     UserID = user.ID,
                     User = user
                 };
-                if (this.context.DbSet<Admin>().Contains(admin))
+                if (this.context.Set<Admin>().Contains(admin))
                 {
-                    var existingAdmin = this.context.DbSet<Admin>().FirstOrDefault(a => a.ID == admin.ID);
+                    var existingAdmin = this.context.Set<Admin>().FirstOrDefault(a => a.ID == admin.ID);
                     existingAdmin.IsDeleted = false;
                 }
                 else
                 {
-                    this.context.DbSet<Admin>().Add(admin);
+                    this.context.Set<Admin>().Add(admin);
                 }
             }
             await this.context.SaveChangesAsync();
         }
         public async Task Demote(string username)
         {
-            var user = this.context.DbSet<User>()
+            var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == username);
             if (!user.IsAdmin)
             {
@@ -95,7 +95,7 @@ namespace Beer2Beer.Services
             else
             {
                 user.IsAdmin = false;
-                var admin = this.context.DbSet<Admin>()
+                var admin = this.context.Set<Admin>()
                     .FirstOrDefault(a => a.UserID == user.ID);
                 admin.IsDeleted = false;
             }
@@ -104,7 +104,7 @@ namespace Beer2Beer.Services
 
         public async Task BlockUser(string username)
         {
-            var user = this.context.DbSet<User>()
+            var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == username);
             if (user.IsBlocked)
             {
@@ -119,7 +119,7 @@ namespace Beer2Beer.Services
 
         public async Task UnblockUser(string username)
         {
-            var user = this.context.DbSet<User>()
+            var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == username);
             if (!user.IsBlocked)
             {

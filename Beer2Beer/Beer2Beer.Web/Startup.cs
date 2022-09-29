@@ -6,9 +6,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Linq;
 using System.Reflection;
-using Beer2Beer.Services;
 using Beer2Beer.Data.Contracts;
 using Beer2Beer.Data;
+using AutoMapper;
+using QuizOverflow.Services.MappingProfiles;
 
 namespace Beer2Beer.Web
 {
@@ -32,9 +33,17 @@ namespace Beer2Beer.Web
 
             services.AddControllersWithViews();
 
+            AutoMapper.IConfigurationProvider config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MappingProfile>();
+            });
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, Mapper>();
+
+            services.AddScoped<IBeer2BeerDbContext, Beer2BeerDbContext>();
 
             //register servises using reflection.
-            this.RegisterServises(services);
+            this.RegisterServices(services);
 
         }
 
@@ -76,7 +85,7 @@ namespace Beer2Beer.Web
             });
         }
 
-        public void RegisterServises(IServiceCollection services)
+        public void RegisterServices(IServiceCollection services)
         {
             var servicesToRegister = Assembly.Load("Beer2Beer.Services")
                                       .GetTypes()

@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Beer2Beer.Data
 {
-    public class Beer2BeerDbContext : DbContext
+    public class Beer2BeerDbContext : DbContext, IBeer2BeerDbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

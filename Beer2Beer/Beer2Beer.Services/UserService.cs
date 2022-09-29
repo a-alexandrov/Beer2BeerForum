@@ -33,7 +33,7 @@ namespace Beer2Beer.Services
                 PasswordHash = userDto.Password
             };
 
-            this.context.DbSet<User>().Add(user);
+            this.context.Set<User>().Add(user);
 
             await this.context.SaveChangesAsync();
         }
@@ -41,7 +41,7 @@ namespace Beer2Beer.Services
         public async Task ChangeFirstName(string firstName, LoginUserDto userDto)
         {
 
-            this.context.DbSet<User>()
+            this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == userDto.Username)
                 .FirstName = firstName;
 
@@ -50,7 +50,7 @@ namespace Beer2Beer.Services
         public async Task ChangeLastName(string lastName, LoginUserDto userDto)
         {
 
-            this.context.DbSet<User>()
+            this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == userDto.Username)
                 .LastName = lastName;
 
@@ -60,7 +60,7 @@ namespace Beer2Beer.Services
         public async Task ChangePassword(string newPassword, LoginUserDto userDto)
         {
 
-            this.context.DbSet<User>()
+            this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == userDto.Username)
                 .PasswordHash = newPassword;
 
@@ -70,7 +70,7 @@ namespace Beer2Beer.Services
         public async Task ChangeAvatarPath(string newAvatarPath, LoginUserDto userDto)
         {
 
-            this.context.DbSet<User>()
+            this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == userDto.Username)
                 .AvatarPath = newAvatarPath;
 
@@ -82,7 +82,7 @@ namespace Beer2Beer.Services
         {
             // ToDo:implement
 
-            var user = this.context.DbSet<User>()
+            var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == username);
 
             if (user == null)
