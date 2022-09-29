@@ -1,4 +1,5 @@
-﻿using Beer2Beer.Models;
+﻿using Beer2Beer.Data.Contracts;
+using Beer2Beer.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -62,7 +63,6 @@ namespace Beer2Beer.Data
                 );
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            
         }
 
         DbSet<Admin> Admins { get; set; }

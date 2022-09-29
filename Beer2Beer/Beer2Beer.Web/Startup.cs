@@ -6,6 +6,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Linq;
 using System.Reflection;
+using Beer2Beer.Services;
+using Beer2Beer.Data.Contracts;
+using Beer2Beer.Data;
 
 namespace Beer2Beer.Web
 {
@@ -28,6 +31,7 @@ namespace Beer2Beer.Web
             });
 
             services.AddControllersWithViews();
+
 
             //register servises using reflection.
             this.RegisterServises(services);
@@ -76,6 +80,7 @@ namespace Beer2Beer.Web
         {
             var servicesToRegister = Assembly.Load("Beer2Beer.Services")
                                       .GetTypes()
+                                      .Where(x => x.IsClass && x.Name.Contains("Service"))
                                       .Select(s => new
                                       {
                                           Interface = s.GetInterface($"I{s.Name}"),

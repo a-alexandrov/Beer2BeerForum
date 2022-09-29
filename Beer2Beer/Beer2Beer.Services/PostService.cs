@@ -2,6 +2,7 @@
 using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
+using Beer2Beer.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Services
 {
-    public class PostService
+    public class PostService : IPostService
     {
 
         private readonly IBeer2BeerDbContext context;

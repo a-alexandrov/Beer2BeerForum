@@ -7,10 +7,11 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Beer2Beer.Services.Contracts;
 
 namespace Beer2Beer.Services
 {
-    public class AdminService
+    public class AdminService : IAdminService
     {
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
