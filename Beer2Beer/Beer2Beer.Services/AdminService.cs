@@ -21,37 +21,37 @@ namespace Beer2Beer.Services
             this.context = context;
             this.mapper = mapper;
         }
-        public async Task<UserDto> FindUserByUserName(string username)
+        public async Task<UserFullDto> FindUserByUserName(string username)
         {
 
             var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Username == username);
             await IsUserNull(user);
-            var userDto = mapper.Map<UserDto>(user);
+            var userDto = mapper.Map<UserFullDto>(user);
             await this.context.SaveChangesAsync();//????
             return userDto;
 
         }
-        public async Task<UserDto> FindUserByEmail(string email)
+        public async Task<UserFullDto> FindUserByEmail(string email)
         {
 
             var user = this.context.Set<User>()
                 .FirstOrDefault(u => u.Email == email);
             await IsUserNull(user);
-            var userDto = mapper.Map<UserDto>(user);
+            var userDto = mapper.Map<UserFullDto>(user);
             await this.context.SaveChangesAsync();//????
             return userDto;
 
         }
 
-        public async Task<List<UserDto>> FindUsersByFirstName(string firstName)
+        public async Task<List<UserFullDto>> FindUsersByFirstName(string firstName)
         {
 
             var users = await this.context.Set<User>()
             .Where(u => u.FirstName == firstName)
                 .ToListAsync();
 
-            var userDtos = mapper.Map<List<UserDto>>(users);
+            var userDtos = mapper.Map<List<UserFullDto>>(users);
 
             return userDtos;
 

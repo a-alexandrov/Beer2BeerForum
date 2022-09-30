@@ -8,6 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Beer2Beer.Services.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace Beer2Beer.Services
 {
@@ -22,23 +23,24 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
         }
 
-        public async Task RegisterUser(RegisterUserDto userDto)
+        public async Task CreateUser(UserRegisterDto userDto)
         {
-            var user = new User
-            {
-                Username = userDto.Username,
-                Email = userDto.Email,
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                PasswordHash = userDto.Password
-            };
+            //var user = new User
+            //{
+            //    Username = userDto.Username,
+            //    Email = userDto.Email,
+            //    FirstName = userDto.FirstName,
+            //    LastName = userDto.LastName,
+            //    PasswordHash = userDto.Password
+            //};
+
+            var user = mapper.Map<User>(userDto);
 
             this.context.Set<User>().Add(user);
-
             await this.context.SaveChangesAsync();
         }
 
-        public async Task ChangeFirstName(string firstName, LoginUserDto userDto)
+        public async Task ChangeFirstName(string firstName, UserLoginDto userDto)
         {
 
             this.context.Set<User>()
@@ -47,7 +49,7 @@ namespace Beer2Beer.Services
 
             await this.context.SaveChangesAsync();
         }
-        public async Task ChangeLastName(string lastName, LoginUserDto userDto)
+        public async Task ChangeLastName(string lastName, UserLoginDto userDto)
         {
 
             this.context.Set<User>()
@@ -57,7 +59,7 @@ namespace Beer2Beer.Services
             await this.context.SaveChangesAsync();
         }
 
-        public async Task ChangePassword(string newPassword, LoginUserDto userDto)
+        public async Task ChangePassword(string newPassword, UserLoginDto userDto)
         {
 
             this.context.Set<User>()
@@ -67,7 +69,7 @@ namespace Beer2Beer.Services
             await this.context.SaveChangesAsync();
         }
 
-        public async Task ChangeAvatarPath(string newAvatarPath, LoginUserDto userDto)
+        public async Task ChangeAvatarPath(string newAvatarPath, UserLoginDto userDto)
         {
 
             this.context.Set<User>()
@@ -113,7 +115,5 @@ namespace Beer2Beer.Services
             }
             await this.context.SaveChangesAsync();///???
         }
-
-
     }
 }

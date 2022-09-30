@@ -4,7 +4,7 @@ using Beer2Beer.Models;
 
 namespace Beer2Beer.DTO
 {
-    public class UserDto
+    public class UserFullDto
     {
         public bool IsBlocked { get; set; } = false;
 

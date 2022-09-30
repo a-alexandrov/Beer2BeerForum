@@ -11,9 +11,9 @@ namespace Beer2Beer.Services.Contracts
 {
     public interface IAdminService
     {
-        Task<UserDto> FindUserByUserName(string username);
-        Task<UserDto> FindUserByEmail(string email);
-        Task<List<UserDto>> FindUsersByFirstName(string firstName);
+        Task<UserFullDto> FindUserByUserName(string username);
+        Task<UserFullDto> FindUserByEmail(string email);
+        Task<List<UserFullDto>> FindUsersByFirstName(string firstName);
         Task Promote(string username);
         Task Demote(string username);
         Task BlockUser(string username);
