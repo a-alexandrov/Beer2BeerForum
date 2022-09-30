@@ -22,18 +22,6 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<PostDto>> GetLastPosts(int count = 10)
-        {
-            var posts = await this.context.Set<Post>()
-                .OrderByDescending(p => p.ID)
-                .Take(count)
-                .ToListAsync();
-
-            var postDtos = mapper.Map<List<PostDto>>(posts);
-
-            return postDtos;
-        }
-
         public async Task<List<PostDto>> GetLatestPosts(int count = 10)
         {
             var posts = await this.context.Set<Post>()
@@ -68,17 +56,14 @@ namespace Beer2Beer.Services
             return postDtos;
         }
 
-        public async Task<PostDto> ChangePostName(string newName)
+        public async Task<PostDto> UpdatePost(PostDto postUpdateDto)
         {
-            //Unsure how to get current post
             var post = await this.context.Set<Post>()
-                .ToListAsync();
+                .FirstOrDefaultAsync(p => p.ID == postUpdateDto.ID);
 
             var postDto = mapper.Map<PostDto>(post);
 
             return postDto;
         }
-
-
     }
 }

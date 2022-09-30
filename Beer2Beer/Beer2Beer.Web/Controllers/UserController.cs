@@ -40,40 +40,43 @@ namespace Beer2Beer.Web.Controllers
             }
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
+
         [HttpGet("{firstName}")]
-        public IActionResult GetUsersByFirstName([FromQuery] string firstName) { 
-        
-            var users = this.adminService.FindUsersByFirstName(firstName);
-            if (users == null) {
-                return this.StatusCode(StatusCodes.Status404NotFound);
-            }
-            return this. StatusCode(StatusCodes.Status200OK, users);
-        }
-
-        [HttpPut("")]
-
-        public IActionResult BlockUser([FromQuery] string username) {
-            var user = this.adminService.BlockUser(username);
-            if (user == null)
-            {
-                return this.StatusCode(StatusCodes.Status404NotFound);
-            }
-            return this.StatusCode(StatusCodes.Status200OK, user);
-
-
-        }
-        [HttpPut("")]
-        public IActionResult UnblockUser([FromQuery] string username)
+        public IActionResult GetUsersByFirstName([FromQuery] string firstName)
         {
-            var user = this.adminService.UnblockUser(username);
-            if (user == null)
+
+            var users = this.adminService.FindUsersByFirstName(firstName);
+            if (users == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
-            return this.StatusCode(StatusCodes.Status200OK, user);
-
-
+            return this.StatusCode(StatusCodes.Status200OK, users);
         }
+
+        //[HttpPut("")]
+
+        //public IActionResult BlockUser([FromQuery] string username) {
+        //    var user = this.adminService.BlockUser(username);
+        //    if (user == null)
+        //    {
+        //        return this.StatusCode(StatusCodes.Status404NotFound);
+        //    }
+        //    return this.StatusCode(StatusCodes.Status200OK, user);
+
+
+        //}
+        //[HttpPut("")]
+        //public IActionResult UnblockUser([FromQuery] string username)
+        //{
+        //    var user = this.adminService.UnblockUser(username);
+        //    if (user == null)
+        //    {
+        //        return this.StatusCode(StatusCodes.Status404NotFound);
+        //    }
+        //    return this.StatusCode(StatusCodes.Status200OK, user);
+
+
+        //}
 
 
 
