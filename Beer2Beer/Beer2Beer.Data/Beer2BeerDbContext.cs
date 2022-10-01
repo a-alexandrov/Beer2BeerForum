@@ -61,8 +61,8 @@ namespace Beer2Beer.Data
                 new Post { ID = 2 , UserID = 1, Title = "Carlsberg Beer Opinions", Content = "Have you tried it", PostDislikes= 1, PostLikes = 1, CommentsCount = 2 },
                 new Post { ID = 3 , UserID = 2, Title = "The best beer meme", Content = "Dont laught too hard", PostDislikes= 0, PostLikes = 2, CommentsCount = 2 }
                 );
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         DbSet<Admin> Admins { get; set; }
@@ -71,6 +71,5 @@ namespace Beer2Beer.Data
         DbSet<Tag> Tags { get; set; }
         DbSet<TagPost> TagPosts { get; set; }
         DbSet<User> Users { get; set; }
-
     }
 }
