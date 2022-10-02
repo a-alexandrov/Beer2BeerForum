@@ -22,6 +22,8 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
         }
 
+
+        #region GET
         public async Task<List<PostDto>> GetLatestPosts(int count = 10)
         {
             var posts = await this.context.Set<Post>()
@@ -46,6 +48,20 @@ namespace Beer2Beer.Services
             return postDtos;
         }
 
+        public async Task<List<PostDto>> GetUserPosts(User user)
+        {
+            var posts = await this.context.Set<Post>().Where(post => post.UserID == user.ID).ToListAsync();
+            var postDto = mapper.Map<List<PostDto>>(posts);
+            return postDto;
+        }
+
+        public async Task<PostDto> GetPostById(int id)
+        {
+            var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == id);
+            var postDto = mapper.Map<PostDto>(post);
+            return postDto;
+        }
+
         public async Task<List<PostDto>> GetAllPosts()
         {
             var posts = await this.context.Set<Post>()
@@ -55,15 +71,12 @@ namespace Beer2Beer.Services
 
             return postDtos;
         }
+        #endregion GET
 
-        public async Task<PostDto> UpdatePost(PostDto postUpdateDto)
-        {
-            var post = await this.context.Set<Post>()
-                .FirstOrDefaultAsync(p => p.ID == postUpdateDto.ID);
+        #region POST
 
-            var postDto = mapper.Map<PostDto>(post);
 
-            return postDto;
-        }
+
+
     }
 }
