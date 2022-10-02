@@ -74,8 +74,15 @@ namespace Beer2Beer.Services
         #endregion GET
 
         #region POST
+        public async Task<PostDto> PostNewPost(Post newPost)
+        {
+            var posts = await this.context.Set<Post>().ToArrayAsync();
+            posts.Append(newPost);
+            var postsDtos = mapper.Map<List<PostDto>>(newPost);
+            return postsDtos.Last();
 
-
+        }
+        #endregion POST 
 
 
     }
