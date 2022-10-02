@@ -78,6 +78,8 @@ namespace Beer2Beer.Services
         {
             var posts = await this.context.Set<Post>().ToArrayAsync();
             posts.Append(newPost);
+            await this.context.SaveChangesAsync();
+
             var postsDtos = mapper.Map<List<PostDto>>(newPost);
             return postsDtos.Last();
 
