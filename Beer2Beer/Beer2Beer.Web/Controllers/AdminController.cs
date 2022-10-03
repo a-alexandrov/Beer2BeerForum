@@ -1,10 +1,16 @@
 ﻿using AutoMapper;
+using Beer2Beer.DTO;
+using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
+    [ApiController]
+    [Route("api/admin")]
     public class AdminController : ControllerBase
     {
 
@@ -20,68 +26,97 @@ namespace Beer2Beer.Web.Controllers
         }
 
 
-        [HttpGet("{username}")]
-        public IActionResult GetUserByUsername([FromQuery] string username)
+        [HttpGet("{users}")]
+        public IActionResult Get([FromQuery] string querytype,string queryparam)
         {
-
-            var user = this.adminService.FindUserByUserName(username);
-
-            if (user == null)
+            if (querytype == "username")
             {
-                return this.StatusCode(StatusCodes.Status404NotFound);
+                var user = this.adminService.FindUserByUserName(queryparam);
+                if (user == null)
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+                return this.StatusCode(StatusCodes.Status200OK, user);
+
             }
 
-            return this.StatusCode(StatusCodes.Status200OK, user);
-        }
-
-        [HttpGet("{email}")]
-        public IActionResult GetUserByEmail([FromQuery] string email)
-        {
-
-            var user = this.adminService.FindUserByEmail(email);
-
-            if (user == null)
+            else if (querytype == "email")
             {
-                return this.StatusCode(StatusCodes.Status404NotFound);
+                var user = this.adminService.FindUserByEmail(queryparam);
+                if (user == null)
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+                return this.StatusCode(StatusCodes.Status200OK, user);
+            }
+            
+
+            else if (querytype =="firstname")
+            {
+                //ToDo: fix object cycle bug 
+                var users = this.adminService.FindUsersByFirstName(queryparam);
+                if (users ==null)
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+                return this.StatusCode(StatusCodes.Status200OK, users);
+
+            }
+            else
+            {
+                return this.StatusCode(StatusCodes.Status400BadRequest);
             }
 
-            return this.StatusCode(StatusCodes.Status200OK, user);
+
         }
 
-        [HttpGet("{firstName}")]
-        public IActionResult GetUsersByFirstName([FromQuery] string firstName)
+        [HttpPut("{users}")]
+        public IActionResult Put([FromQuery] string queryType, string queryParam)
         {
 
-            var users = this.adminService.FindUsersByFirstName(firstName);
 
-            if (users == null)
+            if (queryType == "block")
             {
-                return this.StatusCode(StatusCodes.Status404NotFound);
+                var user = this.adminService.BlockUser(queryParam);
+                if (user == null)
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+                return this.StatusCode(StatusCodes.Status200OK);
+            }
+            else if (queryType == "unblock")
+            {
+                var user = this.adminService.UnblockUser(queryParam);
+                if (user == null)
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+                return this.StatusCode(StatusCodes.Status200OK);
             }
 
-            return this.StatusCode(StatusCodes.Status200OK, users);
+            else if (queryType == "promote") {
+                var user = this.adminService.Promote(queryParam);
+                if (user == null)
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+                return this.StatusCode(StatusCodes.Status200OK);
+            }
+
+            else if (queryType == "demote")
+            {
+                var user = this.adminService.Demote(queryParam);
+                if (user == null)
+                {
+                    return this.StatusCode(StatusCodes.Status404NotFound);
+                }
+                return this.StatusCode(StatusCodes.Status200OK);
+            }
+
+            return this.StatusCode(StatusCodes.Status400BadRequest);
+            
+
         }
-
-        //[HttpPut("")]
-        //public IActionResult BlockUser([FromQuery] string username) {
-        //    var user = this.adminService.BlockUser(username);
-        //    if (user == null)
-        //    {
-        //        return this.StatusCode(StatusCodes.Status404NotFound);
-        //    }
-        //    return this.StatusCode(StatusCodes.Status200OK, user);
-
-        //}
-        //[HttpPut("")]
-        //public IActionResult UnblockUser([FromQuery] string username)
-        //{
-        //    var user = this.adminService.UnblockUser(username);
-        //    if (user == null)
-        //    {
-        //        return this.StatusCode(StatusCodes.Status404NotFound);
-        //    }
-        //    return this.StatusCode(StatusCodes.Status200OK, user);
-        //}
 
     }
 }

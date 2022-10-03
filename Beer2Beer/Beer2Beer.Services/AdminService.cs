@@ -28,7 +28,6 @@ namespace Beer2Beer.Services
                 .FirstOrDefault(u => u.Username == username);
             await IsUserNull(user);
             var userDto = mapper.Map<UserFullDto>(user);
-            await this.context.SaveChangesAsync();//????
             return userDto;
 
         }
@@ -39,17 +38,15 @@ namespace Beer2Beer.Services
                 .FirstOrDefault(u => u.Email == email);
             await IsUserNull(user);
             var userDto = mapper.Map<UserFullDto>(user);
-            await this.context.SaveChangesAsync();//????
             return userDto;
 
         }
-
         public async Task<List<UserFullDto>> FindUsersByFirstName(string firstName)
         {
-
+            
             var users = await this.context.Set<User>()
-            .Where(u => u.FirstName == firstName)
-                .ToListAsync();
+            .Where(u => u.FirstName.Contains(firstName))
+            .ToListAsync();
 
             var userDtos = mapper.Map<List<UserFullDto>>(users);
 
@@ -62,25 +59,11 @@ namespace Beer2Beer.Services
                 .FirstOrDefault(u => u.Username == username);
             if (user.IsAdmin)
             {
-                throw new ArgumentException("User is already an admin!");
+                throw new ArgumentException("User is not an admin yet!");
             }
             else
             {
                 user.IsAdmin = true;
-                var admin = new Admin
-                {
-                    UserID = user.ID,
-                    User = user
-                };
-                if (this.context.Set<Admin>().Contains(admin))
-                {
-                    var existingAdmin = this.context.Set<Admin>().FirstOrDefault(a => a.ID == admin.ID);
-                    existingAdmin.IsDeleted = false;
-                }
-                else
-                {
-                    this.context.Set<Admin>().Add(admin);
-                }
             }
             await this.context.SaveChangesAsync();
         }
@@ -95,13 +78,9 @@ namespace Beer2Beer.Services
             else
             {
                 user.IsAdmin = false;
-                var admin = this.context.Set<Admin>()
-                    .FirstOrDefault(a => a.UserID == user.ID);
-                admin.IsDeleted = false;
             }
             await this.context.SaveChangesAsync();
         }
-
         public async Task BlockUser(string username)
         {
             var user = this.context.Set<User>()
@@ -116,7 +95,6 @@ namespace Beer2Beer.Services
             }
             await this.context.SaveChangesAsync();
         }
-
         public async Task UnblockUser(string username)
         {
             var user = this.context.Set<User>()
@@ -131,7 +109,6 @@ namespace Beer2Beer.Services
             }
             await this.context.SaveChangesAsync();
         }
-
         public async Task IsUserNull(User user)
 
         {
