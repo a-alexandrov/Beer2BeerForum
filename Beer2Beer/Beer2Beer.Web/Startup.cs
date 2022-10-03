@@ -25,6 +25,12 @@ namespace Beer2Beer.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddControllers().AddNewtonsoftJson(
+                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -45,6 +51,8 @@ namespace Beer2Beer.Web
             //register servises using reflection.
             this.RegisterServices(services);
 
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

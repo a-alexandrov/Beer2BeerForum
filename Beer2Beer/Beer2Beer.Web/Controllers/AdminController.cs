@@ -74,7 +74,6 @@ namespace Beer2Beer.Web.Controllers
         public IActionResult Put([FromQuery] string queryType, string queryParam)
         {
 
-
             if (queryType == "block")
             {
                 var user = this.adminService.BlockUser(queryParam);
