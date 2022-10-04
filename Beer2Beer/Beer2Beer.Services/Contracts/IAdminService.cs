@@ -14,11 +14,11 @@ namespace Beer2Beer.Services.Contracts
         Task<UserFullDto> FindUserByUserName(string username);
         Task<UserFullDto> FindUserByEmail(string email);
         Task<List<UserFullDto>> FindUsersByFirstName(string firstName);
-        Task Promote(string username);
-        Task Demote(string username);
-        Task BlockUser(string username);
-        Task UnblockUser(string username);
-        Task IsUserNull(User user);
+        Task<UserFullDto> Promote(string username);
+        Task<UserFullDto> Demote(string username);
+        Task<UserFullDto> BlockUser(string username);
+        Task<UserFullDto> UnblockUser(string username);
+        void IsUserNull(User user);
 
     }
 }

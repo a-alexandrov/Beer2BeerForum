@@ -24,9 +24,9 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> FindUserByUserName(string username)
         {
 
-            var user = this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == username);
-            await IsUserNull(user);
+            var user = await this.context.Set<User>()
+                .FirstOrDefaultAsync(u => u.Username == username);
+            IsUserNull(user);
             var userDto = mapper.Map<UserFullDto>(user);
             return userDto;
 
@@ -34,9 +34,10 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> FindUserByEmail(string email)
         {
 
-            var user = this.context.Set<User>()
-                .FirstOrDefault(u => u.Email == email);
-            await IsUserNull(user);
+            var user = await this.context.Set<User>().FirstOrDefaultAsync(u => u.Email == email);
+
+            IsUserNull(user);
+
             var userDto = mapper.Map<UserFullDto>(user);
             return userDto;
 
@@ -48,15 +49,20 @@ namespace Beer2Beer.Services
             .Where(u => u.FirstName.Contains(firstName))
             .ToListAsync();
 
+            if (!users.Any()) {
+                throw new ArgumentException($"There aren't any users with firstname {firstName}");
+            }
+
             var userDtos = mapper.Map<List<UserFullDto>>(users);
 
             return userDtos;
 
         }
-        public async Task Promote(string username)
+        public async Task<UserFullDto> Promote(string username)
         {
-            var user = this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == username);
+            var user = await this.context.Set<User>()
+                .FirstOrDefaultAsync(u => u.Username == username);
+            IsUserNull(user);
             if (user.IsAdmin)
             {
                 throw new ArgumentException("User is not an admin yet!");
@@ -66,11 +72,13 @@ namespace Beer2Beer.Services
                 user.IsAdmin = true;
             }
             await this.context.SaveChangesAsync();
+            var result = mapper.Map<UserFullDto>(user);
+            return result;
         }
-        public async Task Demote(string username)
+        public async Task<UserFullDto> Demote(string username)
         {
-            var user = this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == username);
+            var user = await this.context.Set<User>().FirstOrDefaultAsync(u => u.Username == username);
+            IsUserNull(user);
             if (!user.IsAdmin)
             {
                 throw new ArgumentException("User is not an admin yet!");
@@ -80,11 +88,13 @@ namespace Beer2Beer.Services
                 user.IsAdmin = false;
             }
             await this.context.SaveChangesAsync();
+            var result = mapper.Map<UserFullDto>(user);
+            return result;
         }
-        public async Task BlockUser(string username)
+        public async Task<UserFullDto> BlockUser(string username)
         {
-            var user = this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == username);
+            var user = await this.context.Set<User>().FirstOrDefaultAsync(u => u.Username == username);
+            IsUserNull(user);
             if (user.IsBlocked)
             {
                 throw new ArgumentException("User is already blocked!");
@@ -94,11 +104,13 @@ namespace Beer2Beer.Services
                 user.IsBlocked = true;
             }
             await this.context.SaveChangesAsync();
+            var result = mapper.Map<UserFullDto>(user);
+            return result;
         }
-        public async Task UnblockUser(string username)
+        public async Task<UserFullDto> UnblockUser(string username)
         {
-            var user = this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == username);
+            var user = await this.context.Set<User>().FirstOrDefaultAsync(u => u.Username == username);
+            IsUserNull(user);
             if (!user.IsBlocked)
             {
                 throw new ArgumentException("User is not blocked yet!");
@@ -108,15 +120,17 @@ namespace Beer2Beer.Services
                 user.IsBlocked = false;
             }
             await this.context.SaveChangesAsync();
+            var result = mapper.Map<UserFullDto>(user);
+            return result;
         }
-        public async Task IsUserNull(User user)
+        public void IsUserNull(User user)
 
         {
             if (user == null)
             {
                 throw new ArgumentNullException("User not found!");
             }
-            await this.context.SaveChangesAsync();///???
+            
         }
     }
 }
