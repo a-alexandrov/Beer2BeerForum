@@ -1,12 +1,9 @@
-﻿using Beer2Beer.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using Beer2Beer.Web.Models;
-using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Beer2Beer.DTO;
-using System.ComponentModel.DataAnnotations;
+using Beer2Beer.Services.Contracts;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -15,42 +12,57 @@ namespace Beer2Beer.Web.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IAdminService adminService;
         private readonly IMapper mapper;
         private readonly IUserService userService;
 
-        public UserController(IUserService userServise, IAdminService adminService, IMapper mapper)
+        public UserController(IUserService userServise, IMapper mapper)
         {
-            this.adminService = adminService;
             this.mapper = mapper;
             this.userService = userServise;
         }
 
-        /// <summary>
-        /// Registers a User in the DataBase.
-        /// </summary>
-        /// <remarks>
-        /// Registers a User in the DataBase.
-        /// </remarks>
-        /// 
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
+
+            var registeredUser = new UserFullDto();
 
             try
             {
-                await this.userService.CreateUser(user);
+                registeredUser = await this.userService.CreateUser(user);
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, user);
+            }
+
+            return StatusCode(StatusCodes.Status200OK, registeredUser);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
+        {
+            if (!ModelState.IsValid)
             {
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
 
-            return StatusCode(StatusCodes.Status200OK);
+            var updatedUser = new UserFullDto();
+
+            try
+            {
+                updatedUser = await this.userService.UpdateUser(user);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+
+            return StatusCode(StatusCodes.Status200OK, updatedUser);
         }
     }
 }

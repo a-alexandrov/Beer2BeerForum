@@ -5,6 +5,7 @@ namespace Beer2Beer.Services.Contracts
 {
     public interface IUserService
     {
-        Task CreateUser(UserRegisterDto userDto);
+        Task<UserFullDto> CreateUser(UserRegisterDto userDto);
+        Task<UserFullDto> UpdateUser(UserUpdateDto userDto);
     }
 }

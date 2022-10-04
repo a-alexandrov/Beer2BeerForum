@@ -1,14 +1,12 @@
-﻿using Beer2Beer.Data.Contracts;
-using System.Threading.Tasks;
-using AutoMapper;
-using Beer2Beer.Models;
+﻿using AutoMapper;
+using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
+using Beer2Beer.Models;
+using Beer2Beer.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Beer2Beer.Services.Contracts;
-using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace Beer2Beer.Services
 {
@@ -23,21 +21,32 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
         }
 
-        public async Task CreateUser(UserRegisterDto userDto)
+        public async Task<UserFullDto> CreateUser(UserRegisterDto userDto)
         {
-            //var user = new User
-            //{
-            //    Username = userDto.Username,
-            //    Email = userDto.Email,
-            //    FirstName = userDto.FirstName,
-            //    LastName = userDto.LastName,
-            //    PasswordHash = userDto.Password
-            //};
-
             var user = mapper.Map<User>(userDto);
 
             this.context.Set<User>().Add(user);
             await this.context.SaveChangesAsync();
+
+            return mapper.Map<UserFullDto>(user);
+        }
+
+        public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto)
+        {
+            var user = await this.FindUserById(userDto.ID);
+
+            if (user == null)
+            {
+                throw new NullReferenceException(message: $"User with ID:{userDto.ID} not found.");
+            }
+
+            user.FirstName = userDto.FirstName ?? user.FirstName;
+            user.LastName = userDto.LastName ?? userDto.LastName;
+            user.PasswordHash = userDto.PasswordHash ?? userDto.PasswordHash;
+
+            await this.context.SaveChangesAsync();
+
+            return mapper.Map<UserFullDto>(user);
         }
 
         public async Task ChangeFirstName(string firstName, UserLoginDto userDto)
@@ -49,6 +58,7 @@ namespace Beer2Beer.Services
 
             await this.context.SaveChangesAsync();
         }
+
         public async Task ChangeLastName(string lastName, UserLoginDto userDto)
         {
 
@@ -78,7 +88,6 @@ namespace Beer2Beer.Services
 
             await this.context.SaveChangesAsync();
         }
-
 
         public async Task Login(string username, string password)
         {
@@ -114,6 +123,14 @@ namespace Beer2Beer.Services
                 throw new ArgumentNullException("User not found!");
             }
             await this.context.SaveChangesAsync();///???
+        }
+
+        private async Task<User> FindUserById(int id)
+        {
+            var user = await this.context.Set<User>()
+                .FirstOrDefaultAsync(u => u.ID == id);
+
+            return user;
         }
     }
 }

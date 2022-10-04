@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using Beer2Beer.DTO;
-using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -27,7 +24,7 @@ namespace Beer2Beer.Web.Controllers
 
 
         [HttpGet("{users}")]
-        public IActionResult Get([FromQuery] string querytype,string queryparam)
+        public async Task<IActionResult> Get([FromQuery] string querytype,string queryparam)
         {
             if (querytype == "username")
             {
@@ -54,7 +51,7 @@ namespace Beer2Beer.Web.Controllers
             else if (querytype =="firstname")
             {
                 //ToDo: fix object cycle bug 
-                var users = this.adminService.FindUsersByFirstName(queryparam);
+                var users = await this.adminService.FindUsersByFirstName(queryparam);
                 if (users ==null)
                 {
                     return this.StatusCode(StatusCodes.Status404NotFound);
@@ -66,9 +63,35 @@ namespace Beer2Beer.Web.Controllers
             {
                 return this.StatusCode(StatusCodes.Status400BadRequest);
             }
-
-
         }
+
+
+        [HttpGet("users/byUsername")]
+        public async Task<IActionResult> GetUsersByUsername([FromQuery] string username)
+        {
+            var user = await this.adminService.FindUserByUserName(username);
+
+            if (user == null)
+            {
+                return this.StatusCode(StatusCodes.Status404NotFound);
+            }
+
+            return this.StatusCode(StatusCodes.Status200OK, user);
+        }
+
+        [HttpGet("users/byEmail")]
+        public async Task<IActionResult> GetUsersByEmail([FromQuery] string email)
+        {
+            var user = await this.adminService.FindUserByEmail(email);
+
+            if (user == null)
+            {
+                return this.StatusCode(StatusCodes.Status404NotFound);
+            }
+
+            return this.StatusCode(StatusCodes.Status200OK, user);
+        }
+
 
         [HttpPut("{users}")]
         public IActionResult Put([FromQuery] string queryType, string queryParam)
