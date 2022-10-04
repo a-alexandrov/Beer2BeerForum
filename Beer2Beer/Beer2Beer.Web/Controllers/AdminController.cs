@@ -2,6 +2,7 @@
 using Beer2Beer.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -23,50 +24,20 @@ namespace Beer2Beer.Web.Controllers
         }
 
 
-        [HttpGet("{users}")]
-        public async Task<IActionResult> Get([FromQuery] string querytype,string queryparam)
+        [HttpGet("users-byFirstname")]
+        public async Task<IActionResult> GetUsersByFirstName([FromQuery]string firstName)
         {
-            if (querytype == "username")
-            {
-                var user = this.adminService.FindUserByUserName(queryparam);
-                if (user == null)
-                {
-                    return this.StatusCode(StatusCodes.Status404NotFound);
-                }
-                return this.StatusCode(StatusCodes.Status200OK, user);
 
-            }
-
-            else if (querytype == "email")
+            var users = await this.adminService.FindUsersByFirstName(firstName);
+            if (!users.Any())
             {
-                var user = this.adminService.FindUserByEmail(queryparam);
-                if (user == null)
-                {
-                    return this.StatusCode(StatusCodes.Status404NotFound);
-                }
-                return this.StatusCode(StatusCodes.Status200OK, user);
+                return this.StatusCode(StatusCodes.Status404NotFound);
             }
-            
-
-            else if (querytype =="firstname")
-            {
-                //ToDo: fix object cycle bug 
-                var users = await this.adminService.FindUsersByFirstName(queryparam);
-                if (users ==null)
-                {
-                    return this.StatusCode(StatusCodes.Status404NotFound);
-                }
-                return this.StatusCode(StatusCodes.Status200OK, users);
-
-            }
-            else
-            {
-                return this.StatusCode(StatusCodes.Status400BadRequest);
-            }
+            return this.StatusCode(StatusCodes.Status200OK, users);
         }
 
 
-        [HttpGet("users/byUsername")]
+        [HttpGet("users-byUsername")]
         public async Task<IActionResult> GetUsersByUsername([FromQuery] string username)
         {
             var user = await this.adminService.FindUserByUserName(username);
@@ -79,7 +50,7 @@ namespace Beer2Beer.Web.Controllers
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
 
-        [HttpGet("users/byEmail")]
+        [HttpGet("users-byEmail")]
         public async Task<IActionResult> GetUsersByEmail([FromQuery] string email)
         {
             var user = await this.adminService.FindUserByEmail(email);
@@ -93,52 +64,45 @@ namespace Beer2Beer.Web.Controllers
         }
 
 
-        [HttpPut("{users}")]
-        public IActionResult Put([FromQuery] string queryType, string queryParam)
-        {
-
-            if (queryType == "block")
+        
+        [HttpPut("users-block")]
+        public async Task<IActionResult> BlockUser([FromQuery] string username) {
+            var user = await this.adminService.BlockUser(username);
+            if (user == null)
             {
-                var user = this.adminService.BlockUser(queryParam);
-                if (user == null)
-                {
-                    return this.StatusCode(StatusCodes.Status404NotFound);
-                }
-                return this.StatusCode(StatusCodes.Status200OK);
+                return this.StatusCode(StatusCodes.Status404NotFound);
             }
-            else if (queryType == "unblock")
-            {
-                var user = this.adminService.UnblockUser(queryParam);
-                if (user == null)
-                {
-                    return this.StatusCode(StatusCodes.Status404NotFound);
-                }
-                return this.StatusCode(StatusCodes.Status200OK);
-            }
-
-            else if (queryType == "promote") {
-                var user = this.adminService.Promote(queryParam);
-                if (user == null)
-                {
-                    return this.StatusCode(StatusCodes.Status404NotFound);
-                }
-                return this.StatusCode(StatusCodes.Status200OK);
-            }
-
-            else if (queryType == "demote")
-            {
-                var user = this.adminService.Demote(queryParam);
-                if (user == null)
-                {
-                    return this.StatusCode(StatusCodes.Status404NotFound);
-                }
-                return this.StatusCode(StatusCodes.Status200OK);
-            }
-
-            return this.StatusCode(StatusCodes.Status400BadRequest);
-            
-
+            return this.StatusCode(StatusCodes.Status200OK,user);
         }
-
+        [HttpPut("users-unblock")]
+        public async Task<IActionResult> UnblockUser([FromQuery] string username)
+        {
+            var user = await this.adminService.UnblockUser(username);
+            if (user == null)
+            {
+                return this.StatusCode(StatusCodes.Status404NotFound);
+            }
+            return this.StatusCode(StatusCodes.Status200OK, user);
+        }
+        [HttpPut("users-promote")]
+        public async Task<IActionResult> PromoteUser([FromQuery] string username)
+        {
+            var user = await this.adminService.Promote(username);
+            if (user == null)
+            {
+                return this.StatusCode(StatusCodes.Status404NotFound);
+            }
+            return this.StatusCode(StatusCodes.Status200OK,user);
+        }
+        [HttpPut("users-demote")]
+        public async Task<IActionResult> DemoteUser([FromQuery] string username)
+        {
+            var user = await this.adminService.Demote(username);
+            if (user == null)
+            {
+                return this.StatusCode(StatusCodes.Status404NotFound);
+            }
+            return this.StatusCode(StatusCodes.Status200OK, user);
+        }
     }
 }
