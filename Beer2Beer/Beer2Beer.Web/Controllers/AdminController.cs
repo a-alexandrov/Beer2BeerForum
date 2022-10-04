@@ -24,8 +24,9 @@ namespace Beer2Beer.Web.Controllers
         }
 
 
-        [HttpGet("users-byFirstname")]
-        public async Task<IActionResult> GetUsersByFirstName([FromQuery]string firstName)
+        [HttpGet]
+        [Route("byFirstName")]
+        public async Task<IActionResult> GetUsersByFirstName([FromQuery] string firstName)
         {
 
             var users = await this.adminService.FindUsersByFirstName(firstName);
@@ -37,7 +38,8 @@ namespace Beer2Beer.Web.Controllers
         }
 
 
-        [HttpGet("users-byUsername")]
+        [HttpGet]
+        [Route("byUsername")]
         public async Task<IActionResult> GetUsersByUsername([FromQuery] string username)
         {
             var user = await this.adminService.FindUserByUserName(username);
@@ -50,7 +52,8 @@ namespace Beer2Beer.Web.Controllers
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
 
-        [HttpGet("users-byEmail")]
+        [HttpGet]
+        [Route("byEmail")]
         public async Task<IActionResult> GetUsersByEmail([FromQuery] string email)
         {
             var user = await this.adminService.FindUserByEmail(email);
@@ -64,17 +67,21 @@ namespace Beer2Beer.Web.Controllers
         }
 
 
-        
-        [HttpPut("users-block")]
-        public async Task<IActionResult> BlockUser([FromQuery] string username) {
+
+        [HttpPut]
+        [Route("block")]
+        public async Task<IActionResult> BlockUser([FromQuery] string username)
+        {
             var user = await this.adminService.BlockUser(username);
             if (user == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
-            return this.StatusCode(StatusCodes.Status200OK,user);
+            return this.StatusCode(StatusCodes.Status200OK, user);
         }
-        [HttpPut("users-unblock")]
+
+        [HttpPut]
+        [Route("unblock")]
         public async Task<IActionResult> UnblockUser([FromQuery] string username)
         {
             var user = await this.adminService.UnblockUser(username);
@@ -84,7 +91,10 @@ namespace Beer2Beer.Web.Controllers
             }
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
-        [HttpPut("users-promote")]
+
+
+        [HttpPut]
+        [Route("promote")]
         public async Task<IActionResult> PromoteUser([FromQuery] string username)
         {
             var user = await this.adminService.Promote(username);
@@ -92,9 +102,12 @@ namespace Beer2Beer.Web.Controllers
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
-            return this.StatusCode(StatusCodes.Status200OK,user);
+            return this.StatusCode(StatusCodes.Status200OK, user);
         }
-        [HttpPut("users-demote")]
+
+
+        [HttpPut]
+        [Route("demote")]
         public async Task<IActionResult> DemoteUser([FromQuery] string username)
         {
             var user = await this.adminService.Demote(username);
