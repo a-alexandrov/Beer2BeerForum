@@ -23,6 +23,8 @@ namespace Beer2Beer.DTO
 
         public string AvatarPath { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         public List<PostDto> Posts { get; set; }
 
         public List<Comment> Comments { get; set; }

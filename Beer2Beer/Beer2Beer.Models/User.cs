@@ -18,6 +18,8 @@ namespace Beer2Beer.Models
 
         public string AvatarPath { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         public List<Post> Posts { get; set; }
 
         public List<Comment> Comments { get; set; }
