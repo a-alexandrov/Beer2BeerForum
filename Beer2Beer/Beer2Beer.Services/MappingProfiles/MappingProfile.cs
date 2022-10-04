@@ -21,8 +21,13 @@ namespace QuizOverflow.Services.MappingProfiles
             CreateMap<UserRegisterDto, User>();
 
             CreateMap<User, UserUpdateDto>();
-            CreateMap<UserUpdateDto, User>(MemberList.Destination);
+            CreateMap<UserUpdateDto, User>();
 
+            CreateMap<Comment, CommentFullDto>();
+            CreateMap<CommentFullDto, Comment>();
+
+            CreateMap<Comment, CommentCreateDto>();
+            CreateMap<CommentCreateDto, Comment>();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Beer2Beer.Services
 
         public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto)
         {
-            var user = await this.FindUserById(userDto.ID);
+            var user = await this.GetUserById(userDto.ID);
 
             if (user == null)
             {
@@ -49,36 +49,8 @@ namespace Beer2Beer.Services
             return mapper.Map<UserFullDto>(user);
         }
 
-        public async Task ChangeFirstName(string firstName, UserLoginDto userDto)
-        {
-
-            this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .FirstName = firstName;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task ChangeLastName(string lastName, UserLoginDto userDto)
-        {
-
-            this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .LastName = lastName;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task ChangePassword(string newPassword, UserLoginDto userDto)
-        {
-
-            this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .PasswordHash = newPassword;
-
-            await this.context.SaveChangesAsync();
-        }
-
+        //Might place ChangeAvatarPath in UpdateUser.
+        //Implement UploadPicture method.
         public async Task ChangeAvatarPath(string newAvatarPath, UserLoginDto userDto)
         {
 
@@ -125,7 +97,7 @@ namespace Beer2Beer.Services
             await this.context.SaveChangesAsync();///???
         }
 
-        private async Task<User> FindUserById(int id)
+        private async Task<User> GetUserById(int id)
         {
             var user = await this.context.Set<User>()
                 .FirstOrDefaultAsync(u => u.ID == id);

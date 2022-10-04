@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Beer2Beer.DTO;
+﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +11,10 @@ namespace Beer2Beer.Web.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IMapper mapper;
         private readonly IUserService userService;
 
-        public UserController(IUserService userServise, IMapper mapper)
+        public UserController(IUserService userServise)
         {
-            this.mapper = mapper;
             this.userService = userServise;
         }
 
