@@ -20,7 +20,7 @@ namespace Beer2Beer.Data
             modelBuilder.Entity<User>().HasData(
                 new User { ID = 1, IsDeleted = false, IsAdmin = true, Email = "beerKing@abv.bg", PasswordHash = "THeKingIsHere", Username = "BeerKing", FirstName = "Forum", LastName = "King" },
                 new User { ID = 4, IsDeleted = false, IsAdmin = true, Email = "beerEmperor@rome.com", PasswordHash = "YourEMperorHasReturnted", Username = "BeerEmperor", FirstName = "Emperor", LastName = "Beer" },
-                new User { ID = 5, IsDeleted = false, IsAdmin = true, Email = "beerGod@heaven.universe", PasswordHash = "BowToYourGod", Username = "BeerGod", FirstName = "God", LastName = "Almighty" },
+                new User { ID = 5, IsDeleted = false, IsAdmin = true, Email = "beerGod@heaven.universe", PasswordHash = "BowToYourGod", Username = "BeerGod", FirstName = "God", LastName = "Almighty",PhoneNumber = "0883778833" },
                 new User { ID = 2, IsDeleted = false, IsAdmin = false, Email = "beerPeasent@mail.bg", PasswordHash = "ThePeasentIsHere", Username = "BeerPeasunt", FirstName = "Beer", LastName = "Peasunt" },
                 new User { ID = 3, IsDeleted = false, IsAdmin = false, Email = "beerSlave@mail.bg", PasswordHash = "TheSlaveIsHere", Username = "BeerSlave", FirstName = "Beer", LastName = "Slave" });
 
