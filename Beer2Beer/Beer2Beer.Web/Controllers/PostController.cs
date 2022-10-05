@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Beer2Beer.DTO;
+using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,9 +25,22 @@ namespace Beer2Beer.Web.Controllers
             this.mapper = mapper;
             this.userService = userService;
         }
-
         [HttpGet]
-        [Route ("latest")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var posts = await this.postService.GetAllPosts();
+                return this.StatusCode(StatusCodes.Status200OK, posts);
+            }
+            catch (ArgumentNullException e)
+            {
+
+                return this.StatusCode(StatusCodes.Status400BadRequest, e.ParamName);
+            }
+        }
+        [HttpGet]
+        [Route("latest")]
         public async Task<IActionResult> GetLatestPost()
         {
             try
@@ -68,11 +83,108 @@ namespace Beer2Beer.Web.Controllers
             }
             catch (ArgumentNullException e)
             {
-                
+
+
+                return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
+            }
+        }
+        [HttpGet]
+        [Route("byUserID")]
+        public async Task<IActionResult> GetByUserId([FromQuery] int userID)
+        {
+            try
+            {
+
+                var posts = await this.postService.GetPostsByUserID(userID);
+                return this.StatusCode(StatusCodes.Status200OK, posts);
+
+            }
+            catch (ArgumentNullException e)
+            {
+
+
+                return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
+            }
+        }
+        [HttpGet]
+        [Route("byUsername")]
+        public async Task<IActionResult> GetByUserName([FromQuery] string username)
+        {
+            try
+            {
+
+                var posts = await this.postService.GetPostsByUsername(username);
+                return this.StatusCode(StatusCodes.Status200OK, posts);
+
+            }
+            catch (ArgumentNullException e)
+            {
+
+
+                return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
+            }
+        }
+        [HttpPost]
+        [Route("newPost")]
+        public async Task<IActionResult> PostNew([FromQuery] Post post)
+        {
+            //TODO: Make NewPostDTO
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.PostNewPost(post));
+        }
+        [HttpPut]
+        [Route("changeTitle")]
+        public async Task<IActionResult> ChangeTitle([FromQuery] int postID, string newTitle)
+        {
+            try
+            {
+
+                var posts = await this.postService.ChangePostTitle(postID, newTitle);
+                return this.StatusCode(StatusCodes.Status200OK, posts);
+
+            }
+            catch (ArgumentNullException e)
+            {
+
 
                 return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
             }
         }
 
+        [HttpPut]
+        [Route("changeContent")]
+        public async Task<IActionResult> ChangeContent([FromQuery] int postID, string newContent)
+        {
+            try
+            {
+
+                var posts = await this.postService.ChangePostContent(postID, newContent);
+                return this.StatusCode(StatusCodes.Status200OK, posts);
+
+            }
+            catch (ArgumentNullException e)
+            {
+
+
+                return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
+            }
+        }
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> DeletePost([FromQuery] int postId)
+        {
+            try
+            {
+
+                var posts = await this.postService.DeletePost(postId);
+                return this.StatusCode(StatusCodes.Status200OK, posts);
+
+            }
+            catch (ArgumentNullException e)
+            {
+
+
+                return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
+            }
+        }
     }
 }
