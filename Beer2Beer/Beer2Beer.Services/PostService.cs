@@ -4,6 +4,7 @@ using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,6 +32,8 @@ namespace Beer2Beer.Services
                 .Take(count)
                 .ToListAsync();
 
+            ArePostNull(posts);
+
             var postDtos = mapper.Map<List<PostDto>>(posts);
 
             return postDtos;
@@ -43,6 +46,8 @@ namespace Beer2Beer.Services
                 .Take(count)
                 .ToListAsync();
 
+            ArePostNull(posts);
+
             var postDtos = mapper.Map<List<PostDto>>(posts);
 
             return postDtos;
@@ -51,6 +56,9 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetUserPosts(User user)
         {
             var posts = await this.context.Set<Post>().Where(post => post.UserID == user.ID).ToListAsync();
+
+            ArePostNull(posts);
+
             var postDto = mapper.Map<List<PostDto>>(posts);
             return postDto;
         }
@@ -58,6 +66,9 @@ namespace Beer2Beer.Services
         public async Task<PostDto> GetPostById(int id)
         {
             var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == id);
+
+            IsPostNull(post);
+
             var postDto = mapper.Map<PostDto>(post);
             return postDto;
         }
@@ -66,6 +77,8 @@ namespace Beer2Beer.Services
         {
             var posts = await this.context.Set<Post>()
                 .ToListAsync();
+
+            ArePostNull(posts);
 
             var postDtos = mapper.Map<List<PostDto>>(posts);
 
@@ -76,8 +89,10 @@ namespace Beer2Beer.Services
         #region POST
         public async Task<PostDto> PostNewPost(Post newPost)
         {
-            var posts = await this.context.Set<Post>().ToArrayAsync();
-            posts.Append(newPost);
+            var posts = await this.context.Set<Post>().ToListAsync();
+
+            posts.Add(newPost);
+
             await this.context.SaveChangesAsync();
 
             var postsDtos = mapper.Map<List<PostDto>>(newPost);
@@ -86,6 +101,68 @@ namespace Beer2Beer.Services
         }
         #endregion POST 
 
+        #region PUT
+        public async Task<PostDto> ChangePostTitle(int postID, string newTitle)
+        {
+            var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == postID);
+
+            IsPostNull(post);
+
+            post.Title = newTitle;
+            await this.context.SaveChangesAsync();
+
+            var postDto = mapper.Map<PostDto>(post);
+            return postDto;
+        }
+
+        public async Task<PostDto> ChangePostCOntent(int postID, string content)
+        {
+            var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == postID);
+
+            IsPostNull(post);
+            
+            post.Content = content;
+            await this.context.SaveChangesAsync();
+
+            var postDto = mapper.Map<PostDto>(post);
+            return postDto;
+        }
+
+        //Tags???
+        #endregion PUT
+
+        #region DELETE
+        public async Task<PostDto> DeletePost(int postID)
+        {
+            var postToRemove = this.context.Set<Post>().FirstOrDefault(post => post.ID == postID);
+            
+            IsPostNull(postToRemove);
+            
+            this.context.Set<Post>().Remove(postToRemove);
+            await this.context.SaveChangesAsync();
+
+            var postDto = mapper.Map<PostDto>(postToRemove);
+            return postDto;
+        }
+        #endregion DELETE
+
+        #region PrivateValidation
+        private void IsPostNull(Post post)
+        {
+            if (post == null)
+            {
+                throw new ArgumentNullException("This post doesn't exist");
+            }
+        }
+
+        private void ArePostNull(ICollection<Post> posts)
+        {
+            if (posts.Count == 0)
+            {
+                throw new ArgumentNullException("There are no posts to match the criteria");
+            }
+        }
+        #endregion PrivateValidation
 
     }
 }
