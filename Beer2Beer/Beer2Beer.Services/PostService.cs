@@ -53,14 +53,20 @@ namespace Beer2Beer.Services
             return postDtos;
         }
 
-        public async Task<List<PostDto>> GetUserPosts(User user)
+        public async Task<List<PostDto>> GetPostsByUserID(int userId)
         {
-            var posts = await this.context.Set<Post>().Where(post => post.UserID == user.ID).ToListAsync();
+            var posts = await this.context.Set<Post>().Where(post => post.UserID == userId).ToListAsync();
 
             ArePostNull(posts);
 
             var postDto = mapper.Map<List<PostDto>>(posts);
             return postDto;
+        }
+
+        public async Task<List<PostDto>> GetPostsByUsername(string username)
+        {
+             throw  new NotImplementedException();
+
         }
 
         public async Task<PostDto> GetPostById(int id)

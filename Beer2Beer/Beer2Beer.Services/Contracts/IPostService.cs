@@ -13,7 +13,8 @@ namespace Beer2Beer.Services.Contracts
         #region GET
         Task<List<PostDto>> GetLatestPosts(int count);
         Task<List<PostDto>> GetPostsByMostComments(int count);
-        Task<List<PostDto>> GetUserPosts(User user);
+        Task<List<PostDto>> GetPostsByUserID(int userId);
+        Task<List<PostDto>> GetPostsByUsername(string username);
         Task<PostDto> GetPostById(int id);
         Task<List<PostDto>> GetAllPosts();
         #endregion GET
