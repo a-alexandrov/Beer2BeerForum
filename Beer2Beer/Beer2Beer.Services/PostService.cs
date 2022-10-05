@@ -16,11 +16,13 @@ namespace Beer2Beer.Services
 
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
+        private readonly IAdminService users;
 
-        public PostService(IBeer2BeerDbContext context, IMapper mapper)
+        public PostService(IBeer2BeerDbContext context, IMapper mapper, IAdminService users)
         {
             this.context = context;
             this.mapper = mapper;
+            this.users = users; 
         }
 
 
@@ -61,12 +63,6 @@ namespace Beer2Beer.Services
 
             var postDto = mapper.Map<List<PostDto>>(posts);
             return postDto;
-        }
-
-        public async Task<List<PostDto>> GetPostsByUsername(string username)
-        {
-            throw new NotImplementedException();
-
         }
 
         public async Task<PostDto> GetPostById(int id)

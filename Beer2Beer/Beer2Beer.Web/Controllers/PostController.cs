@@ -4,9 +4,7 @@ using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -106,24 +104,7 @@ namespace Beer2Beer.Web.Controllers
                 return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
             }
         }
-        [HttpGet]
-        [Route("byUsername")]
-        public async Task<IActionResult> GetByUserName([FromQuery] string username)
-        {
-            try
-            {
-
-                var posts = await this.postService.GetPostsByUsername(username);
-                return this.StatusCode(StatusCodes.Status200OK, posts);
-
-            }
-            catch (ArgumentNullException e)
-            {
-
-
-                return this.StatusCode(StatusCodes.Status404NotFound, e.ParamName);
-            }
-        }
+        
         [HttpPost]
         [Route("newPost")]
         public async Task<IActionResult> PostNew([FromQuery] PostCreateDto post)
