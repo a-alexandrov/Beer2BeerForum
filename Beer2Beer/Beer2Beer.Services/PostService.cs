@@ -115,7 +115,7 @@ namespace Beer2Beer.Services
             return postDto;
         }
 
-        public async Task<PostDto> ChangePostCOntent(int postID, string content)
+        public async Task<PostDto> ChangePostContent(int postID, string content)
         {
             var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == postID);
 
