@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Beer2Beer.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -13,18 +14,17 @@ namespace Beer2Beer.Web.Controllers
     {
 
         private readonly IAdminService adminService;
-        private readonly IMapper mapper;
-        private readonly IUserService userService;
 
-        public AdminController(IUserService userServise, IAdminService adminService, IMapper mapper)
+
+        public AdminController(IAdminService adminService)
         {
             this.adminService = adminService;
-            this.mapper = mapper;
-            this.userService = userServise;
+
         }
 
 
         [HttpGet]
+        [Authorize]
         [Route("byFirstName")]
         public async Task<IActionResult> GetUsersByFirstName([FromQuery] string firstName)
         {

@@ -10,6 +10,13 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.Data;
 using AutoMapper;
 using QuizOverflow.Services.MappingProfiles;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System;
+using Beer2Beer.Web.Utility;
 
 namespace Beer2Beer.Web
 {
@@ -38,6 +45,8 @@ namespace Beer2Beer.Web
 
             services.AddControllersWithViews();
 
+
+            //Automapper 
             AutoMapper.IConfigurationProvider config = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
@@ -49,6 +58,32 @@ namespace Beer2Beer.Web
 
             //register servises using reflection.
             this.RegisterServices(services);
+
+            // register authentication
+
+            // In this example, we have specified which parameters must be taken into account to consider JWT as valid. As per our code,  the following items consider a token valid:
+            // Validate the server(ValidateIssuer = true) that generates the token.
+            // Validate the recipient of the token is authorized to receive(ValidateAudience = true)
+            // Check if the token is not expired and the signing key of the issuer is valid(ValidateLifetime = true)
+            // Validate signature of the token(ValidateIssuerSigningKey = true)
+            // Additionally, we specify the values for the issuer, audience, signing key.In this example, I have stored these values in appsettings.json file.
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+            services.AddScoped<IAuthenticator, Authenticator>();
+
 
 
             
@@ -90,6 +125,9 @@ namespace Beer2Beer.Web
             {
                 c.SwaggerEndpoint("/swagger/v2/swagger.json", "Beer2BeerAPI");
             });
+
+            app.UseAuthentication();
+
         }
 
         public void RegisterServices(IServiceCollection services)
