@@ -65,7 +65,7 @@ namespace Beer2Beer.Services
 
         public async Task<List<PostDto>> GetPostsByUsername(string username)
         {
-             throw  new NotImplementedException();
+            throw new NotImplementedException();
 
         }
 
@@ -93,16 +93,16 @@ namespace Beer2Beer.Services
         #endregion GET
 
         #region POST
-        public async Task<PostDto> PostNewPost(Post newPost)
+        public async Task<PostDto> PostNewPost(PostCreateDto newPostDTO)
         {
-            var posts = await this.context.Set<Post>().ToListAsync();
 
-            posts.Add(newPost);
-
+            var postToAdd = mapper.Map<Post>(newPostDTO);
+            this.context.Set<Post>().Add(postToAdd);
             await this.context.SaveChangesAsync();
 
-            var postsDtos = mapper.Map<List<PostDto>>(newPost);
-            return postsDtos.Last();
+            var posts = await this.context.Set<Post>().ToListAsync();
+            var returnPost = mapper.Map<PostDto>(posts.Last());
+            return returnPost;
 
         }
         #endregion POST 

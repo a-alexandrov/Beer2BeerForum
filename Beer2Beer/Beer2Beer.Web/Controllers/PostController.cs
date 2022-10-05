@@ -126,9 +126,8 @@ namespace Beer2Beer.Web.Controllers
         }
         [HttpPost]
         [Route("newPost")]
-        public async Task<IActionResult> PostNew([FromQuery] Post post)
+        public async Task<IActionResult> PostNew([FromQuery] PostCreateDto post)
         {
-            //TODO: Make NewPostDTO
             return this.StatusCode(StatusCodes.Status200OK, await this.postService.PostNewPost(post));
         }
         [HttpPut]
