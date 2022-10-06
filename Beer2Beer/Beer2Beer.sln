@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beer2Beer.DTO", "Beer2Beer.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PresentationLayer", "PresentationLayer", "{E72ACC39-F43A-4FEA-8F11-450C8B72595D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beer2Beer.Web", "Beer2Beer.Web\Beer2Beer.Web.csproj", "{3DDADFEB-C177-42F7-BC98-17FD500EA0E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beer2Beer.Web", "Beer2Beer.Web\Beer2Beer.Web.csproj", "{3DDADFEB-C177-42F7-BC98-17FD500EA0E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

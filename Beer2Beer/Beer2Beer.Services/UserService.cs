@@ -3,6 +3,7 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -46,7 +47,7 @@ namespace Beer2Beer.Services
 
             if (user == null)
             {
-                throw new NullReferenceException(message: $"User with ID:{userDto.ID} not found.");
+                throw new InvalidUserInputException(message: $"User with ID:{userDto.ID} not found.");
             }
 
             user.FirstName = userDto.FirstName ?? user.FirstName;
@@ -60,9 +61,13 @@ namespace Beer2Beer.Services
 
         public async Task<UserFullDto> UpdateUser(IFormFile avatarImage, int userId)
         {
-            var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
+            if (avatarImage == null)
+            {
+                throw new InvalidUserInputException(message: "Invalid Input.");
+            }
 
-            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSize || avatarImage.Length != 0;
+            var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
+            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSize && avatarImage.Length != 0;
 
             //Should we keep a name in db for the uploaded file?
             //var fileName = Guid.NewGuid() + "_" + userId + avatarImage.ContentType;
@@ -71,13 +76,12 @@ namespace Beer2Beer.Services
 
             if (!(isValidType || isCorrectSize))
             {
-                throw new NullReferenceException(message: $"Invalid image.");
+                throw new InvalidUserInputException(message: "Invalid image.");
             }
             else if (user == null)
             {
-                throw new NullReferenceException(message: $"User with ID:{userId} not found.");
+                throw new InvalidUserInputException(message: $"User with ID: {userId} not found.");
             }
-
 
             using (var target = new MemoryStream())
             {

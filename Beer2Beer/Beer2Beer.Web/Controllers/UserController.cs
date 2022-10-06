@@ -1,5 +1,6 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -66,23 +67,7 @@ namespace Beer2Beer.Web.Controllers
         [Route("avatar")]
         public async Task<IActionResult> UpdateUserAvatarAsync(IFormFile avatarImage, [FromForm] int userId)
         {
-            var updatedUser = new UserFullDto();
-
-            if (avatarImage == null)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, avatarImage);
-            }
-
-            try
-            {
-                updatedUser = await this.userService.UpdateUser(avatarImage, userId);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, avatarImage);
-            }
-
-            return StatusCode(StatusCodes.Status200OK, updatedUser);
+            return new OkObjectResult(await this.userService.UpdateUser(avatarImage, userId));
         }
     }
 }
