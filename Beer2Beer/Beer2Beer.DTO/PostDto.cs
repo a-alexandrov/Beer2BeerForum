@@ -13,8 +13,6 @@ namespace Beer2Beer.DTO
 
         public int UserID { get; set; }
 
-        public User User { get; set; }
-
         public int PostLikes { get; set; }
 
         public int PostDislikes { get; set; }
