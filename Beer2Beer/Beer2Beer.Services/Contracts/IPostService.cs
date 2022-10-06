@@ -1,9 +1,5 @@
-﻿using AutoMapper;
-using Beer2Beer.DTO;
-using Beer2Beer.Models;
-using System;
+﻿using Beer2Beer.DTO;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Services.Contracts

@@ -12,31 +12,27 @@ namespace Beer2Beer.Web.Controllers
     [Route("api/admin")]
     public class AdminController : ControllerBase
     {
-
         private readonly IAdminService adminService;
-
 
         public AdminController(IAdminService adminService)
         {
             this.adminService = adminService;
-
         }
-
 
         [HttpGet]
         [Authorize]
         [Route("byFirstName")]
         public async Task<IActionResult> GetUsersByFirstName([FromQuery] string firstName)
         {
-
             var users = await this.adminService.FindUsersByFirstName(firstName);
+
             if (!users.Any())
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
+
             return this.StatusCode(StatusCodes.Status200OK, users);
         }
-
 
         [HttpGet]
         [Route("byUsername")]
@@ -66,17 +62,17 @@ namespace Beer2Beer.Web.Controllers
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
 
-
-
         [HttpPut]
         [Route("block")]
         public async Task<IActionResult> BlockUser([FromQuery] string username)
         {
             var user = await this.adminService.BlockUser(username);
+
             if (user == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
+
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
 
@@ -85,36 +81,40 @@ namespace Beer2Beer.Web.Controllers
         public async Task<IActionResult> UnblockUser([FromQuery] string username)
         {
             var user = await this.adminService.UnblockUser(username);
+
             if (user == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
+
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
-
 
         [HttpPut]
         [Route("promote")]
         public async Task<IActionResult> PromoteUser([FromQuery] string username)
         {
             var user = await this.adminService.Promote(username);
+
             if (user == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
+
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
-
 
         [HttpPut]
         [Route("demote")]
         public async Task<IActionResult> DemoteUser([FromQuery] string username)
         {
             var user = await this.adminService.Demote(username);
+
             if (user == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
+
             return this.StatusCode(StatusCodes.Status200OK, user);
         }
     }

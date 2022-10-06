@@ -27,11 +27,8 @@ namespace Beer2Beer.Web.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
 
-            //var createdComment = new CommentFullDto();
-
             try
             {
-                //createdComment = await this.commentService.CreateComment(comment);
                 return StatusCode(StatusCodes.Status200OK,
                     await this.commentService.CreateComment(comment));
             }
@@ -39,8 +36,6 @@ namespace Beer2Beer.Web.Controllers
             {
                 return StatusCode(StatusCodes.Status400BadRequest, comment);
             }
-
-            //return StatusCode(StatusCodes.Status200OK, createdComment);
         }
 
         [HttpPut]

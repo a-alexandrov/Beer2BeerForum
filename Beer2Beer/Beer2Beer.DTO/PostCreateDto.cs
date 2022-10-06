@@ -1,8 +1,4 @@
-﻿using Beer2Beer.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Beer2Beer.DTO
 {
@@ -10,10 +6,11 @@ namespace Beer2Beer.DTO
     {
         [Required]
         public string Title { get; set; }
+
         [Required]
         public string Content { get; set; }
+
         [Required]
         public int UserID { get; set; }
-
     }
 }

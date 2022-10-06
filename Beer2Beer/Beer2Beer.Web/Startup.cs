@@ -13,9 +13,6 @@ using QuizOverflow.Services.MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
-using System;
 using Beer2Beer.Web.Utility;
 
 namespace Beer2Beer.Web
@@ -36,7 +33,6 @@ namespace Beer2Beer.Web
                     options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
 
-
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -44,7 +40,6 @@ namespace Beer2Beer.Web
             });
 
             services.AddControllersWithViews();
-
 
             //Automapper 
             AutoMapper.IConfigurationProvider config = new MapperConfiguration(cfg =>
@@ -67,7 +62,6 @@ namespace Beer2Beer.Web
             // Check if the token is not expired and the signing key of the issuer is valid(ValidateLifetime = true)
             // Validate signature of the token(ValidateIssuerSigningKey = true)
             // Additionally, we specify the values for the issuer, audience, signing key.In this example, I have stored these values in appsettings.json file.
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -82,11 +76,8 @@ namespace Beer2Beer.Web
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+
             services.AddScoped<IAuthenticator, Authenticator>();
-
-
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,7 +118,6 @@ namespace Beer2Beer.Web
             });
 
             app.UseAuthentication();
-
         }
 
         public void RegisterServices(IServiceCollection services)

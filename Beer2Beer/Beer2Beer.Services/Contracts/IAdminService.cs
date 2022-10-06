@@ -1,10 +1,6 @@
-﻿using AutoMapper;
-using Beer2Beer.Data.Contracts;
-using Beer2Beer.DTO;
+﻿using Beer2Beer.DTO;
 using Beer2Beer.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Services.Contracts
@@ -19,6 +15,5 @@ namespace Beer2Beer.Services.Contracts
         Task<UserFullDto> BlockUser(string username);
         Task<UserFullDto> UnblockUser(string username);
         void IsUserNull(User user);
-
     }
 }

@@ -16,7 +16,6 @@ namespace Beer2Beer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<User>().HasData(
                 new User { ID = 1, IsDeleted = false, IsAdmin = true, Email = "beerKing@abv.bg", PasswordHash = "THeKingIsHere", Username = "BeerKing", FirstName = "Forum", LastName = "King" },
                 new User { ID = 4, IsDeleted = false, IsAdmin = true, Email = "beerEmperor@rome.com", PasswordHash = "YourEMperorHasReturnted", Username = "BeerEmperor", FirstName = "Emperor", LastName = "Beer" },

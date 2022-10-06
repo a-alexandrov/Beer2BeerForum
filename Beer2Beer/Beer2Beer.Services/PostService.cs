@@ -13,7 +13,6 @@ namespace Beer2Beer.Services
 {
     public class PostService : IPostService
     {
-
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
 
@@ -22,7 +21,6 @@ namespace Beer2Beer.Services
             this.context = context;
             this.mapper = mapper;
         }
-
 
         #region GET
         public async Task<List<PostDto>> GetLatestPosts(int count = 10)
@@ -163,6 +161,5 @@ namespace Beer2Beer.Services
             }
         }
         #endregion PrivateValidation
-
     }
 }
