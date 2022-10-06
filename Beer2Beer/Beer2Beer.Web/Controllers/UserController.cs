@@ -68,7 +68,7 @@ namespace Beer2Beer.Web.Controllers
         {
             var updatedUser = new UserFullDto();
 
-            if (!ModelState.IsValid)
+            if (avatarImage == null)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, avatarImage);
             }
@@ -83,7 +83,6 @@ namespace Beer2Beer.Web.Controllers
             }
 
             return StatusCode(StatusCodes.Status200OK, updatedUser);
-
         }
     }
 }
