@@ -61,5 +61,29 @@ namespace Beer2Beer.Web.Controllers
 
             return StatusCode(StatusCodes.Status200OK, updatedUser);
         }
+
+        [HttpPut]
+        [Route("avatar")]
+        public async Task<IActionResult> UpdateUserAvatarAsync(IFormFile avatarImage, [FromForm] int userId)
+        {
+            var updatedUser = new UserFullDto();
+
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, avatarImage);
+            }
+
+            try
+            {
+                updatedUser = await this.userService.UpdateUser(avatarImage, userId);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, avatarImage);
+            }
+
+            return StatusCode(StatusCodes.Status200OK, updatedUser);
+
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Beer2Beer.DTO
 
         public string PasswordHash { get; set; }
 
-        public string AvatarPath { get; set; }
+        public byte[] AvatarImage { get; set; }
 
         public string PhoneNumber { get; set; }
 

@@ -7,6 +7,7 @@ namespace Beer2Beer.Data.Configuration
     internal class UserConfiguration: IEntityTypeConfiguration<User>
     {
         private const int MaxNameLenght = 32;
+        private const int maxAvatarImageSize = 1048576;
 
         public void Configure(EntityTypeBuilder<User> builder)
         {
@@ -26,6 +27,9 @@ namespace Beer2Beer.Data.Configuration
             builder
                 .HasIndex(e => e.Email)
                 .IsUnique();
+
+            builder.Property(i => i.AvatarImage)
+                .HasMaxLength(maxAvatarImageSize);
         }
     }
 }

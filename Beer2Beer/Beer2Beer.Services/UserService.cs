@@ -3,8 +3,11 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,13 +15,19 @@ namespace Beer2Beer.Services
 {
     public class UserService : IUserService
     {
+        private const int MaxAvatarImageSize = 1048576;
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
+        private readonly List<string> AllowedImageType;
 
         public UserService(IBeer2BeerDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
+            this.AllowedImageType = new List<string>()
+            { 
+                ".bmp", ".jpg", ".jpeg", ".png" 
+            };
         }
 
         public async Task<UserFullDto> CreateUser(UserRegisterDto userDto)
@@ -49,16 +58,36 @@ namespace Beer2Beer.Services
             return mapper.Map<UserFullDto>(user);
         }
 
-        //Might place ChangeAvatarPath in UpdateUser.
-        //Implement UploadPicture method.
-        public async Task ChangeAvatarPath(string newAvatarPath, UserLoginDto userDto)
+        public async Task<UserFullDto> UpdateUser(IFormFile avatarImage, int userId)
         {
+            var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
 
-            this.context.Set<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .AvatarPath = newAvatarPath;
+            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSize || avatarImage.Length != 0;
 
+            //Should we keep a name in db for the uploaded file?
+            //var fileName = Guid.NewGuid() + "_" + userId + avatarImage.ContentType;
+
+            var user = await this.GetUserById(userId);
+
+            if (!(isValidType || isCorrectSize))
+            {
+                throw new NullReferenceException(message: $"Invalid image.");
+            }
+            else if (user == null)
+            {
+                throw new NullReferenceException(message: $"User with ID:{userId} not found.");
+            }
+
+
+            using (var target = new MemoryStream())
+            {
+                avatarImage.CopyTo(target);
+                user.AvatarImage = target.ToArray();
+            }
+            
             await this.context.SaveChangesAsync();
+
+            return mapper.Map<UserFullDto>(user);
         }
 
         public async Task Login(string username, string password)
