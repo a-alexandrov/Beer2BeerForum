@@ -16,13 +16,11 @@ namespace Beer2Beer.Services
 
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
-        private readonly IAdminService users;
 
         public PostService(IBeer2BeerDbContext context, IMapper mapper, IAdminService users)
         {
             this.context = context;
             this.mapper = mapper;
-            this.users = users; 
         }
 
 
@@ -30,7 +28,7 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetLatestPosts(int count = 10)
         {
             var posts = await this.context.Set<Post>()
-                .OrderByDescending(p => p.CreatedOn)
+                .OrderByDescending(p => p.CreatedOn).Where(x=> !x.IsDeleted)
                 .Take(count)
                 .ToListAsync();
 
@@ -44,7 +42,7 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetPostsByMostComments(int count = 10)
         {
             var posts = await this.context.Set<Post>()
-                .OrderByDescending(p => p.CommentsCount)
+                .OrderByDescending(p => p.CommentsCount).Where(x => !x.IsDeleted)
                 .Take(count)
                 .ToListAsync();
 
@@ -57,7 +55,7 @@ namespace Beer2Beer.Services
 
         public async Task<List<PostDto>> GetPostsByUserID(int userId)
         {
-            var posts = await this.context.Set<Post>().Where(post => post.UserID == userId).ToListAsync();
+            var posts = await this.context.Set<Post>().Where(post => post.UserID == userId && !post.IsDeleted).ToListAsync();
 
             ArePostNull(posts);
 
@@ -67,7 +65,7 @@ namespace Beer2Beer.Services
 
         public async Task<PostDto> GetPostById(int id)
         {
-            var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == id);
+            var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == id);
 
             IsPostNull(post);
 
@@ -77,7 +75,7 @@ namespace Beer2Beer.Services
 
         public async Task<List<PostDto>> GetAllPosts()
         {
-            var posts = await this.context.Set<Post>()
+            var posts = await this.context.Set<Post>().Where(x => !x.IsDeleted)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -106,7 +104,7 @@ namespace Beer2Beer.Services
         #region PUT
         public async Task<PostDto> ChangePostTitle(int postID, string newTitle)
         {
-            var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == postID);
+            var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
 
             IsPostNull(post);
 
@@ -119,7 +117,7 @@ namespace Beer2Beer.Services
 
         public async Task<PostDto> ChangePostContent(int postID, string content)
         {
-            var post = await this.context.Set<Post>().FirstOrDefaultAsync(post => post.ID == postID);
+            var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
 
             IsPostNull(post);
             
@@ -139,8 +137,8 @@ namespace Beer2Beer.Services
             var postToRemove = this.context.Set<Post>().FirstOrDefault(post => post.ID == postID);
             
             IsPostNull(postToRemove);
-            
-            this.context.Set<Post>().Remove(postToRemove);
+            postToRemove.IsDeleted = true;
+            this.context.Set<Post>().Update(postToRemove);
             await this.context.SaveChangesAsync();
 
             var postDto = mapper.Map<PostDto>(postToRemove);
