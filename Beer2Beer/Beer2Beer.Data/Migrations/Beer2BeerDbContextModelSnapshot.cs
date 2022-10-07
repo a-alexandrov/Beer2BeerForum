@@ -54,7 +54,7 @@ namespace Beer2Beer.Data.Migrations
                         {
                             ID = 1,
                             Content = "No",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(5113),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7924),
                             IsDeleted = false,
                             PostID = 1,
                             UserID = 1
@@ -63,7 +63,7 @@ namespace Beer2Beer.Data.Migrations
                         {
                             ID = 2,
                             Content = "I think things are just fine now",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(5845),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8588),
                             IsDeleted = false,
                             PostID = 1,
                             UserID = 2
@@ -72,7 +72,7 @@ namespace Beer2Beer.Data.Migrations
                         {
                             ID = 3,
                             Content = "That beer is great",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(5877),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8620),
                             IsDeleted = false,
                             PostID = 2,
                             UserID = 2
@@ -81,7 +81,7 @@ namespace Beer2Beer.Data.Migrations
                         {
                             ID = 4,
                             Content = "Slaves dont drink beers",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(5881),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8624),
                             IsDeleted = false,
                             PostID = 2,
                             UserID = 3
@@ -90,7 +90,7 @@ namespace Beer2Beer.Data.Migrations
                         {
                             ID = 5,
                             Content = "Quality meme",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(5884),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8628),
                             IsDeleted = false,
                             PostID = 3,
                             UserID = 1
@@ -99,7 +99,7 @@ namespace Beer2Beer.Data.Migrations
                         {
                             ID = 6,
                             Content = "I would laugh but slaves never laught",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(5888),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8631),
                             IsDeleted = false,
                             PostID = 3,
                             UserID = 3
@@ -135,8 +135,8 @@ namespace Beer2Beer.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(32)")
-                        .HasMaxLength(32);
+                        .HasColumnType("nvarchar(64)")
+                        .HasMaxLength(64);
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
@@ -147,41 +147,43 @@ namespace Beer2Beer.Data.Migrations
 
                     b.ToTable("Posts");
 
+                    b.HasCheckConstraint("CK_Post_Title", "LEN([Title]) >= 32");
+
                     b.HasData(
                         new
                         {
                             ID = 1,
                             CommentsCount = 2,
-                            Content = "I beg to be free",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(6318),
+                            Content = "I beg to be freeI beg to be free",
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(9063),
                             IsDeleted = false,
                             PostDislikes = 2,
                             PostLikes = 0,
-                            Title = "End Forum Slavery",
+                            Title = "End Forum SlaveryEnd Forum Slavery",
                             UserID = 3
                         },
                         new
                         {
                             ID = 2,
                             CommentsCount = 2,
-                            Content = "Have you tried it",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(7573),
+                            Content = "Have you tried itHave you tried it",
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 504, DateTimeKind.Local).AddTicks(269),
                             IsDeleted = false,
                             PostDislikes = 1,
                             PostLikes = 1,
-                            Title = "Carlsberg Beer Opinions",
+                            Title = "Carlsberg Beer OpinionsCarlsberg Beer Opinions",
                             UserID = 1
                         },
                         new
                         {
                             ID = 3,
                             CommentsCount = 2,
-                            Content = "Dont laught too hard",
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(7639),
+                            Content = "Dont laught too hardDont laught too hard",
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 504, DateTimeKind.Local).AddTicks(337),
                             IsDeleted = false,
                             PostDislikes = 0,
                             PostLikes = 2,
-                            Title = "The best beer meme",
+                            Title = "The best beer memeThe best beer meme",
                             UserID = 2
                         });
                 });
@@ -214,21 +216,21 @@ namespace Beer2Beer.Data.Migrations
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(4338),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7169),
                             IsDeleted = false,
                             Name = "ShitPost"
                         },
                         new
                         {
                             ID = 2,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(4648),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7466),
                             IsDeleted = false,
                             Name = "General"
                         },
                         new
                         {
                             ID = 3,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 369, DateTimeKind.Local).AddTicks(4668),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7485),
                             IsDeleted = false,
                             Name = "Admin Topics"
                         });
@@ -296,7 +298,8 @@ namespace Beer2Beer.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<byte[]>("AvatarImage")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("varbinary(max)")
+                        .HasMaxLength(1048576);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -340,11 +343,15 @@ namespace Beer2Beer.Data.Migrations
 
                     b.ToTable("Users");
 
+                    b.HasCheckConstraint("CK_User_FirstName", "LEN([FirstName]) >= 4");
+
+                    b.HasCheckConstraint("CK_User_LastName", "LEN([LastName]) >= 4");
+
                     b.HasData(
                         new
                         {
                             ID = 1,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 364, DateTimeKind.Local).AddTicks(9326),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 499, DateTimeKind.Local).AddTicks(4052),
                             Email = "beerKing@abv.bg",
                             FirstName = "Forum",
                             IsAdmin = true,
@@ -357,7 +364,7 @@ namespace Beer2Beer.Data.Migrations
                         new
                         {
                             ID = 4,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 368, DateTimeKind.Local).AddTicks(1624),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(4659),
                             Email = "beerEmperor@rome.com",
                             FirstName = "Emperor",
                             IsAdmin = true,
@@ -370,9 +377,9 @@ namespace Beer2Beer.Data.Migrations
                         new
                         {
                             ID = 5,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 368, DateTimeKind.Local).AddTicks(1721),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(4757),
                             Email = "beerGod@heaven.universe",
-                            FirstName = "God",
+                            FirstName = "GodGod",
                             IsAdmin = true,
                             IsBlocked = false,
                             IsDeleted = false,
@@ -384,7 +391,7 @@ namespace Beer2Beer.Data.Migrations
                         new
                         {
                             ID = 2,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 368, DateTimeKind.Local).AddTicks(1957),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(4986),
                             Email = "beerPeasent@mail.bg",
                             FirstName = "Beer",
                             IsAdmin = false,
@@ -397,7 +404,7 @@ namespace Beer2Beer.Data.Migrations
                         new
                         {
                             ID = 3,
-                            CreatedOn = new DateTime(2022, 10, 5, 21, 33, 33, 368, DateTimeKind.Local).AddTicks(1970),
+                            CreatedOn = new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(5000),
                             Email = "beerSlave@mail.bg",
                             FirstName = "Beer",
                             IsAdmin = false,

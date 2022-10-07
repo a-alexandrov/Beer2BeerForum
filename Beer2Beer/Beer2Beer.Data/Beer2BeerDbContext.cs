@@ -19,7 +19,7 @@ namespace Beer2Beer.Data
             modelBuilder.Entity<User>().HasData(
                 new User { ID = 1, IsDeleted = false, IsAdmin = true, Email = "beerKing@abv.bg", PasswordHash = "THeKingIsHere", Username = "BeerKing", FirstName = "Forum", LastName = "King" },
                 new User { ID = 4, IsDeleted = false, IsAdmin = true, Email = "beerEmperor@rome.com", PasswordHash = "YourEMperorHasReturnted", Username = "BeerEmperor", FirstName = "Emperor", LastName = "Beer" },
-                new User { ID = 5, IsDeleted = false, IsAdmin = true, Email = "beerGod@heaven.universe", PasswordHash = "BowToYourGod", Username = "BeerGod", FirstName = "God", LastName = "Almighty",PhoneNumber = "0883778833" },
+                new User { ID = 5, IsDeleted = false, IsAdmin = true, Email = "beerGod@heaven.universe", PasswordHash = "BowToYourGod", Username = "BeerGod", FirstName = "GodGod", LastName = "Almighty",PhoneNumber = "0883778833" },
                 new User { ID = 2, IsDeleted = false, IsAdmin = false, Email = "beerPeasent@mail.bg", PasswordHash = "ThePeasentIsHere", Username = "BeerPeasunt", FirstName = "Beer", LastName = "Peasunt" },
                 new User { ID = 3, IsDeleted = false, IsAdmin = false, Email = "beerSlave@mail.bg", PasswordHash = "TheSlaveIsHere", Username = "BeerSlave", FirstName = "Beer", LastName = "Slave" });
 
@@ -46,9 +46,9 @@ namespace Beer2Beer.Data
                 );
 
             modelBuilder.Entity<Post>().HasData(
-                new Post { ID = 1 , UserID = 3, Title = "End Forum Slavery", Content = "I beg to be free", PostDislikes= 2, PostLikes = 0, CommentsCount = 2},
-                new Post { ID = 2 , UserID = 1, Title = "Carlsberg Beer Opinions", Content = "Have you tried it", PostDislikes= 1, PostLikes = 1, CommentsCount = 2 },
-                new Post { ID = 3 , UserID = 2, Title = "The best beer meme", Content = "Dont laught too hard", PostDislikes= 0, PostLikes = 2, CommentsCount = 2 }
+                new Post { ID = 1 , UserID = 3, Title = "End Forum SlaveryEnd Forum Slavery", Content = "I beg to be freeI beg to be free", PostDislikes= 2, PostLikes = 0, CommentsCount = 2},
+                new Post { ID = 2 , UserID = 1, Title = "Carlsberg Beer OpinionsCarlsberg Beer Opinions", Content = "Have you tried itHave you tried it", PostDislikes= 1, PostLikes = 1, CommentsCount = 2 },
+                new Post { ID = 3 , UserID = 2, Title = "The best beer memeThe best beer meme", Content = "Dont laught too hardDont laught too hard", PostDislikes= 0, PostLikes = 2, CommentsCount = 2 }
                 );
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
