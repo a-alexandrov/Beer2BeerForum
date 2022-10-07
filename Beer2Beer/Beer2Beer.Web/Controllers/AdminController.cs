@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Beer2Beer.Services.Contracts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("byFirstName")]
         public async Task<IActionResult> GetUsersByFirstName([FromQuery] string firstName)
         {
@@ -35,6 +36,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("byUsername")]
         public async Task<IActionResult> GetUsersByUsername([FromQuery] string username)
         {

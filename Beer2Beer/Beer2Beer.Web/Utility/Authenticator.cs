@@ -33,7 +33,7 @@ namespace Beer2Beer.Web.Utility
             };
 
             var token = new JwtSecurityToken(this.config["Jwt:Issuer"],
-                this.config["Jwt:Issuer"],
+                this.config["Jwt:Audience"],
                 claims,
                 expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: credentials);
@@ -57,7 +57,7 @@ namespace Beer2Beer.Web.Utility
             }
 
             await Task.CompletedTask;
-            throw new ArgumentException("User not found");
+            throw new ArgumentException("Invalid credentials");
         }
     }
 }
