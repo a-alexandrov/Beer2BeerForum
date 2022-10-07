@@ -1,13 +1,13 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
-using Beer2Beer.Services.CustomExceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase
@@ -20,47 +20,16 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
-
-            var registeredUser = new UserFullDto();
-
-            try
-            {
-                registeredUser = await this.userService.CreateUser(user);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, user);
-            }
-
-            return StatusCode(StatusCodes.Status200OK, registeredUser);
+            return new OkObjectResult(await this.userService.CreateUser(user));
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
-
-            var updatedUser = new UserFullDto();
-
-            try
-            {
-                updatedUser = await this.userService.UpdateUser(user);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
-
-            return StatusCode(StatusCodes.Status200OK, updatedUser);
+            return new OkObjectResult(await this.userService.UpdateUser(user));
         }
 
         [HttpPut]
@@ -69,5 +38,6 @@ namespace Beer2Beer.Web.Controllers
         {
             return new OkObjectResult(await this.userService.UpdateUser(avatarImage, userId));
         }
+
     }
 }

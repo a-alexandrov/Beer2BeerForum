@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Beer2Beer.DTO
+﻿namespace Beer2Beer.DTO
 {
     public class UserUpdateDto
     {
@@ -8,6 +6,5 @@ namespace Beer2Beer.DTO
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PasswordHash { get; set; }
-        public byte[] AvatarImage { get; set; }
     }
 }

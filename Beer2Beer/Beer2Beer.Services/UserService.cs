@@ -10,13 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Services
 {
     public class UserService : IUserService
     {
-        private const int MaxAvatarImageSize = 1048576;
+        private const int MaxAvatarImageSizeBytes = 1048576;
+        private const int MaxAvatarImageSizeMb = (MaxAvatarImageSizeBytes / 1024) / 1024;
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
         private readonly List<string> AllowedImageType;
@@ -34,6 +36,11 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> CreateUser(UserRegisterDto userDto)
         {
             var user = mapper.Map<User>(userDto);
+
+            if (!this.ValidateEmail(user.Email))
+            {
+                throw new InvalidUserInputException(message: $"E-mail {user.Email} is invalid.");
+            }
 
             this.context.Set<User>().Add(user);
             await this.context.SaveChangesAsync();
@@ -67,21 +74,20 @@ namespace Beer2Beer.Services
             }
 
             var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
-            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSize && avatarImage.Length != 0;
+            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSizeBytes && avatarImage.Length != 0;
 
             //Should we keep a name in db for the uploaded file?
             //var fileName = Guid.NewGuid() + "_" + userId + avatarImage.ContentType;
 
-            var user = await this.GetUserById(userId);
+            if (!isValidType || !isCorrectSize)
+            {
+                throw new InvalidUserInputException(
+                    message: $"Invalid image. Size limit: {MaxAvatarImageSizeMb}Mb.\r\n" +
+                             $"Allowed formats: {string.Join(',', AllowedImageType)}");
+            }
 
-            if (!(isValidType || isCorrectSize))
-            {
-                throw new InvalidUserInputException(message: "Invalid image.");
-            }
-            else if (user == null)
-            {
-                throw new InvalidUserInputException(message: $"User with ID: {userId} not found.");
-            }
+            var user = await this.GetUserById(userId);
+            this.IsUserNull(user, $"User with ID: {userId} not found.");
 
             using (var target = new MemoryStream())
             {
@@ -121,13 +127,12 @@ namespace Beer2Beer.Services
             throw new NotImplementedException();
         }
 
-        public async Task IsUserNull (User user)
-        
+        private void IsUserNull (User user, string message)
         {
-            if (user == null) {
-                throw new ArgumentNullException("User not found!");
+            if (user == null) 
+            {
+                throw new InvalidUserInputException(message: message);
             }
-            await this.context.SaveChangesAsync();///???
         }
 
         private async Task<User> GetUserById(int id)
@@ -136,6 +141,17 @@ namespace Beer2Beer.Services
                 .FirstOrDefaultAsync(u => u.ID == id);
 
             return user;
+        }
+
+        private bool ValidateEmail(string email)
+        {
+            string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+                  + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+                  + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+
+            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return regex.IsMatch(email);
         }
     }
 }
