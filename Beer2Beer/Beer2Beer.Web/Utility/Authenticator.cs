@@ -28,7 +28,7 @@ namespace Beer2Beer.Web.Utility
 
             var claims = new[] 
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userLoginDto.Username),
+                new Claim(JwtRegisteredClaimNames.Sub, userLoginDto.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -45,13 +45,13 @@ namespace Beer2Beer.Web.Utility
 
         public async Task<UserLoginDto> AuthenticateUser(UserLoginDto userLoginDto)
         {
-            var name = userLoginDto.Username;
+            var email = userLoginDto.Email;
             var pass = userLoginDto.Password;
 
-            var user = await this.adminService.FindUserByUserName(name);
+            var user = await this.adminService.FindUserByEmail(email);
 
             //Validate the User Credentials    
-            if (user.Username == name && user.PasswordHash == pass)
+            if (user.Email== email && user.PasswordHash == pass)
             {
                 return userLoginDto;
             }
