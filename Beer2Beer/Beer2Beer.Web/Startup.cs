@@ -111,6 +111,10 @@ namespace Beer2Beer.Web
                 };
             });
             services.AddScoped<IAuthenticator, Authenticator>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("UserStatus", policy => policy.RequireClaim("UserStatus","Active"));
+            });
         }
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

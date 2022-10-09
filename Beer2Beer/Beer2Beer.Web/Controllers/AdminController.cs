@@ -21,7 +21,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(Roles = "Admin",Policy = "UserStatus")]////ToDo: update real authorization level
         [Route("byFirstName")]
         public async Task<IActionResult> GetUsersByFirstName([FromQuery] string firstName)
         {
@@ -37,6 +37,7 @@ namespace Beer2Beer.Web.Controllers
 
         [HttpGet]
         [Authorize]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]////ToDo: update real authorization level
         [Route("byUsername")]
         public async Task<IActionResult> GetUsersByUsername([FromQuery] string username)
         {

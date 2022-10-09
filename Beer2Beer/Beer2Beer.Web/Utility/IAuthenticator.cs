@@ -5,7 +5,7 @@ namespace Beer2Beer.Web.Utility
 {
     public interface IAuthenticator
     {
-        Task<string> GenerateJSONWebToken(UserLoginDto userLoginDto);
-        Task<UserLoginDto> AuthenticateUser(UserLoginDto userLoginDto);
+        Task<string> GenerateJSONWebToken(UserFullDto userLoginDto);
+        Task<UserFullDto> AuthenticateUser(UserLoginDto userLoginDto);
     }
 }
