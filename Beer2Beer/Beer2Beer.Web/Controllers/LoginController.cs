@@ -1,5 +1,5 @@
 ﻿using Beer2Beer.DTO;
-using Beer2Beer.Web.Utility;
+using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

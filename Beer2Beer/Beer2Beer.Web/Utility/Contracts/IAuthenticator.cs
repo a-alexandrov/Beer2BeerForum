@@ -1,7 +1,7 @@
 ﻿using Beer2Beer.DTO;
 using System.Threading.Tasks;
 
-namespace Beer2Beer.Web.Utility
+namespace Beer2Beer.Web.Utility.Contracts
 {
     public interface IAuthenticator
     {

@@ -1,5 +1,6 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Web.Utility.Contracts;
 using Beer2Beer.Web.Utility.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

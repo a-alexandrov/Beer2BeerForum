@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Beer2Beer.Web.Utility;
+using Beer2Beer.Web.Utility.Contracts;
 
 namespace Beer2Beer.Web
 {
