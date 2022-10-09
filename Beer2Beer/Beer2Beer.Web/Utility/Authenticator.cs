@@ -12,12 +12,12 @@ namespace Beer2Beer.Web.Utility
 {
     public class Authenticator:IAuthenticator
     {
-        private IAdminService adminService;
+        private ILoginService loginService;
         private IConfiguration config;
 
-        public Authenticator(IAdminService adminService,IConfiguration config) 
+        public Authenticator(ILoginService loginService,IConfiguration config) 
         {
-            this.adminService = adminService;
+            this.loginService = loginService;
             this.config = config;
         }
 
@@ -28,7 +28,7 @@ namespace Beer2Beer.Web.Utility
 
             var claims = new[] 
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userLoginDto.Email),
+                new Claim(ClaimTypes.Email, userLoginDto.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
@@ -48,7 +48,7 @@ namespace Beer2Beer.Web.Utility
             var email = userLoginDto.Email;
             var pass = userLoginDto.Password;
 
-            var user = await this.adminService.FindUserByEmail(email);
+            var user = await this.loginService.GetUser(email);
 
             //Validate the User Credentials    
             if (user.Email== email && user.PasswordHash == pass)
