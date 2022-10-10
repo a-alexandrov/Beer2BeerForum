@@ -26,6 +26,7 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> FindUserByUserName(string username)
         {
             var user = await this.context.Set<User>()
+                .Where(u=>!u.IsDeleted)
                 .FirstOrDefaultAsync(u => u.Username == username);
 
             IsUserNull(user);
@@ -37,7 +38,9 @@ namespace Beer2Beer.Services
 
         public async Task<UserFullDto> FindUserByEmail(string email)
         {
-            var user = await this.context.Set<User>().FirstOrDefaultAsync(u => u.Email == email);
+            var user = await this.context.Set<User>()
+                .Where(u => !u.IsDeleted)
+                .FirstOrDefaultAsync(u => u.Email == email);
 
             IsUserNull(user);
 
@@ -49,6 +52,7 @@ namespace Beer2Beer.Services
         {
             var users = await this.context.Set<User>()
             .Where(u => u.FirstName.Contains(firstName))
+            .Where(u => !u.IsDeleted)
             .ToListAsync();
 
             if (!users.Any())
@@ -64,6 +68,7 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> Promote(string username)
         {
             var user = await this.context.Set<User>()
+                .Where(u => !u.IsDeleted)
                 .FirstOrDefaultAsync(u => u.Username == username);
 
             IsUserNull(user);
@@ -86,6 +91,7 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> Demote(string username)
         {
             var user = await this.context.Set<User>()
+                .Where(u => !u.IsDeleted)
                 .FirstOrDefaultAsync(u => u.Username == username);
 
             IsUserNull(user);
@@ -108,6 +114,7 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> BlockUser(string username)
         {
             var user = await this.context.Set<User>()
+                .Where(u => !u.IsDeleted)
                 .FirstOrDefaultAsync(u => u.Username == username);
             IsUserNull(user);
 
@@ -129,6 +136,7 @@ namespace Beer2Beer.Services
         public async Task<UserFullDto> UnblockUser(string username)
         {
             var user = await this.context.Set<User>()
+                .Where(u => !u.IsDeleted)
                 .FirstOrDefaultAsync(u => u.Username == username);
             IsUserNull(user);
 

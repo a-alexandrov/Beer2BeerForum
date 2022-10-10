@@ -16,7 +16,7 @@ namespace Beer2Beer.Web.Controllers
         private readonly IUserService userService;
         private readonly ICustomHasher customHasher;
 
-        public UserController(IUserService userService,ICustomHasher customHasher)
+        public UserController(IUserService userService, ICustomHasher customHasher)
         {
             this.userService = userService;
             this.customHasher = customHasher;
@@ -36,6 +36,15 @@ namespace Beer2Beer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
+
+            // update password should probably require to reenter old password for security purposes
+            if (user.PasswordHash != null)
+            {
+                user.PasswordHash = customHasher
+                    .HashToString(customHasher
+                    .CreateHash(user.PasswordHash, customHasher
+                    .CreateSalt()));
+            }
             return new OkObjectResult(await this.userService.UpdateUser(user));
         }
 

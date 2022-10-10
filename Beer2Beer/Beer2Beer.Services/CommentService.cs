@@ -62,6 +62,7 @@ namespace Beer2Beer.Services
         private async Task<Comment> GetCommentById(int id)
         {
             var comment = await this.context.Set<Comment>()
+                .Where(c => !c.IsDeleted)
                 .FirstOrDefaultAsync(u => u.ID == id);
 
             return comment;

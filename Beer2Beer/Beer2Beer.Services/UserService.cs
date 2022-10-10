@@ -54,12 +54,15 @@ namespace Beer2Beer.Services
 
             if (user == null)
             {
-                throw new InvalidUserInputException(message: $"User with ID:{userDto.ID} not found.");
+                throw new EntityNotFoundException(message: $"User with ID:{userDto.ID} not found.");
+            }
+            if (user.IsDeleted) {
+                throw new InvalidActionException(message: $"User with ID:{userDto.ID} is deleted.");
             }
 
             user.FirstName = userDto.FirstName ?? user.FirstName;
-            user.LastName = userDto.LastName ?? userDto.LastName;
-            user.PasswordHash = userDto.PasswordHash ?? userDto.PasswordHash;
+            user.LastName = userDto.LastName ?? user.LastName;
+            user.PasswordHash = userDto.PasswordHash ?? user.PasswordHash;
 
             await this.context.SaveChangesAsync();
 
@@ -111,6 +114,7 @@ namespace Beer2Beer.Services
         private async Task<User> GetUserById(int id)
         {
             var user = await this.context.Set<User>()
+                .Where(u=>!u.IsDeleted)
                 .FirstOrDefaultAsync(u => u.ID == id);
 
             return user;
