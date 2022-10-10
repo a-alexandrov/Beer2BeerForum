@@ -3,6 +3,7 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace Beer2Beer.Services
         {
             if (user == null)
             {
-                throw new ArgumentNullException("User not found!");
+                throw new EntityNotFoundException("User not found!");
             }
         }
     }
