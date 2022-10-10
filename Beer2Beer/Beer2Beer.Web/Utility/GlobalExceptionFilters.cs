@@ -21,6 +21,12 @@ namespace Beer2Beer.Web.Utility
                     case bool _ when exception is InvalidUserInputException:
                         statusCode = StatusCodes.Status400BadRequest;
                         break;
+                    case bool _ when exception is EntityNotFoundException:
+                        statusCode = StatusCodes.Status404NotFound;
+                        break;
+                    case bool _ when exception is InvalidActionException:
+                        statusCode = StatusCodes.Status403Forbidden;
+                        break;
                     case bool _ when exception is DbUpdateException:
                         statusCode = StatusCodes.Status400BadRequest;
                         message = "Invalid input data.";
