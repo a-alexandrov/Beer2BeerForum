@@ -3,6 +3,7 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -149,7 +150,7 @@ namespace Beer2Beer.Services
         {
             if (post == null)
             {
-                throw new ArgumentNullException("This post doesn't exist");
+                throw new EntityNotFoundException("This post doesn't exist");
             }
         }
 
@@ -157,7 +158,7 @@ namespace Beer2Beer.Services
         {
             if (posts.Count == 0)
             {
-                throw new ArgumentNullException("There are no posts to match the criteria");
+                throw new EntityNotFoundException("There are no posts to match the criteria");
             }
         }
         #endregion PrivateValidation

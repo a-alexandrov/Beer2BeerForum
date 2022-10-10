@@ -104,7 +104,7 @@ namespace Beer2Beer.Services
         {
             if (user == null) 
             {
-                throw new InvalidUserInputException(message: message);
+                throw new EntityNotFoundException(message: message);
             }
         }
 

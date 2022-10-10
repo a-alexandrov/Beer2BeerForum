@@ -3,6 +3,7 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Beer2Beer.Services
 
             if (postToComment == null)
             {
-                throw new NullReferenceException(message: $"Post to comment with ID:{commentDto.PostID} not found.");
+                throw new EntityNotFoundException(message: $"Post to comment with ID:{commentDto.PostID} not found.");
             }
 
             this.context.Set<Comment>().Add(comment);
@@ -48,7 +49,7 @@ namespace Beer2Beer.Services
 
             if (commentDto == null)
             {
-                throw new NullReferenceException(message: $"comment with ID:{commentDto.ID} not found.");
+                throw new EntityNotFoundException(message: $"comment with ID:{commentDto.ID} not found.");
             }
 
             comment.Content = commentDto.Content ?? comment.Content;
