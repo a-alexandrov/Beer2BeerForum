@@ -1,5 +1,6 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +14,22 @@ namespace Beer2Beer.Web.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
+        private readonly ICustomHasher customHasher;
 
-        public UserController(IUserService userServise)
+        public UserController(IUserService userService,ICustomHasher customHasher)
         {
-            this.userService = userServise;
+            this.userService = userService;
+            this.customHasher = customHasher;
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
         {
+            user.PasswordHash = customHasher
+                .HashToString(customHasher
+                .CreateHash(user.PasswordHash, customHasher
+                .CreateSalt()));
             return new OkObjectResult(await this.userService.CreateUser(user));
         }
 

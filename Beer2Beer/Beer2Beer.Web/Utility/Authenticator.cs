@@ -18,14 +18,16 @@ namespace Beer2Beer.Web.Utility
     {
         private ILoginService loginService;
         private IConfiguration config;
+        private ICustomHasher customHasher;
         private UserRoles userRole;
         private UserStatuses userStatus;
         private const string userStatusClaimsName = "UserStatus";
 
-        public Authenticator(ILoginService loginService, IConfiguration config)
+        public Authenticator(ILoginService loginService, IConfiguration config,ICustomHasher customHasher)
         {
             this.loginService = loginService;
             this.config = config;
+            this.customHasher = customHasher;
             this.userRole = UserRoles.User;
             this.userStatus = UserStatuses.Active;
         }
@@ -52,9 +54,10 @@ namespace Beer2Beer.Web.Utility
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var token = new JwtSecurityToken(this.config["Jwt:Issuer"],
-                this.config["Jwt:Audience"],
-                claims,
+            var token = new JwtSecurityToken(
+                issuer:this.config["Jwt:Issuer"],
+                audience:this.config["Jwt:Audience"],
+                claims:claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials);
 
@@ -66,14 +69,18 @@ namespace Beer2Beer.Web.Utility
         public async Task<UserFullDto> AuthenticateUser(UserLoginDto userLoginDto)
         {
             var email = userLoginDto.Email;
-            var pass = userLoginDto.Password;
-
             var user = await this.loginService.GetUser(email);
 
             //Validate the User Credentials    
-            if (user.Email == email && user.PasswordHash == pass)
+            if (user.Email == email)
             {
-                return user;
+                var hash = customHasher
+                .HashToString(customHasher
+                .CreateHash(userLoginDto.Password, customHasher
+                .CreateSalt()));
+                if (user.PasswordHash == hash) {
+                    return user;
+                }
             }
 
             await Task.CompletedTask;

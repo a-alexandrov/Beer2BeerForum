@@ -112,6 +112,7 @@ namespace Beer2Beer.Web
                 };
             });
             services.AddScoped<IAuthenticator, Authenticator>();
+            services.AddScoped<ICustomHasher,CustomHasher>();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("UserStatus", policy => policy.RequireClaim("UserStatus","Active"));
