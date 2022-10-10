@@ -3,6 +3,7 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace Beer2Beer.Services
 
             if (!users.Any())
             {
-                throw new ArgumentException($"There aren't any users with firstname {firstName}");
+                throw new EntityNotFoundException($"There aren't any users with firstname {firstName}");
             }
 
             var userDtos = mapper.Map<List<UserFullDto>>(users);
@@ -69,7 +70,7 @@ namespace Beer2Beer.Services
 
             if (user.IsAdmin)
             {
-                throw new ArgumentException("User is not an admin yet!");
+                throw new InvalidActionException("User is not an admin yet!");
             }
             else
             {
@@ -91,7 +92,7 @@ namespace Beer2Beer.Services
 
             if (!user.IsAdmin)
             {
-                throw new ArgumentException("User is not an admin yet!");
+                throw new InvalidActionException("User is not an admin yet!");
             }
             else
             {
@@ -112,7 +113,7 @@ namespace Beer2Beer.Services
 
             if (user.IsBlocked)
             {
-                throw new ArgumentException("User is already blocked!");
+                throw new InvalidActionException("User is already blocked!");
             }
             else
             {
@@ -133,7 +134,7 @@ namespace Beer2Beer.Services
 
             if (!user.IsBlocked)
             {
-                throw new ArgumentException("User is not blocked yet!");
+                throw new InvalidActionException("User is not blocked yet!");
             }
             else
             {
@@ -150,7 +151,7 @@ namespace Beer2Beer.Services
         {
             if (user == null)
             {
-                throw new ArgumentNullException("User not found!");
+                throw new EntityNotFoundException("User not found!");
             }
         }
     }
