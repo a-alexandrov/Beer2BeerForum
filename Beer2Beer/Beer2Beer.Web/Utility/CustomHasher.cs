@@ -10,7 +10,7 @@ namespace Beer2Beer.Web.Utility
     {
         public const int saltSize = 24;
         public const int hashSize = 24;
-        public const int iteratons = 100000;
+        public const int iterations = 100000;
 
         private IConfiguration config;
 
@@ -32,7 +32,7 @@ namespace Beer2Beer.Web.Utility
 
         public byte[] CreateHash(string input, byte[] salt) {
 
-            Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(input, salt, iteratons);
+            Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(input, salt, iterations);
 
             return pbkdf2.GetBytes(hashSize);
         }
