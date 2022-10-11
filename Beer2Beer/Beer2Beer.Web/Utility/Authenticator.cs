@@ -48,6 +48,7 @@ namespace Beer2Beer.Web.Utility
 
             var claims = new[]
             {
+                new Claim(ClaimTypes.Name,userFullDto.Username),
                 new Claim(ClaimTypes.Email, userFullDto.Email),
                 new Claim(ClaimTypes.Role,Enum.GetName(typeof(UserRoles),this.userRole)),
                 new Claim(userStatusClaimsName,Enum.GetName(typeof(UserStatuses),this.userStatus)),
@@ -55,8 +56,8 @@ namespace Beer2Beer.Web.Utility
             };
 
             var token = new JwtSecurityToken(
-                issuer:this.config["Jwt:Issuer"],
-                audience:this.config["Jwt:Audience"],
+                issuer:null,
+                audience:null,
                 claims:claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials);
