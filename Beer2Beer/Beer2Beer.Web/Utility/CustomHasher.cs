@@ -1,4 +1,5 @@
 ﻿using Beer2Beer.Web.Utility.Contracts;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,7 +11,12 @@ namespace Beer2Beer.Web.Utility
         public const int saltSize = 24;
         public const int hashSize = 24;
         public const int iteratons = 100000;
-        private const string secretSalt = "t3@dav3dga5$6ga_sga514sw4";
+
+        private IConfiguration config;
+
+        public CustomHasher(IConfiguration config) {
+            this.config = config;
+        }
 
 
         public byte[] CreateSalt() { 
@@ -18,7 +24,7 @@ namespace Beer2Beer.Web.Utility
             //RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             //byte[] salt = new byte[saltSize];
             //provider.GetBytes(salt);
-            var salt = Encoding.ASCII.GetBytes(secretSalt);
+            var salt = Encoding.ASCII.GetBytes(this.config["Hasher:Salt"]);
         
             return salt;
         
