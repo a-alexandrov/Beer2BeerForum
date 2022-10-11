@@ -8,6 +8,6 @@ namespace Beer2Beer.Web.Utility.Contracts
     {
         Task<string> GenerateJSONWebToken(UserFullDto userLoginDto);
         Task<UserFullDto> AuthenticateUser(UserLoginDto userLoginDto);
-        int GetCurrentUserID(ClaimsPrincipal claimsPrincipal);
+        Task<int> GetCurrentUserID(ClaimsPrincipal claimsPrincipal);
     }
 }
