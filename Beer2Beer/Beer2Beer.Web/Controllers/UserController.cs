@@ -26,10 +26,7 @@ namespace Beer2Beer.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
         {
-            user.PasswordHash = customHasher
-                .HashToString(customHasher
-                .CreateHash(user.PasswordHash, customHasher
-                .CreateSalt()));
+            user.PasswordHash = customHasher.GetHash(user.PasswordHash);
             return new OkObjectResult(await this.userService.CreateUser(user));
         }
 
@@ -37,13 +34,10 @@ namespace Beer2Beer.Web.Controllers
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
 
-            // update password should probably require to reenter old password for security purposes
+            // update password should probably require reentering old password for security purposes
             if (user.PasswordHash != null)
             {
-                user.PasswordHash = customHasher
-                    .HashToString(customHasher
-                    .CreateHash(user.PasswordHash, customHasher
-                    .CreateSalt()));
+                user.PasswordHash = customHasher.GetHash(user.PasswordHash);
             }
             return new OkObjectResult(await this.userService.UpdateUser(user));
         }

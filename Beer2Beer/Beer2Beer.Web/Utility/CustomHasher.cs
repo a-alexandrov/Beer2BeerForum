@@ -20,7 +20,7 @@ namespace Beer2Beer.Web.Utility
 
 
         public byte[] CreateSalt() { 
-            //ToDo - implement salt table lookup
+            //ToDo - we can implement salt table lookup, now this is really just pepper :D
             //RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             //byte[] salt = new byte[saltSize];
             //provider.GetBytes(salt);
@@ -42,6 +42,9 @@ namespace Beer2Beer.Web.Utility
             return BitConverter.ToString(hash).Replace("-", string.Empty);
         }
 
+        public string GetHash(string input) {
+            return HashToString(CreateHash(input, CreateSalt()));
+        }
         
 
     }

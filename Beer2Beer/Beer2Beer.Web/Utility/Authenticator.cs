@@ -77,10 +77,7 @@ namespace Beer2Beer.Web.Utility
             //Validate the User Credentials    
             if (user.Email == email)
             {
-                var hash = customHasher
-                .HashToString(customHasher
-                .CreateHash(userLoginDto.Password, customHasher
-                .CreateSalt()));
+                var hash = customHasher.GetHash(userLoginDto.Password);
                 if (user.PasswordHash == hash) {
                     return user;
                 }
