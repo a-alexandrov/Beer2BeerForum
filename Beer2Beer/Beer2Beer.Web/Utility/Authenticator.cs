@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Beer2Beer.Web.Utility
         private const string userStatusClaimsName = "UserStatus";
         private const string userIDClaimsName = "UserID";
 
-        public Authenticator(ILoginService loginService, IConfiguration config,ICustomHasher customHasher)
+        public Authenticator(ILoginService loginService, IConfiguration config, ICustomHasher customHasher)
         {
             this.loginService = loginService;
             this.config = config;
@@ -58,9 +59,9 @@ namespace Beer2Beer.Web.Utility
             };
 
             var token = new JwtSecurityToken(
-                issuer:null,
-                audience:null,
-                claims:claims,
+                issuer: null,
+                audience: null,
+                claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials);
 
@@ -78,13 +79,20 @@ namespace Beer2Beer.Web.Utility
             if (user.Email == email)
             {
                 var hash = customHasher.GetHash(userLoginDto.Password);
-                if (user.PasswordHash == hash) {
+                if (user.PasswordHash == hash)
+                {
                     return user;
                 }
             }
 
             await Task.CompletedTask;
             throw new ArgumentException("Invalid credentials");
+        }
+
+        public async Task<int> GetCurrentUserID(ClaimsPrincipal claimsPrincipal)
+        {
+            await Task.CompletedTask;
+            return int.Parse(claimsPrincipal.Claims.First(i => i.Type == userIDClaimsName).Value);
         }
     }
 }
