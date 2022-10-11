@@ -101,25 +101,13 @@ namespace Beer2Beer.Services
         #endregion POST 
 
         #region PUT
-        public async Task<PostDto> ChangePostTitle(int postID, string newTitle)
+        public async Task<PostDto> ChangePost(int postID, string newTitle, string content)
         {
             var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
 
             IsPostNull(post);
 
             post.Title = newTitle;
-            await this.context.SaveChangesAsync();
-
-            var postDto = mapper.Map<PostDto>(post);
-            return postDto;
-        }
-
-        public async Task<PostDto> ChangePostContent(int postID, string content)
-        {
-            var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
-
-            IsPostNull(post);
-            
             post.Content = content;
             await this.context.SaveChangesAsync();
 
