@@ -1,9 +1,11 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -15,11 +17,13 @@ namespace Beer2Beer.Web.Controllers
     {
         private readonly IUserService userService;
         private readonly ICustomHasher customHasher;
+        private readonly IAuthenticator authenticator;
 
-        public UserController(IUserService userService, ICustomHasher customHasher)
+        public UserController(IUserService userService, ICustomHasher customHasher, IAuthenticator authenticator)
         {
             this.userService = userService;
             this.customHasher = customHasher;
+            this.authenticator = authenticator;
         }
 
         [HttpPost]
@@ -31,8 +35,15 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
+            var loginID = await this.authenticator.GetCurrentUserID(this.User);
+
+            if (loginID != user.ID)
+            {
+                throw new InvalidActionException("An user can only update his own info");
+            }
 
             // update password should probably require reentering old password for security purposes
             if (user.PasswordHash != null)
