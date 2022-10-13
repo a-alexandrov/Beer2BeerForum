@@ -105,9 +105,9 @@ namespace Beer2Beer.Web.Controllers
         }
         [HttpPut]
         [Route("change")]
-        public async Task<IActionResult> Change([FromQuery] int postID, string newTitle, string content)
+        public async Task<IActionResult> Change([FromQuery] int postID, string newTitle, string content,string tagName)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.ChangePost(postID, newTitle, content));
+                return this.StatusCode(StatusCodes.Status200OK, await this.postService.ChangePost(postID, newTitle, content,tagName));
 
         }
         [HttpDelete]

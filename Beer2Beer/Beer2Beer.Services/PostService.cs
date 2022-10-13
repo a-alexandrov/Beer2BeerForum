@@ -162,14 +162,34 @@ namespace Beer2Beer.Services
         #endregion POST 
 
         #region PUT
-        public async Task<PostDto> ChangePost(int postID, string newTitle, string content)
+        public async Task<PostDto> ChangePost(int postID, string newTitle, string content,string tagName)
         {
             var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
 
             IsPostNull(post);
 
-            post.Title = newTitle;
-            post.Content = content;
+            post.Title = newTitle??post.Title;
+            post.Content = content??post.Content;
+
+            if (!String.IsNullOrEmpty(tagName)) {
+                Tag tag;
+                if (!this.context.Set<Tag>().Any(t => t.Name == tagName)){
+                    tag = await this.CreateTag(tagName);
+                }
+                else {
+                    tag = await this.context.Set<Tag>().FirstOrDefaultAsync(t => t.Name == tagName);
+                }
+
+                var tagPost = new TagPost { PostID = post.ID, TagID = tag.ID };
+
+                if (!this.context.Set<TagPost>().Contains(tagPost)) {
+                    this.context.Set<TagPost>().Add(tagPost);
+                }
+                
+                
+            }
+            
+
             await this.context.SaveChangesAsync();
 
             var postDto = mapper.Map<PostDto>(post);
@@ -211,5 +231,13 @@ namespace Beer2Beer.Services
             }
         }
         #endregion PrivateValidation
+
+        private async Task<Tag> CreateTag(string tagName) {
+            var tag = new Tag { Name = tagName };
+            this.context.Set<Tag>().Add(tag);
+            await this.context.SaveChangesAsync();
+
+            return tag;
+        }
     }
 }
