@@ -1,4 +1,5 @@
 ﻿using Beer2Beer.DTO;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +13,13 @@ namespace Beer2Beer.Services.Contracts
         Task<List<PostDto>> GetPostsByUserID(int userId);
         Task<PostDto> GetPostById(int id);
         Task<List<PostDto>> GetAllPosts();
+        Task<List<PostDto>> GetPostsByKeyword(string keyword);
+        Task<List<PostDto>> GetPostsByLikesRange(int minLikes, int maxLikes);
+        Task<List<PostDto>> GetPostsByDislikesRange(int minDislikes, int maxDislikes);
+        Task<List<PostDto>> GetPostsByCommentRange(int minComments, int maxComments);
+        Task<List<PostDto>> GetPostsByCreatonDate(DateTime createdAfter);
+
+
         #endregion GET
 
         #region POST

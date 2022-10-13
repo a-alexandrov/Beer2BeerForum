@@ -59,7 +59,47 @@ namespace Beer2Beer.Web.Controllers
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByUserID(userID));
 
         }
-        
+
+        [HttpGet]
+        [Route("keyword")]
+        public async Task<IActionResult> GetByKeyword([FromQuery] string keyword)
+        {
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByKeyword(keyword));
+
+        }
+
+        [HttpGet]
+        [Route("likesAmount")]
+        public async Task<IActionResult> GetByLikesRange([FromQuery] int min, int max)
+        {
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByLikesRange(min, max));
+
+        }
+
+        [HttpGet]
+        [Route("disikesAmount")]
+        public async Task<IActionResult> GetByDisikesRange([FromQuery] int min, int max)
+        {
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByDislikesRange(min, max));
+
+        }
+
+        [HttpGet]
+        [Route("commentAmount")]
+        public async Task<IActionResult> GetByCommentRange([FromQuery] int min, int max)
+        {
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByCommentRange(min, max));
+
+        }
+
+        [HttpGet]
+        [Route("createdAfter")]
+        public async Task<IActionResult> GetByCreatonDate([FromQuery] DateTime createdAfter)
+        {
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByCreatonDate(createdAfter));
+
+        }
+
         [HttpPost]
         [Route("newPost")]
         public async Task<IActionResult> PostNew([FromQuery] PostCreateDto post)
@@ -74,7 +114,7 @@ namespace Beer2Beer.Web.Controllers
 
         }
         [HttpDelete]
-        [Route("Delete")]
+        [Route("delete")]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.DeletePost(postId));

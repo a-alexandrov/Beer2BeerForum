@@ -83,6 +83,67 @@ namespace Beer2Beer.Services
 
             return postDtos;
         }
+        public async Task<List<PostDto>> GetPostsByKeyword(string keyword)
+        {
+            var posts = await this.context.Set<Post>()
+                .Where(x => !x.IsDeleted &&(x.Title.Contains(keyword)||x.Content.Contains(keyword)))
+                .ToListAsync();
+
+            ArePostNull(posts);
+
+            posts.OrderBy(x => x.Title == keyword).ThenBy(x => x.Content == keyword);
+
+            return mapper.Map<List<PostDto>>(posts);
+        }
+
+        public async Task<List<PostDto>> GetPostsByLikesRange(int minLikes, int maxLikes)
+        {
+            var posts = await this.context.Set<Post>()
+               .Where(x => !x.IsDeleted && (x.PostLikes >= minLikes && x.PostLikes <= maxLikes))
+               .ToListAsync();
+
+            ArePostNull(posts);
+
+            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.PostLikes));
+
+        }
+
+        public async Task<List<PostDto>> GetPostsByDislikesRange(int minDislikes, int maxDislikes)
+        {
+            var posts = await this.context.Set<Post>()
+               .Where(x => !x.IsDeleted && (x.PostDislikes >= minDislikes && x.PostLikes <= maxDislikes))
+               .ToListAsync();
+
+            ArePostNull(posts);
+
+            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.PostDislikes));
+
+        }
+
+        public async Task<List<PostDto>> GetPostsByCommentRange(int minComments, int maxComments)
+        {
+            var posts = await this.context.Set<Post>()
+               .Where(x => !x.IsDeleted && (x.CommentsCount >= minComments && x.CommentsCount <= maxComments))
+               .ToListAsync();
+
+            ArePostNull(posts);
+
+            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CommentsCount));
+
+        }
+
+        public async Task<List<PostDto>> GetPostsByCreatonDate(DateTime createdAfter)
+        {
+            var posts = await this.context.Set<Post>()
+               .Where(x => !x.IsDeleted && (x.CreatedOn.CompareTo(createdAfter)>= 0))
+               .ToListAsync();
+
+            ArePostNull(posts);
+            
+            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CreatedOn));
+
+        }
+
         #endregion GET
 
         #region POST
