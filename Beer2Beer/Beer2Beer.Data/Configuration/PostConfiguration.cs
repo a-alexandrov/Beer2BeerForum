@@ -24,8 +24,8 @@ namespace Beer2Beer.Data.Configuration
                .IsRequired();
 
             builder.
-                HasCheckConstraint("CK_Post_Title"
-                , $"LEN([Title]) >= {MinContentLength}");
+                HasCheckConstraint("CK_Post_Content"
+                , $"LEN([Content]) >= {MinContentLength}");
 
             builder
                 .Property(f => f.Content)

@@ -65,7 +65,8 @@ namespace Beer2Beer.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.ID);
-                    table.CheckConstraint("CK_Post_Title", "LEN([Title]) >= 32");
+                    table.CheckConstraint("CK_Post_Title", "LEN([Title]) >= 16");
+                    table.CheckConstraint("CK_Post_Content", "LEN([Content]) >= 32");
                     table.ForeignKey(
                         name: "FK_Posts_Users_UserID",
                         column: x => x.UserID,
@@ -133,9 +134,9 @@ namespace Beer2Beer.Data.Migrations
                 columns: new[] { "ID", "CreatedOn", "IsDeleted", "Name" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7169), false, "ShitPost" },
-                    { 2, new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7466), false, "General" },
-                    { 3, new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7485), false, "Admin Topics" }
+                    { 1, new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1012), false, "ShitPost" },
+                    { 2, new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1202), false, "General" },
+                    { 3, new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1215), false, "Admin Topics" }
                 });
 
             migrationBuilder.InsertData(
@@ -143,39 +144,39 @@ namespace Beer2Beer.Data.Migrations
                 columns: new[] { "ID", "AvatarImage", "CreatedOn", "Email", "FirstName", "IsAdmin", "IsBlocked", "IsDeleted", "LastName", "PasswordHash", "PhoneNumber", "Username" },
                 values: new object[,]
                 {
-                    { 1, null, new DateTime(2022, 10, 7, 18, 6, 18, 499, DateTimeKind.Local).AddTicks(4052), "beerKing@abv.bg", "Forum", true, false, false, "King", "THeKingIsHere", null, "BeerKing" },
-                    { 4, null, new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(4659), "beerEmperor@rome.com", "Emperor", true, false, false, "Beer", "YourEMperorHasReturnted", null, "BeerEmperor" },
-                    { 5, null, new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(4757), "beerGod@heaven.universe", "GodGod", true, false, false, "Almighty", "BowToYourGod", "0883778833", "BeerGod" },
-                    { 2, null, new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(4986), "beerPeasent@mail.bg", "Beer", false, false, false, "Peasunt", "ThePeasentIsHere", null, "BeerPeasunt" },
-                    { 3, null, new DateTime(2022, 10, 7, 18, 6, 18, 502, DateTimeKind.Local).AddTicks(5000), "beerSlave@mail.bg", "Beer", false, false, false, "Slave", "TheSlaveIsHere", null, "BeerSlave" }
+                    { 1, null, new DateTime(2022, 10, 14, 0, 48, 5, 700, DateTimeKind.Local).AddTicks(9848), "beerKing@abv.bg", "Forum", true, false, false, "King", "THeKingIsHere", null, "BeerKing" },
+                    { 4, null, new DateTime(2022, 10, 14, 0, 48, 5, 703, DateTimeKind.Local).AddTicks(269), "beerEmperor@rome.com", "Emperor", true, false, false, "Beer", "YourEMperorHasReturnted", null, "BeerEmperor" },
+                    { 5, null, new DateTime(2022, 10, 14, 0, 48, 5, 703, DateTimeKind.Local).AddTicks(348), "beerGod@heaven.universe", "GodGod", true, false, false, "Almighty", "BowToYourGod", "0883778833", "BeerGod" },
+                    { 2, null, new DateTime(2022, 10, 14, 0, 48, 5, 703, DateTimeKind.Local).AddTicks(479), "beerPeasent@mail.bg", "Beer", false, false, false, "Peasunt", "ThePeasentIsHere", null, "BeerPeasunt" },
+                    { 3, null, new DateTime(2022, 10, 14, 0, 48, 5, 703, DateTimeKind.Local).AddTicks(485), "beerSlave@mail.bg", "Beer", false, false, false, "Slave", "TheSlaveIsHere", null, "BeerSlave" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Posts",
                 columns: new[] { "ID", "CommentsCount", "Content", "CreatedOn", "IsDeleted", "PostDislikes", "PostLikes", "Title", "UserID" },
-                values: new object[] { 2, 2, "Have you tried itHave you tried it", new DateTime(2022, 10, 7, 18, 6, 18, 504, DateTimeKind.Local).AddTicks(269), false, 1, 1, "Carlsberg Beer OpinionsCarlsberg Beer Opinions", 1 });
+                values: new object[] { 2, 2, "Have you tried itHave you tried it", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(2868), false, 1, 1, "Carlsberg Beer OpinionsCarlsberg Beer Opinions", 1 });
 
             migrationBuilder.InsertData(
                 table: "Posts",
                 columns: new[] { "ID", "CommentsCount", "Content", "CreatedOn", "IsDeleted", "PostDislikes", "PostLikes", "Title", "UserID" },
-                values: new object[] { 3, 2, "Dont laught too hardDont laught too hard", new DateTime(2022, 10, 7, 18, 6, 18, 504, DateTimeKind.Local).AddTicks(337), false, 0, 2, "The best beer memeThe best beer meme", 2 });
+                values: new object[] { 3, 2, "Dont laught too hardDont laught too hard", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(2930), false, 0, 2, "The best beer memeThe best beer meme", 2 });
 
             migrationBuilder.InsertData(
                 table: "Posts",
                 columns: new[] { "ID", "CommentsCount", "Content", "CreatedOn", "IsDeleted", "PostDislikes", "PostLikes", "Title", "UserID" },
-                values: new object[] { 1, 2, "I beg to be freeI beg to be free", new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(9063), false, 2, 0, "End Forum SlaveryEnd Forum Slavery", 3 });
+                values: new object[] { 1, 2, "I beg to be freeI beg to be free", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(2188), false, 2, 0, "End Forum SlaveryEnd Forum Slavery", 3 });
 
             migrationBuilder.InsertData(
                 table: "Comments",
                 columns: new[] { "ID", "Content", "CreatedOn", "IsDeleted", "PostID", "UserID" },
                 values: new object[,]
                 {
-                    { 3, "That beer is great", new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8620), false, 2, 2 },
-                    { 4, "Slaves dont drink beers", new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8624), false, 2, 3 },
-                    { 5, "Quality meme", new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8628), false, 3, 1 },
-                    { 6, "I would laugh but slaves never laught", new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8631), false, 3, 3 },
-                    { 1, "No", new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(7924), false, 1, 1 },
-                    { 2, "I think things are just fine now", new DateTime(2022, 10, 7, 18, 6, 18, 503, DateTimeKind.Local).AddTicks(8588), false, 1, 2 }
+                    { 3, "That beer is great", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1874), false, 2, 2 },
+                    { 4, "Slaves dont drink beers", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1877), false, 2, 3 },
+                    { 5, "Quality meme", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1880), false, 3, 1 },
+                    { 6, "I would laugh but slaves never laught", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1883), false, 3, 3 },
+                    { 1, "No", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1476), false, 1, 1 },
+                    { 2, "I think things are just fine now", new DateTime(2022, 10, 14, 0, 48, 5, 704, DateTimeKind.Local).AddTicks(1851), false, 1, 2 }
                 });
 
             migrationBuilder.InsertData(
