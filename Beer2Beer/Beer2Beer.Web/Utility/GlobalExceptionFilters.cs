@@ -29,7 +29,7 @@ namespace Beer2Beer.Web.Utility
                         break;
                     case bool _ when exception is DbUpdateException:
                         statusCode = StatusCodes.Status400BadRequest;
-                        message = "Invalid input data.";
+                        message = exception.InnerException.ToString(); ///Kalata: needed inner exception body to fix bug
                         break;
                 }
 
