@@ -14,14 +14,11 @@ namespace Beer2Beer.Web.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostService postService;
-        private readonly IMapper mapper;
-        private readonly IUserService userService;
 
-        public PostController(IPostService postService, IMapper mapper, IUserService userService)
+
+        public PostController(IPostService postService)
         {
             this.postService = postService;
-            this.mapper = mapper;
-            this.userService = userService;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()

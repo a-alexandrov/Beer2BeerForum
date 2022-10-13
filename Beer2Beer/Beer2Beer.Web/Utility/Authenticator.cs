@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
@@ -22,8 +23,9 @@ namespace Beer2Beer.Web.Utility
         private UserRoles userRole;
         private UserStatuses userStatus;
         private const string userStatusClaimsName = "UserStatus";
+        private const string userIDClaimsName = "UserID";
 
-        public Authenticator(ILoginService loginService, IConfiguration config,ICustomHasher customHasher)
+        public Authenticator(ILoginService loginService, IConfiguration config, ICustomHasher customHasher)
         {
             this.loginService = loginService;
             this.config = config;
@@ -48,16 +50,18 @@ namespace Beer2Beer.Web.Utility
 
             var claims = new[]
             {
+                new Claim(ClaimTypes.Name,userFullDto.Username),
                 new Claim(ClaimTypes.Email, userFullDto.Email),
                 new Claim(ClaimTypes.Role,Enum.GetName(typeof(UserRoles),this.userRole)),
+                new Claim(userIDClaimsName,userFullDto.ID.ToString()),
                 new Claim(userStatusClaimsName,Enum.GetName(typeof(UserStatuses),this.userStatus)),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             var token = new JwtSecurityToken(
-                issuer:this.config["Jwt:Issuer"],
-                audience:this.config["Jwt:Audience"],
-                claims:claims,
+                issuer: null,
+                audience: null,
+                claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials);
 
@@ -74,17 +78,21 @@ namespace Beer2Beer.Web.Utility
             //Validate the User Credentials    
             if (user.Email == email)
             {
-                var hash = customHasher
-                .HashToString(customHasher
-                .CreateHash(userLoginDto.Password, customHasher
-                .CreateSalt()));
-                if (user.PasswordHash == hash) {
+                var hash = customHasher.GetHash(userLoginDto.Password);
+                if (user.PasswordHash == hash)
+                {
                     return user;
                 }
             }
 
             await Task.CompletedTask;
             throw new ArgumentException("Invalid credentials");
+        }
+
+        public async Task<int> GetCurrentUserID(ClaimsPrincipal claimsPrincipal)
+        {
+            await Task.CompletedTask;
+            return int.Parse(claimsPrincipal.Claims.First(i => i.Type == userIDClaimsName).Value);
         }
     }
 }

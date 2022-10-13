@@ -1,9 +1,11 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
 using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -15,35 +17,38 @@ namespace Beer2Beer.Web.Controllers
     {
         private readonly IUserService userService;
         private readonly ICustomHasher customHasher;
+        private readonly IAuthenticator authenticator;
 
-        public UserController(IUserService userService, ICustomHasher customHasher)
+        public UserController(IUserService userService, ICustomHasher customHasher, IAuthenticator authenticator)
         {
             this.userService = userService;
             this.customHasher = customHasher;
+            this.authenticator = authenticator;
         }
 
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
         {
-            user.PasswordHash = customHasher
-                .HashToString(customHasher
-                .CreateHash(user.PasswordHash, customHasher
-                .CreateSalt()));
+            user.PasswordHash = customHasher.GetHash(user.PasswordHash);
             return new OkObjectResult(await this.userService.CreateUser(user));
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
+            var loginID = await this.authenticator.GetCurrentUserID(this.User);
 
-            // update password should probably require to reenter old password for security purposes
+            if (loginID != user.ID)
+            {
+                throw new InvalidActionException("An user can only update his own info");
+            }
+
+            // update password should probably require reentering old password for security purposes
             if (user.PasswordHash != null)
             {
-                user.PasswordHash = customHasher
-                    .HashToString(customHasher
-                    .CreateHash(user.PasswordHash, customHasher
-                    .CreateSalt()));
+                user.PasswordHash = customHasher.GetHash(user.PasswordHash);
             }
             return new OkObjectResult(await this.userService.UpdateUser(user));
         }
