@@ -1,4 +1,6 @@
-﻿namespace Beer2Beer.Models
+﻿using System.Drawing;
+
+namespace Beer2Beer.Models
 {
     public class TagPost
     {
@@ -9,5 +11,10 @@
 
         public int PostID { get; set; }
         public Post Post { get; set; }
+
+        public override string ToString()
+        {
+            return this.Tag.Name;
+        }
     }
 }

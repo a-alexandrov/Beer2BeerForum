@@ -11,8 +11,10 @@ namespace QuizOverflow.Services.MappingProfiles
             CreateMap<User, UserFullDto>();
             CreateMap<UserFullDto, User>();
 
-            CreateMap<Post, PostDto>();
-            CreateMap<PostDto, Post>();
+            CreateMap<Post, PostDto>()
+                .ForMember(d=>d.Tags,d=>d.MapFrom(p=>p.TagPosts));
+            CreateMap<PostDto, Post>()
+                .ForMember(p=>p.TagPosts,p=>p.MapFrom(d=>d.Tags));
 
             CreateMap<Post, PostCreateDto>();
             CreateMap<PostCreateDto, Post>();

@@ -17,7 +17,7 @@ namespace Beer2Beer.Services
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
 
-        public PostService(IBeer2BeerDbContext context, IMapper mapper, IAdminService users)
+        public PostService(IBeer2BeerDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
@@ -27,8 +27,10 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetLatestPosts(int count = 10)
         {
             var posts = await this.context.Set<Post>()
-                .OrderByDescending(p => p.CreatedOn).Where(x=> !x.IsDeleted)
+                .OrderByDescending(p => p.CreatedOn).Where(x => !x.IsDeleted)
                 .Take(count)
+                .Include(p => p.TagPosts)
+                .ThenInclude(tp => tp.Tag)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -43,6 +45,8 @@ namespace Beer2Beer.Services
             var posts = await this.context.Set<Post>()
                 .OrderByDescending(p => p.CommentsCount).Where(x => !x.IsDeleted)
                 .Take(count)
+                .Include(p => p.TagPosts)
+                .ThenInclude(tp => tp.Tag)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -54,7 +58,11 @@ namespace Beer2Beer.Services
 
         public async Task<List<PostDto>> GetPostsByUserID(int userId)
         {
-            var posts = await this.context.Set<Post>().Where(post => post.UserID == userId && !post.IsDeleted).ToListAsync();
+            var posts = await this.context.Set<Post>()
+                .Where(post => post.UserID == userId && !post.IsDeleted)
+                .Include(p => p.TagPosts)
+                .ThenInclude(tp => tp.Tag)
+                .ToListAsync();
 
             ArePostNull(posts);
 
@@ -64,7 +72,11 @@ namespace Beer2Beer.Services
 
         public async Task<PostDto> GetPostById(int id)
         {
-            var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == id);
+            var post = await this.context.Set<Post>()
+                .Where(x => !x.IsDeleted)
+                .Include(p => p.TagPosts)
+                .ThenInclude(tp => tp.Tag)
+                .FirstOrDefaultAsync(post => post.ID == id);
 
             IsPostNull(post);
 
@@ -74,7 +86,10 @@ namespace Beer2Beer.Services
 
         public async Task<List<PostDto>> GetAllPosts()
         {
-            var posts = await this.context.Set<Post>().Where(x => !x.IsDeleted)
+            var posts = await this.context.Set<Post>()
+                .Where(x => !x.IsDeleted)
+                .Include(p => p.TagPosts)
+                .ThenInclude(tp => tp.Tag)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -86,7 +101,9 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetPostsByKeyword(string keyword)
         {
             var posts = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted &&(x.Title.Contains(keyword)||x.Content.Contains(keyword)))
+                .Where(x => !x.IsDeleted && (x.Title.Contains(keyword) || x.Content.Contains(keyword)))
+                .Include(p => p.TagPosts)
+                .ThenInclude(tp => tp.Tag)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -100,6 +117,8 @@ namespace Beer2Beer.Services
         {
             var posts = await this.context.Set<Post>()
                .Where(x => !x.IsDeleted && (x.PostLikes >= minLikes && x.PostLikes <= maxLikes))
+               .Include(p => p.TagPosts)
+               .ThenInclude(tp => tp.Tag)
                .ToListAsync();
 
             ArePostNull(posts);
@@ -112,6 +131,8 @@ namespace Beer2Beer.Services
         {
             var posts = await this.context.Set<Post>()
                .Where(x => !x.IsDeleted && (x.PostDislikes >= minDislikes && x.PostLikes <= maxDislikes))
+               .Include(p => p.TagPosts)
+               .ThenInclude(tp => tp.Tag)
                .ToListAsync();
 
             ArePostNull(posts);
@@ -124,6 +145,8 @@ namespace Beer2Beer.Services
         {
             var posts = await this.context.Set<Post>()
                .Where(x => !x.IsDeleted && (x.CommentsCount >= minComments && x.CommentsCount <= maxComments))
+               .Include(p => p.TagPosts)
+               .ThenInclude(tp => tp.Tag)
                .ToListAsync();
 
             ArePostNull(posts);
@@ -135,11 +158,13 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetPostsByCreatonDate(DateTime createdAfter)
         {
             var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.CreatedOn.CompareTo(createdAfter)>= 0))
+               .Where(x => !x.IsDeleted && (x.CreatedOn.CompareTo(createdAfter) >= 0))
+               .Include(p => p.TagPosts)
+               .ThenInclude(tp => tp.Tag)
                .ToListAsync();
 
             ArePostNull(posts);
-            
+
             return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CreatedOn));
 
         }
@@ -154,41 +179,47 @@ namespace Beer2Beer.Services
             this.context.Set<Post>().Add(postToAdd);
             await this.context.SaveChangesAsync();
 
-            var posts = await this.context.Set<Post>().ToListAsync();
-            var returnPost = mapper.Map<PostDto>(posts.Last());
-            return returnPost;
+            return mapper.Map<PostDto>(postToAdd);
 
         }
         #endregion POST 
 
         #region PUT
-        public async Task<PostDto> ChangePost(int postID, string newTitle, string content,string tagName)
+        public async Task<PostDto> ChangePost(int postID, string newTitle, string content, string tagName)
         {
             var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
 
             IsPostNull(post);
 
-            post.Title = newTitle??post.Title;
-            post.Content = content??post.Content;
+            post.Title = newTitle ?? post.Title;
+            post.Content = content ?? post.Content;
 
-            if (!String.IsNullOrEmpty(tagName)) {
+            if (!String.IsNullOrEmpty(tagName))
+            {
                 Tag tag;
-                if (!this.context.Set<Tag>().Any(t => t.Name == tagName)){
+                if (!this.context.Set<Tag>().Any(t => t.Name == tagName))
+                {
                     tag = await this.CreateTag(tagName);
                 }
-                else {
+                else
+                {
                     tag = await this.context.Set<Tag>().FirstOrDefaultAsync(t => t.Name == tagName);
                 }
 
                 var tagPost = new TagPost { PostID = post.ID, TagID = tag.ID };
-
-                if (!this.context.Set<TagPost>().Contains(tagPost)) {
+                var tagExists = this.context
+                    .Set<TagPost>()
+                    .Any(tp => tp.TagID == tagPost.TagID
+                    &&
+                    tp.PostID == tagPost.PostID);
+                if (!tagExists)
+                {
                     this.context.Set<TagPost>().Add(tagPost);
                 }
-                
-                
+
+
             }
-            
+
 
             await this.context.SaveChangesAsync();
 
@@ -203,7 +234,7 @@ namespace Beer2Beer.Services
         public async Task<PostDto> DeletePost(int postID)
         {
             var postToRemove = this.context.Set<Post>().FirstOrDefault(post => post.ID == postID);
-            
+
             IsPostNull(postToRemove);
             postToRemove.IsDeleted = true;
             this.context.Set<Post>().Update(postToRemove);
@@ -214,7 +245,7 @@ namespace Beer2Beer.Services
         }
         #endregion DELETE
 
-        #region PrivateValidation
+        #region Private
         private void IsPostNull(Post post)
         {
             if (post == null)
@@ -230,14 +261,18 @@ namespace Beer2Beer.Services
                 throw new EntityNotFoundException("There are no posts to match the criteria");
             }
         }
-        #endregion PrivateValidation
 
-        private async Task<Tag> CreateTag(string tagName) {
+
+        private async Task<Tag> CreateTag(string tagName)
+        {
             var tag = new Tag { Name = tagName };
             this.context.Set<Tag>().Add(tag);
             await this.context.SaveChangesAsync();
 
             return tag;
         }
+        #endregion Private
+
+
     }
 }
