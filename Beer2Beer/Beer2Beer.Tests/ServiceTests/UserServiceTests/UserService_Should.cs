@@ -10,7 +10,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MockQueryable.Moq;
 using Moq;
 using QuizOverflow.Services.MappingProfiles;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -159,9 +158,9 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
                      length: content.Length,
                      name: "Data",
                      fileName: fileName)
-            {
-                Headers = new HeaderDictionary()
-            };
+                           {
+                               Headers = new HeaderDictionary()
+                           };
             formFile.ContentType = ".png";
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
@@ -201,9 +200,9 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
                      length: content.Length,
                      name: "Data",
                      fileName: fileName)
-            {
-                Headers = new HeaderDictionary()
-            };
+                           {
+                               Headers = new HeaderDictionary()
+                           };
             formFile.ContentType = ".png";
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
@@ -239,9 +238,9 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
                      length: content.Length,
                      name: "Data",
                      fileName: fileName)
-            {
-                Headers = new HeaderDictionary()
-            };
+                           {
+                               Headers = new HeaderDictionary()
+                           };
             formFile.ContentType = ".png";
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
@@ -258,7 +257,6 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             var initialInput = Encoding.ASCII.GetBytes(content);
             var sut = new UserService(dbContextMock.Object, mapper);
             var result = await sut.UpdateUser(formFile, 1);
-
         }
     }
 }

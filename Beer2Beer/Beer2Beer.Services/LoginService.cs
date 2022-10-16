@@ -5,9 +5,6 @@ using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Beer2Beer.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Services
