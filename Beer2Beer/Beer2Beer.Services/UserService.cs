@@ -6,7 +6,6 @@ using Beer2Beer.Services.Contracts;
 using Beer2Beer.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -52,17 +51,15 @@ namespace Beer2Beer.Services
         {
             var user = await this.GetUserById(userDto.ID);
 
-            if (user == null)
+            if (user == null || user.IsDeleted || user.ID != userDto.ID)
             {
                 throw new EntityNotFoundException(message: $"User with ID:{userDto.ID} not found.");
-            }
-            if (user.IsDeleted) {
-                throw new InvalidActionException(message: $"User with ID:{userDto.ID} is deleted.");
             }
 
             user.FirstName = userDto.FirstName ?? user.FirstName;
             user.LastName = userDto.LastName ?? user.LastName;
             user.PasswordHash = userDto.PasswordHash ?? user.PasswordHash;
+
 
             await this.context.SaveChangesAsync();
 
@@ -90,6 +87,7 @@ namespace Beer2Beer.Services
             }
 
             var user = await this.GetUserById(userId);
+
             this.IsUserNull(user, $"User with ID: {userId} not found.");
 
             using (var target = new MemoryStream())
@@ -126,7 +124,7 @@ namespace Beer2Beer.Services
                   + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
                   + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 
-            Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
             return regex.IsMatch(email);
         }

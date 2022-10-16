@@ -13,13 +13,14 @@ namespace Beer2Beer.Web.Utility
             if(!context.ExceptionHandled)
             {
                 var exception = context.Exception;
-                int statusCode = 0;
+                var statusCode = 0;
                 var message = exception.Message;
 
                 switch (true)
                 {
                     case bool _ when exception is InvalidUserInputException:
                         statusCode = StatusCodes.Status400BadRequest;
+
                         break;
                     case bool _ when exception is EntityNotFoundException:
                         statusCode = StatusCodes.Status404NotFound;
