@@ -27,10 +27,13 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetLatestPosts(int count = 10)
         {
             var posts = await this.context.Set<Post>()
-                .OrderByDescending(p => p.CreatedOn).Where(x => !x.IsDeleted)
+                .OrderByDescending(p => p.CreatedOn)
+                .Where(x => !x.IsDeleted)
                 .Take(count)
                 .Include(p => p.TagPosts)
                 .ThenInclude(tp => tp.Tag)
+                .Include(p => p.Comments)
+                .ThenInclude(c=>c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -47,6 +50,8 @@ namespace Beer2Beer.Services
                 .Take(count)
                 .Include(p => p.TagPosts)
                 .ThenInclude(tp => tp.Tag)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -62,6 +67,8 @@ namespace Beer2Beer.Services
                 .Where(post => post.UserID == userId && !post.IsDeleted)
                 .Include(p => p.TagPosts)
                 .ThenInclude(tp => tp.Tag)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -76,6 +83,8 @@ namespace Beer2Beer.Services
                 .Where(x => !x.IsDeleted)
                 .Include(p => p.TagPosts)
                 .ThenInclude(tp => tp.Tag)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(post => post.ID == id);
 
             IsPostNull(post);
@@ -90,6 +99,8 @@ namespace Beer2Beer.Services
                 .Where(x => !x.IsDeleted)
                 .Include(p => p.TagPosts)
                 .ThenInclude(tp => tp.Tag)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -101,9 +112,11 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetPostsByKeyword(string keyword)
         {
             var posts = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted && (x.Title.Contains(keyword) || x.Content.Contains(keyword)))
+                .Where(x => !x.IsDeleted &&(x.Title.Contains(keyword) || x.Content.Contains(keyword)))                
                 .Include(p => p.TagPosts)
                 .ThenInclude(tp => tp.Tag)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -119,6 +132,8 @@ namespace Beer2Beer.Services
                .Where(x => !x.IsDeleted && (x.PostLikes >= minLikes && x.PostLikes <= maxLikes))
                .Include(p => p.TagPosts)
                .ThenInclude(tp => tp.Tag)
+               .Include(p => p.Comments)
+               .ThenInclude(c => c.User)
                .ToListAsync();
 
             ArePostNull(posts);
@@ -133,6 +148,8 @@ namespace Beer2Beer.Services
                .Where(x => !x.IsDeleted && (x.PostDislikes >= minDislikes && x.PostLikes <= maxDislikes))
                .Include(p => p.TagPosts)
                .ThenInclude(tp => tp.Tag)
+               .Include(p => p.Comments)
+               .ThenInclude(c => c.User)
                .ToListAsync();
 
             ArePostNull(posts);
@@ -147,6 +164,8 @@ namespace Beer2Beer.Services
                .Where(x => !x.IsDeleted && (x.CommentsCount >= minComments && x.CommentsCount <= maxComments))
                .Include(p => p.TagPosts)
                .ThenInclude(tp => tp.Tag)
+               .Include(p => p.Comments)
+               .ThenInclude(c => c.User)
                .ToListAsync();
 
             ArePostNull(posts);
@@ -161,6 +180,8 @@ namespace Beer2Beer.Services
                .Where(x => !x.IsDeleted && (x.CreatedOn.CompareTo(createdAfter) >= 0))
                .Include(p => p.TagPosts)
                .ThenInclude(tp => tp.Tag)
+               .Include(p => p.Comments)
+               .ThenInclude(c => c.User)
                .ToListAsync();
 
             ArePostNull(posts);
