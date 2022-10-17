@@ -2,9 +2,11 @@
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -21,20 +23,22 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         public async Task<IActionResult> GetAll()
         {
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetAllPosts());
 
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("latest")]
-        public async Task<IActionResult> GetLatestPost()
+        public async Task<IActionResult> GetLatestPosts()
         {
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetLatestPosts(10));
             
         }
-
+        [AllowAnonymous]
         [HttpGet]
         [Route("mostCommented")]
         public async Task<IActionResult> GetMostCommented()
@@ -44,6 +48,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("byId")]
         public async Task<IActionResult> GetById([FromQuery] int id)
         {
@@ -51,6 +56,7 @@ namespace Beer2Beer.Web.Controllers
 
         }
         [HttpGet]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("byUserID")]
         public async Task<IActionResult> GetByUserId([FromQuery] int userID)
         {
@@ -59,6 +65,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("keyword")]
         public async Task<IActionResult> GetByKeyword([FromQuery] string keyword)
         {
@@ -67,6 +74,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("likesAmount")]
         public async Task<IActionResult> GetByLikesRange([FromQuery] int min, int max)
         {
@@ -75,6 +83,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("disikesAmount")]
         public async Task<IActionResult> GetByDisikesRange([FromQuery] int min, int max)
         {
@@ -83,6 +92,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("commentAmount")]
         public async Task<IActionResult> GetByCommentRange([FromQuery] int min, int max)
         {
@@ -91,6 +101,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("createdAfter")]
         public async Task<IActionResult> GetByCreatonDate([FromQuery] DateTime createdAfter)
         {
@@ -99,6 +110,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("newPost")]
         public async Task<IActionResult> PostNew([FromQuery] PostCreateDto post)
         {
@@ -106,6 +118,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("change")]
         public async Task<IActionResult> Change([FromQuery] int postID, string newTitle, string content,string tagName)
         {
@@ -114,6 +127,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("delete")]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {
