@@ -1,8 +1,6 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -21,44 +19,13 @@ namespace Beer2Beer.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCommentAsync([FromBody] CommentCreateDto comment)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
-
-            try
-            {
-                return StatusCode(StatusCodes.Status200OK,
-                    await this.commentService.CreateComment(comment));
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, comment);
-            }
+            return new OkObjectResult(await this.commentService.CreateComment(comment));
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateCommentAsync([FromBody] CommentFullDto comment)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest);
-            }
-
-            var updatedComment = new CommentFullDto();
-
-            try
-            {
-                updatedComment = await this.commentService.UpdateComment(comment);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, comment);
-            }
-
-            return StatusCode(StatusCodes.Status200OK, updatedComment);
-
+            return new OkObjectResult(await this.commentService.UpdateComment(comment));
         }
 
         [HttpDelete]
