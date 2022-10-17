@@ -39,6 +39,9 @@ namespace QuizOverflow.Services.MappingProfiles
 
             CreateMap<Comment, CommentCreateDto>();
             CreateMap<CommentCreateDto, Comment>();
+
+            CreateMap<Comment, CommentUpdateDto>();
+            CreateMap<CommentUpdateDto, Comment>();
         }
     }
 }

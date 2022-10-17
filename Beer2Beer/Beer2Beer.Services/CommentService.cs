@@ -43,11 +43,11 @@ namespace Beer2Beer.Services
             return mapper.Map<CommentCreateDto>(comment);
         }
 
-        public async Task<CommentFullDto> UpdateComment(CommentFullDto commentDto)
+        public async Task<CommentFullDto> UpdateComment(CommentUpdateDto commentDto)
         {
             var comment = await this.GetCommentById(commentDto.ID);
 
-            if (commentDto == null)
+            if (commentDto == null || comment == null)
             {
                 throw new EntityNotFoundException(message: $"comment with ID:{commentDto.ID} not found.");
             }

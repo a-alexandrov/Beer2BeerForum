@@ -23,7 +23,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateCommentAsync([FromBody] CommentFullDto comment)
+        public async Task<IActionResult> UpdateCommentAsync([FromBody] CommentUpdateDto comment)
         {
             return new OkObjectResult(await this.commentService.UpdateComment(comment));
         }
