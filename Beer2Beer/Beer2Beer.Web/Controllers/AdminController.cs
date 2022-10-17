@@ -21,7 +21,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin",Policy = "UserStatus")]////ToDo: update real authorization level
+        [Authorize(Roles = "Admin",Policy = "UserStatus")]
         [Route("byFirstName")]
         public async Task<IActionResult> GetUsersByFirstName([FromQuery] string firstName)
         {
@@ -36,8 +36,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]////ToDo: update real authorization level
+        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("byUsername")]
         public async Task<IActionResult> GetUsersByUsername([FromQuery] string username)
         {
@@ -52,6 +51,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("byEmail")]
         public async Task<IActionResult> GetUsersByEmail([FromQuery] string email)
         {
@@ -66,6 +66,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("block")]
         public async Task<IActionResult> BlockUser([FromQuery] string username)
         {
@@ -80,6 +81,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("unblock")]
         public async Task<IActionResult> UnblockUser([FromQuery] string username)
         {
@@ -94,6 +96,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("promote")]
         public async Task<IActionResult> PromoteUser([FromQuery] string username)
         {
@@ -108,6 +111,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("demote")]
         public async Task<IActionResult> DemoteUser([FromQuery] string username)
         {
