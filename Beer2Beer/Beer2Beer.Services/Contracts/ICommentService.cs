@@ -7,5 +7,6 @@ namespace Beer2Beer.Services.Contracts
     {
         Task<CommentCreateDto> CreateComment(CommentCreateDto commentDto);
         Task<CommentFullDto> UpdateComment(CommentFullDto commentDto);
+        Task DeleteComment(int commentId, int useriD);
     }
 }

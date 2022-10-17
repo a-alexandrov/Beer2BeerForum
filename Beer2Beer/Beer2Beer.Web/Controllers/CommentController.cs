@@ -19,7 +19,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateComment([FromBody] CommentCreateDto comment)
+        public async Task<IActionResult> CreateCommentAsync([FromBody] CommentCreateDto comment)
         {
 
             if (!ModelState.IsValid)
@@ -58,6 +58,14 @@ namespace Beer2Beer.Web.Controllers
             }
 
             return StatusCode(StatusCodes.Status200OK, updatedComment);
+
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCommentAsync(int commentId, int userId)
+        {
+            await this.commentService.DeleteComment(commentId, userId);
+            return Ok();
         }
     }
 }

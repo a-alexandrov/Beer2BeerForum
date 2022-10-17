@@ -15,17 +15,18 @@ namespace Beer2Beer.Web.Controllers
     {
         private readonly IPostService postService;
 
-
         public PostController(IPostService postService)
         {
             this.postService = postService;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetAllPosts());
 
         }
+
         [HttpGet]
         [Route("latest")]
         public async Task<IActionResult> GetLatestPost()
@@ -103,6 +104,7 @@ namespace Beer2Beer.Web.Controllers
         {
             return this.StatusCode(StatusCodes.Status200OK, await this.postService.PostNewPost(post));
         }
+
         [HttpPut]
         [Route("change")]
         public async Task<IActionResult> Change([FromQuery] int postID, string newTitle, string content,string tagName)
@@ -110,6 +112,7 @@ namespace Beer2Beer.Web.Controllers
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.ChangePost(postID, newTitle, content,tagName));
 
         }
+
         [HttpDelete]
         [Route("delete")]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)

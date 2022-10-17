@@ -59,6 +59,33 @@ namespace Beer2Beer.Services
             return this.mapper.Map<CommentFullDto>(comment);
         }
 
+        public async Task DeleteComment(int commentId, int userId)
+        {
+            var comment = await this.GetCommentById(commentId);
+
+            var user = await this.context.Set<User>()
+                .Where(u => u.ID == userId)
+                .FirstOrDefaultAsync();
+
+            var post = await this.context.Set<Post>()
+                .Where(p => p.ID == comment.PostID)
+                .FirstOrDefaultAsync();
+
+            if (comment == null)
+            {
+                throw new EntityNotFoundException(message: $"comment with ID:{comment.ID} not found.");
+            }
+
+            if(comment.UserID != userId || !user.IsAdmin)
+            {
+                throw new InvalidActionException("only the user who made the comment or an admin can delete it.");
+            }
+
+            comment.IsDeleted = true;
+            post.CommentsCount--;
+            await this.context.SaveChangesAsync();
+        }
+
         private async Task<Comment> GetCommentById(int id)
         {
             var comment = await this.context.Set<Comment>()
