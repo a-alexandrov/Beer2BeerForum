@@ -47,7 +47,7 @@ namespace Beer2Beer.Services
         {
             var comment = await this.GetCommentById(commentDto.ID);
 
-            if (commentDto == null || comment == null)
+            if (comment == null)
             {
                 throw new EntityNotFoundException(message: $"comment with ID:{commentDto.ID} not found.");
             }
@@ -63,27 +63,34 @@ namespace Beer2Beer.Services
         {
             var comment = await this.GetCommentById(commentId);
 
+            if (comment == null)
+            {
+                throw new EntityNotFoundException(message: $"comment with ID:{commentId} not found.");
+            }
+
             var user = await this.context.Set<User>()
                 .Where(u => u.ID == userId)
                 .FirstOrDefaultAsync();
+
+            if(user == null)
+            {
+                throw new EntityNotFoundException(message: $"invalid user ID for comment with ID:{commentId}");
+            }
 
             var post = await this.context.Set<Post>()
                 .Where(p => p.ID == comment.PostID)
                 .FirstOrDefaultAsync();
 
-            if (comment == null)
+            if(comment.UserID == userId || user.IsAdmin)
             {
-                throw new EntityNotFoundException(message: $"comment with ID:{comment.ID} not found.");
+                comment.IsDeleted = true;
+                post.CommentsCount--;
+                await this.context.SaveChangesAsync();
             }
-
-            if(comment.UserID != userId || !user.IsAdmin)
+            else
             {
                 throw new InvalidActionException("only the user who made the comment or an admin can delete it.");
             }
-
-            comment.IsDeleted = true;
-            post.CommentsCount--;
-            await this.context.SaveChangesAsync();
         }
 
         private async Task<Comment> GetCommentById(int id)

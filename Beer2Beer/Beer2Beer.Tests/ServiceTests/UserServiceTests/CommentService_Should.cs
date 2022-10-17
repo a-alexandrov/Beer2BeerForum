@@ -108,5 +108,137 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             var sut = new CommentService(dbContextMock.Object, mapperMock.Object);
             await sut.UpdateComment(commentUpdateDto);
         }
+
+        [TestMethod]
+        public async Task DeleteComment_ShouldDelete_When_ParamAreValid()
+        {
+            var mapperMock = new Mock<IMapper>();
+            var dbContextMock = new Mock<IBeer2BeerDbContext>();
+
+            var comment = TestHelper.TestHelper.Comment;
+            var comments = new List<Comment> { comment };
+            var mockComment = comments.AsQueryable().BuildMockDbSet();
+            var user = TestHelper.TestHelper.User;
+            var users = new List<User> { user };
+            var mockUser = users.AsQueryable().BuildMockDbSet();
+            var post = TestHelper.TestHelper.Post;
+            var posts = new List<Post> { post };
+            var mockPost = posts.AsQueryable().BuildMockDbSet();
+
+            dbContextMock.Setup(x => x.Set<Comment>()).Returns(mockComment.Object);
+            dbContextMock.Setup(x => x.Set<User>()).Returns(mockUser.Object);
+            dbContextMock.Setup(x => x.Set<Post>()).Returns(mockPost.Object);
+
+            var sut = new CommentService(dbContextMock.Object, mapperMock.Object);
+            await sut.DeleteComment(2, 1);
+
+            Assert.IsTrue(comment.IsDeleted);
+            dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EntityNotFoundException))]
+        public async Task DeleteComment_ShouldThrow_When_CommentIsNull()
+        {
+            var mapperMock = new Mock<IMapper>();
+            var dbContextMock = new Mock<IBeer2BeerDbContext>();
+
+            var comment = TestHelper.TestHelper.Comment;
+            var comments = new List<Comment> { comment };
+            var mockComment = comments.AsQueryable().BuildMockDbSet();
+            var user = TestHelper.TestHelper.User;
+            var users = new List<User> { user };
+            var mockUser = users.AsQueryable().BuildMockDbSet();
+            var post = TestHelper.TestHelper.Post;
+            var posts = new List<Post> { post };
+            var mockPost = posts.AsQueryable().BuildMockDbSet();
+
+            dbContextMock.Setup(x => x.Set<Comment>()).Returns(mockComment.Object);
+            dbContextMock.Setup(x => x.Set<User>()).Returns(mockUser.Object);
+            dbContextMock.Setup(x => x.Set<Post>()).Returns(mockPost.Object);
+
+            var sut = new CommentService(dbContextMock.Object, mapperMock.Object);
+            await sut.DeleteComment(3, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(EntityNotFoundException))]
+        public async Task DeleteComment_ShouldThrow_When_WrongUser()
+        {
+            var mapperMock = new Mock<IMapper>();
+            var dbContextMock = new Mock<IBeer2BeerDbContext>();
+
+            var comment = TestHelper.TestHelper.Comment;
+            var comments = new List<Comment> { comment };
+            var mockComment = comments.AsQueryable().BuildMockDbSet();
+            var user = TestHelper.TestHelper.User;
+            var users = new List<User> { user };
+            var mockUser = users.AsQueryable().BuildMockDbSet();
+            var post = TestHelper.TestHelper.Post;
+            var posts = new List<Post> { post };
+            var mockPost = posts.AsQueryable().BuildMockDbSet();
+
+            dbContextMock.Setup(x => x.Set<Comment>()).Returns(mockComment.Object);
+            dbContextMock.Setup(x => x.Set<User>()).Returns(mockUser.Object);
+            dbContextMock.Setup(x => x.Set<Post>()).Returns(mockPost.Object);
+
+            var sut = new CommentService(dbContextMock.Object, mapperMock.Object);
+            await sut.DeleteComment(2, 3);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidActionException))]
+        public async Task DeleteComment_ShouldThrow_When_ParamAreInvalid()
+        {
+            var mapperMock = new Mock<IMapper>();
+            var dbContextMock = new Mock<IBeer2BeerDbContext>();
+
+            var comment = TestHelper.TestHelper.Comment;
+            comment.UserID = 2;
+            var comments = new List<Comment> { comment };
+            var mockComment = comments.AsQueryable().BuildMockDbSet();
+            var user = TestHelper.TestHelper.User;
+            var users = new List<User> { user };
+            var mockUser = users.AsQueryable().BuildMockDbSet();
+            var post = TestHelper.TestHelper.Post;
+            var posts = new List<Post> { post };
+            var mockPost = posts.AsQueryable().BuildMockDbSet();
+
+            dbContextMock.Setup(x => x.Set<Comment>()).Returns(mockComment.Object);
+            dbContextMock.Setup(x => x.Set<User>()).Returns(mockUser.Object);
+            dbContextMock.Setup(x => x.Set<Post>()).Returns(mockPost.Object);
+
+            var sut = new CommentService(dbContextMock.Object, mapperMock.Object);
+            await sut.DeleteComment(2, 1);
+        }
+
+        [TestMethod]
+        public async Task DeleteComment_ShouldDelete_When_UserIsAdmin()
+        {
+            var mapperMock = new Mock<IMapper>();
+            var dbContextMock = new Mock<IBeer2BeerDbContext>();
+
+            var comment = TestHelper.TestHelper.Comment;
+            comment.UserID = 2;
+            var comments = new List<Comment> { comment };
+            var mockComment = comments.AsQueryable().BuildMockDbSet();
+            var user = TestHelper.TestHelper.User;
+            user.IsAdmin = true;
+            var users = new List<User> { user };
+            var mockUser = users.AsQueryable().BuildMockDbSet();
+            var post = TestHelper.TestHelper.Post;
+            var posts = new List<Post> { post };
+            var mockPost = posts.AsQueryable().BuildMockDbSet();
+
+            dbContextMock.Setup(x => x.Set<Comment>()).Returns(mockComment.Object);
+            dbContextMock.Setup(x => x.Set<User>()).Returns(mockUser.Object);
+            dbContextMock.Setup(x => x.Set<Post>()).Returns(mockPost.Object);
+
+            var sut = new CommentService(dbContextMock.Object, mapperMock.Object);
+            await sut.DeleteComment(2, 1);
+
+            Assert.IsTrue(comment.IsDeleted);
+            dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
+        }
     }
 }
