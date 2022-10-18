@@ -6,13 +6,13 @@ namespace Beer2Beer.DTO
 {
     public class PostDto
     {
+        public int ID { get; set; }
+
         public string Title { get; set; }
 
         public string Content { get; set; }
 
         public int UserID { get; set; }
-
-        public User User { get; set; }
 
         public int PostLikes { get; set; }
 
@@ -20,8 +20,8 @@ namespace Beer2Beer.DTO
 
         public int CommentsCount { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        public List<string> Tags { get; set; }
 
-        public List<TagPost> TagPosts { get; set; }
+        public List<CommentInPostDTO> Comments { get; set; }
     }
 }

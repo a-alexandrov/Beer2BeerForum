@@ -1,228 +1,132 @@
-﻿using Beer2Beer.Data.Contracts;
-using System.Threading.Tasks;
-using AutoMapper;
-using Beer2Beer.Models;
+﻿using AutoMapper;
+using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
-using System;
-using System.Linq;
-using System.Collections.Generic;
+using Beer2Beer.Models;
+using Beer2Beer.Services.Contracts;
+using Beer2Beer.Services.CustomExceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Beer2Beer.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
+        private const int MaxAvatarImageSizeBytes = 1048576;
+        private const int MaxAvatarImageSizeMb = (MaxAvatarImageSizeBytes / 1024) / 1024;
         private readonly IBeer2BeerDbContext context;
         private readonly IMapper mapper;
+        private readonly List<string> AllowedImageType;
 
         public UserService(IBeer2BeerDbContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
-        }
-
-        public async Task RegisterUser(RegisterUserDto userDto)
-        {
-            var user = new User
-            {
-                Username = userDto.Username,
-                Email = userDto.Email,
-                FirstName = userDto.FirstName,
-                LastName = userDto.LastName,
-                PasswordHash = userDto.Password
+            this.AllowedImageType = new List<string>()
+            { 
+                ".bmp", ".jpg", ".jpeg", ".png" 
             };
-
-            this.context.DbSet<User>().Add(user);
-
-            await this.context.SaveChangesAsync();
         }
 
-        public async Task ChangeFirstName(string firstName, LoginUserDto userDto)
+        public async Task<UserFullDto> CreateUser(UserRegisterDto userDto)
         {
+            var user = mapper.Map<User>(userDto);
 
-            this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .FirstName = firstName;
-
-            await this.context.SaveChangesAsync();
-        }
-        public async Task ChangeLastName(string lastName, LoginUserDto userDto)
-        {
-
-            this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .LastName = lastName;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task ChangePassword(string newPassword, LoginUserDto userDto)
-        {
-
-            this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .PasswordHash = newPassword;
-
-            await this.context.SaveChangesAsync();
-        }
-
-        public async Task ChangeAvatarPath(string newAvatarPath, LoginUserDto userDto)
-        {
-
-            this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == userDto.Username)
-                .AvatarPath = newAvatarPath;
-
-            await this.context.SaveChangesAsync();
-        }
-
-
-        public async Task Login(string username, string password)
-        {
-            // ToDo:implement
-
-            var user = this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == username);
-
-            if (user == null)
+            if (!this.ValidateEmail(user.Email))
             {
-                throw new ArgumentException($"User with username {username} cannot be found!");
-            }
-            if (user.PasswordHash != password)
-            {
-                throw new ArgumentException($"Wrong password!");
+                throw new InvalidUserInputException(message: $"E-mail {user.Email} is invalid.");
             }
 
-            await this.context.SaveChangesAsync();///?????
-            throw new NotImplementedException();
+            this.context.Set<User>().Add(user);
+            await this.context.SaveChangesAsync();
+
+            return mapper.Map<UserFullDto>(user);
         }
 
-        public async Task Logout()
+        public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto)
         {
-            //ToDo:implement
-            await this.context.SaveChangesAsync();///?????
-            throw new NotImplementedException();
+            var user = await this.GetUserById(userDto.ID);
+
+            if (user == null || user.IsDeleted || user.ID != userDto.ID)
+            {
+                throw new EntityNotFoundException(message: $"User with ID:{userDto.ID} not found.");
+            }
+
+            user.FirstName = userDto.FirstName ?? user.FirstName;
+            user.LastName = userDto.LastName ?? user.LastName;
+            user.PasswordHash = userDto.PasswordHash ?? user.PasswordHash;
+
+
+            await this.context.SaveChangesAsync();
+
+            return mapper.Map<UserFullDto>(user);
         }
 
-        public async Task<UserDto> FindUserByUserName(string username)
+        public async Task<UserFullDto> UpdateUser(IFormFile avatarImage, int userId)
         {
+            if (avatarImage == null)
+            {
+                throw new InvalidUserInputException(message: "Invalid Input.");
+            }
 
-            var user = this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == username);
-            await IsUserNull(user);
-            var userDto = mapper.Map<UserDto>(user);
-            await this.context.SaveChangesAsync();//????
-            return userDto;
+            var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
+            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSizeBytes && avatarImage.Length != 0;
 
-        }
-        public async Task<UserDto> FindUserByEmail(string email)
-        {
+            //Should we keep a name in db for the uploaded file?
+            //var fileName = Guid.NewGuid() + "_" + userId + avatarImage.ContentType;
 
-            var user = this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Email == email);
-            await IsUserNull(user);
-            var userDto = mapper.Map<UserDto>(user);
-            await this.context.SaveChangesAsync();//????
-            return userDto;
+            if (!isValidType || !isCorrectSize)
+            {
+                throw new InvalidUserInputException(
+                    message: $"Invalid image. Size limit: {MaxAvatarImageSizeMb}Mb.\r\n" +
+                             $"Allowed formats: {string.Join(',', AllowedImageType)}");
+            }
 
-        }
+            var user = await this.GetUserById(userId);
 
-        public async Task<List<UserDto>> FindUsersByFirstName(string firstName)
-        {
+            this.IsUserNull(user, $"User with ID: {userId} not found.");
 
-            var users = await this.context.DbSet<User>()
-                .Where(u => u.FirstName == firstName)
-                .ToListAsync();
-
-            var userDtos = mapper.Map<List<UserDto>>(users);
+            using (var target = new MemoryStream())
+            {
+                avatarImage.CopyTo(target);
+                user.AvatarImage = target.ToArray();
+            }
             
-            return userDtos;
-
-        }
-        public async Task Promote(string username)
-        {
-            var user = this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == username);
-            if (user.IsAdmin)
-            {
-                throw new ArgumentException("User is already an admin!");
-            }
-            else {
-                user.IsAdmin = true;
-                var admin = new Admin
-                {
-                    UserID = user.ID,
-                    User = user
-                };
-                if (this.context.DbSet<Admin>().Contains(admin))
-                {
-                    var existingAdmin=this.context.DbSet<Admin>().FirstOrDefault(a=>a.ID==admin.ID);
-                    existingAdmin.IsDeleted = false;
-                }
-                else
-                {
-                    this.context.DbSet<Admin>().Add(admin);
-                }
-            }
             await this.context.SaveChangesAsync();
+
+            return mapper.Map<UserFullDto>(user);
         }
-        public async Task Demote(string username)
+
+        private void IsUserNull (User user, string message)
         {
-            var user = this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == username);
-            if (!user.IsAdmin)
+            if (user == null) 
             {
-                throw new ArgumentException("User is not an admin yet!");
+                throw new EntityNotFoundException(message: message);
             }
-            else
-            {
-                user.IsAdmin = false;
-                var admin = this.context.DbSet<Admin>()
-                    .FirstOrDefault(a => a.UserID == user.ID);
-                admin.IsDeleted = false;
-            }
-            await this.context.SaveChangesAsync();
         }
 
-        public async Task BlockUser(string username)
+        private async Task<User> GetUserById(int id)
         {
-            var user = this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == username);
-            if (user.IsBlocked)
-            {
-                throw new ArgumentException("User is already blocked!");
-            }
-            else
-            {
-                user.IsBlocked = true;
-            }
-            await this.context.SaveChangesAsync();
+            var user = await this.context.Set<User>()
+                .Where(u=>!u.IsDeleted)
+                .FirstOrDefaultAsync(u => u.ID == id);
+
+            return user;
         }
 
-        public async Task UnblockUser(string username)
+        private bool ValidateEmail(string email)
         {
-            var user = this.context.DbSet<User>()
-                .FirstOrDefault(u => u.Username == username);
-            if (!user.IsBlocked)
-            {
-                throw new ArgumentException("User is not blocked yet!");
-            }
-            else
-            {
-                user.IsBlocked = false;
-            }
-            await this.context.SaveChangesAsync();
+            string pattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
+                  + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
+                  + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+
+            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+            return regex.IsMatch(email);
         }
-
-        public async Task IsUserNull (User user)
-        
-        {
-            if (user == null) {
-                throw new ArgumentNullException("User not found!");
-            }
-            await this.context.SaveChangesAsync();///???
-        }
-
-
     }
 }

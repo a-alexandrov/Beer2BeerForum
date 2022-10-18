@@ -8,11 +8,40 @@ namespace QuizOverflow.Services.MappingProfiles
     {
         public MappingProfile()
         {
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<User, UserFullDto>();
+            CreateMap<UserFullDto, User>();
 
-            CreateMap<Post, PostDto>();
-            CreateMap<PostDto, Post>();
+            CreateMap<User, UserDisplayDto>();
+            CreateMap<UserDisplayDto, User>();
+
+            CreateMap<Post, PostDto>()
+                .ForMember(d => d.Tags, d => d.MapFrom(p => p.TagPosts));
+            CreateMap<PostDto, Post>()
+                .ForMember(p => p.TagPosts, p => p.MapFrom(d => d.Tags));
+
+            CreateMap<Comment, CommentInPostDTO>();
+            CreateMap<CommentInPostDTO, Comment>();
+
+            CreateMap<Post, PostCreateDto>();
+            CreateMap<PostCreateDto, Post>();
+
+            CreateMap<User, UserLoginDto>();
+            CreateMap<UserLoginDto, User>();
+
+            CreateMap<User, UserRegisterDto>();
+            CreateMap<UserRegisterDto, User>();
+
+            CreateMap<User, UserUpdateDto>();
+            CreateMap<UserUpdateDto, User>();
+
+            CreateMap<Comment, CommentFullDto>();
+            CreateMap<CommentFullDto, Comment>();
+
+            CreateMap<Comment, CommentCreateDto>();
+            CreateMap<CommentCreateDto, Comment>();
+
+            CreateMap<Comment, CommentUpdateDto>();
+            CreateMap<CommentUpdateDto, Comment>();
         }
     }
 }

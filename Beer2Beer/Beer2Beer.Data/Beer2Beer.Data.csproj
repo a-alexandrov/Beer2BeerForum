@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20220927093158_AddAdminTable.cs" />
-    <Compile Remove="Migrations\20220927093158_AddAdminTable.Designer.cs" />
+    <Compile Remove="Migrations\20221007150618_Initial.cs" />
+    <Compile Remove="Migrations\20221007150618_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
