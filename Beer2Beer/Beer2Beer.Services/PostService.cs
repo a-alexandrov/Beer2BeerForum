@@ -33,7 +33,7 @@ namespace Beer2Beer.Services
                 .Include(p => p.TagPosts)
                 .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c=>c.User)
+                .ThenInclude(c => c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -60,23 +60,6 @@ namespace Beer2Beer.Services
 
             return postDtos;
         }
-
-        public async Task<List<PostDto>> GetPostsByUserID(int userId)
-        {
-            var posts = await this.context.Set<Post>()
-                .Where(post => post.UserID == userId && !post.IsDeleted)
-                .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
-                .ToListAsync();
-
-            ArePostNull(posts);
-
-            var postDto = mapper.Map<List<PostDto>>(posts);
-            return postDto;
-        }
-
         public async Task<PostDto> GetPostById(int id)
         {
             var post = await this.context.Set<Post>()
@@ -93,101 +76,20 @@ namespace Beer2Beer.Services
             return postDto;
         }
 
-        public async Task<List<PostDto>> GetAllPosts()
+        public async Task<List<PostDto>> GetPosts(PostQueryParameters parameters)
         {
-            var posts = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted)
-                .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
-                .ToListAsync();
+            var posts = await this.FilterBy(parameters)
+                    .Include(p => p.TagPosts)
+                    .ThenInclude(tp => tp.Tag)
+                    .Include(p => p.Comments)
+                    .ThenInclude(c => c.User)
+                    .ToListAsync();
 
             ArePostNull(posts);
 
             var postDtos = mapper.Map<List<PostDto>>(posts);
 
             return postDtos;
-        }
-        public async Task<List<PostDto>> GetPostsByKeyword(string keyword)
-        {
-            var posts = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted &&(x.Title.Contains(keyword) || x.Content.Contains(keyword)))                
-                .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
-                .ToListAsync();
-
-            ArePostNull(posts);
-
-            posts.OrderBy(x => x.Title == keyword).ThenBy(x => x.Content == keyword);
-
-            return mapper.Map<List<PostDto>>(posts);
-        }
-
-        public async Task<List<PostDto>> GetPostsByLikesRange(int minLikes, int maxLikes)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.PostLikes >= minLikes && x.PostLikes <= maxLikes))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.PostLikes));
-
-        }
-
-        public async Task<List<PostDto>> GetPostsByDislikesRange(int minDislikes, int maxDislikes)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.PostDislikes >= minDislikes && x.PostLikes <= maxDislikes))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.PostDislikes));
-
-        }
-
-        public async Task<List<PostDto>> GetPostsByCommentRange(int minComments, int maxComments)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.CommentsCount >= minComments && x.CommentsCount <= maxComments))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CommentsCount));
-
-        }
-
-        public async Task<List<PostDto>> GetPostsByCreatonDate(DateTime createdAfter)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.CreatedOn.CompareTo(createdAfter) >= 0))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CreatedOn));
-
         }
 
         #endregion GET
@@ -287,6 +189,54 @@ namespace Beer2Beer.Services
             await this.context.SaveChangesAsync();
 
             return tag;
+        }
+
+        private IQueryable<Post> FilterBy(PostQueryParameters parameters)
+        {
+            var query = this.context.Set<Post>()
+                .Where(p => !p.IsDeleted);
+
+            if (parameters.UserId.HasValue)
+            {
+                query = query.Where(post => post.UserID == parameters.UserId);
+            }
+            if (!String.IsNullOrEmpty(parameters.Keyword))
+            {
+                query = query.Where(p => p.Title.Contains("") || p.Content.Contains("f"));
+            }
+            if (parameters.minLikes.HasValue)
+            {
+                query = query.Where(p => p.PostLikes >= parameters.minLikes);
+            }
+            if (parameters.maxLikes.HasValue)
+            {
+                query = query.Where(p => p.PostLikes <= parameters.maxLikes);
+            }
+            if (parameters.minDislikes.HasValue)
+            {
+                query = query.Where(p => p.PostDislikes >= parameters.minDislikes);
+            }
+            if (parameters.maxDislikes.HasValue)
+            {
+                query = query.Where(p => p.PostDislikes <= parameters.maxDislikes);
+            }
+            if (parameters.minComments.HasValue)
+            {
+                query = query.Where(p => p.CommentsCount >= parameters.minComments);
+            }
+            if (parameters.maxComments.HasValue)
+            {
+                query = query.Where(p => p.CommentsCount <= parameters.maxComments);
+            }
+            if (parameters.minDate.HasValue)
+            {
+                query = query.Where(p => p.CreatedOn >= parameters.minDate);
+            }
+            if (parameters.maxDate.HasValue) 
+            {
+                query = query.Where(p => p.CreatedOn <= parameters.maxDate);
+            }
+            return query;
         }
         #endregion Private
 

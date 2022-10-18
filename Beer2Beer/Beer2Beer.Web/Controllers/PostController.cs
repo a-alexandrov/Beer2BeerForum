@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
+    [Authorize(Policy = "UserStatus")]
     [ApiController]
     [Route("api/posts")]
     public class PostController : ControllerBase
@@ -23,10 +24,9 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin", Policy = "UserStatus")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetPosts([FromQuery]PostQueryParameters parameters)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetAllPosts());
+                return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPosts(parameters));
 
         }
 
@@ -46,71 +46,9 @@ namespace Beer2Beer.Web.Controllers
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByMostComments(10));
 
         }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
-        [Route("byId")]
-        public async Task<IActionResult> GetById([FromQuery] int id)
-        {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostById(id));
-
-        }
-        [HttpGet]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
-        [Route("byUserID")]
-        public async Task<IActionResult> GetByUserId([FromQuery] int userID)
-        {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByUserID(userID));
-
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
-        [Route("keyword")]
-        public async Task<IActionResult> GetByKeyword([FromQuery] string keyword)
-        {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByKeyword(keyword));
-
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
-        [Route("likesAmount")]
-        public async Task<IActionResult> GetByLikesRange([FromQuery] int min, int max)
-        {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByLikesRange(min, max));
-
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
-        [Route("disikesAmount")]
-        public async Task<IActionResult> GetByDisikesRange([FromQuery] int min, int max)
-        {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByDislikesRange(min, max));
-
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
-        [Route("commentAmount")]
-        public async Task<IActionResult> GetByCommentRange([FromQuery] int min, int max)
-        {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByCommentRange(min, max));
-
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
-        [Route("createdAfter")]
-        public async Task<IActionResult> GetByCreatonDate([FromQuery] DateTime createdAfter)
-        {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByCreatonDate(createdAfter));
-
-        }
+        
 
         [HttpPost]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("newPost")]
         public async Task<IActionResult> PostNew([FromQuery] PostCreateDto post)
         {
@@ -118,7 +56,6 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("change")]
         public async Task<IActionResult> Change([FromQuery] int postID, string newTitle, string content,string tagName)
         {
@@ -127,7 +64,6 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("delete")]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {

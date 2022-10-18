@@ -10,14 +10,8 @@ namespace Beer2Beer.Services.Contracts
         #region GET
         Task<List<PostDto>> GetLatestPosts(int count);
         Task<List<PostDto>> GetPostsByMostComments(int count);
-        Task<List<PostDto>> GetPostsByUserID(int userId);
         Task<PostDto> GetPostById(int id);
-        Task<List<PostDto>> GetAllPosts();
-        Task<List<PostDto>> GetPostsByKeyword(string keyword);
-        Task<List<PostDto>> GetPostsByLikesRange(int minLikes, int maxLikes);
-        Task<List<PostDto>> GetPostsByDislikesRange(int minDislikes, int maxDislikes);
-        Task<List<PostDto>> GetPostsByCommentRange(int minComments, int maxComments);
-        Task<List<PostDto>> GetPostsByCreatonDate(DateTime createdAfter);
+        Task<List<PostDto>> GetPosts(PostQueryParameters parameters);
 
 
         #endregion GET
