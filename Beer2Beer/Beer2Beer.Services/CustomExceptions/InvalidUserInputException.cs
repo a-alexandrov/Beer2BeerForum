@@ -9,9 +9,5 @@ namespace Beer2Beer.Services.CustomExceptions
         {
         }
 
-        public InvalidUserInputException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
     }
 }
