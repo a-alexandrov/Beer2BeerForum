@@ -76,9 +76,6 @@ namespace Beer2Beer.Services
             var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
             var isCorrectSize = avatarImage.Length <= MaxAvatarImageSizeBytes && avatarImage.Length != 0;
 
-            //Should we keep a name in db for the uploaded file?
-            //var fileName = Guid.NewGuid() + "_" + userId + avatarImage.ContentType;
-
             if (!isValidType || !isCorrectSize)
             {
                 throw new InvalidUserInputException(

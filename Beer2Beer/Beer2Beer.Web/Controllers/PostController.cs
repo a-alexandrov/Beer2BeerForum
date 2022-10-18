@@ -63,10 +63,10 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePost([FromQuery] PostUpdateDto postDto,string tagName)
+        public async Task<IActionResult> UpdatePost([FromQuery] PostUpdateDto postDto)
         {
             
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.UpdatePost(postDto,tagName));
+                return this.StatusCode(StatusCodes.Status200OK, await this.postService.UpdatePost(postDto));
 
         }
 
