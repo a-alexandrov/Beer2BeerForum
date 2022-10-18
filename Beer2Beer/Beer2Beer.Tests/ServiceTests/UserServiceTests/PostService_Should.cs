@@ -205,6 +205,30 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
         }
 
 
+        [TestMethod]
+        public async Task GetPostByID_Should_DeletePost_When_ParamAreCorrect()
+        {
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
+            var mapper = new Mapper(config);
+
+            var dbContextMock = new Mock<IBeer2BeerDbContext>();
+            var query = TestHelper.TestHelper.EmptyQuery;
+
+
+            var post = TestHelper.TestHelper.Post;
+            var post2 = TestHelper.TestHelper.Post;
+            var posts = new List<Post> { post, post2 };
+            var mock = posts.AsQueryable().BuildMockDbSet();
+            dbContextMock.Setup(x => x.Set<Post>()).Returns(mock.Object);
+
+
+            var sut = new PostService(dbContextMock.Object, mapper);
+            var result = await sut.DeletePost(1);
+
+            Assert.AreEqual(result.ID, post.ID);
+        }
+
+
 
 
 
