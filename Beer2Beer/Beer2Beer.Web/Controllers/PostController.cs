@@ -30,6 +30,14 @@ namespace Beer2Beer.Web.Controllers
 
         }
 
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetPostById([FromQuery]int id)
+        {
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostById(id));
+
+        }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("latest")]
@@ -41,7 +49,7 @@ namespace Beer2Beer.Web.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("mostCommented")]
-        public async Task<IActionResult> GetMostCommented()
+        public async Task<IActionResult> GetMostCommentedPost()
         {
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByMostComments(10));
 
@@ -49,22 +57,20 @@ namespace Beer2Beer.Web.Controllers
         
 
         [HttpPost]
-        [Route("newPost")]
-        public async Task<IActionResult> PostNew([FromQuery] PostCreateDto post)
+        public async Task<IActionResult> PostPost([FromQuery] PostCreateDto post)
         {
             return this.StatusCode(StatusCodes.Status200OK, await this.postService.CreatePost(post));
         }
 
         [HttpPut]
-        [Route("change")]
-        public async Task<IActionResult> Change([FromQuery] int postID, string newTitle, string content,string tagName)
+        public async Task<IActionResult> UpdatePost([FromQuery] PostUpdateDto postDto,string tagName)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.UpdatePost(postID, newTitle, content,tagName));
+            
+                return this.StatusCode(StatusCodes.Status200OK, await this.postService.UpdatePost(postDto,tagName));
 
         }
 
         [HttpDelete]
-        [Route("delete")]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {
                 return this.StatusCode(StatusCodes.Status200OK, await this.postService.DeletePost(postId));
