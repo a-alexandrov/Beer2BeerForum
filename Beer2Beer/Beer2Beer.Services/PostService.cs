@@ -30,9 +30,9 @@ namespace Beer2Beer.Services
                 .Where(x => !x.IsDeleted)
                 .Take(count)
                 .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
+                    .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -48,9 +48,9 @@ namespace Beer2Beer.Services
                 .OrderByDescending(p => p.CommentsCount).Where(x => !x.IsDeleted)
                 .Take(count)
                 .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
+                    .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -63,11 +63,11 @@ namespace Beer2Beer.Services
         public async Task<PostDto> GetPostById(int id)
         {
             var post = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted)
+                .Where(p => !p.IsDeleted)
                 .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
+                    .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(post => post.ID == id);
 
             IsPostNull(post);
@@ -79,11 +79,11 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetPosts(PostQueryParameters parameters)
         {
             var posts = await this.FilterBy(parameters)
-                    .Include(p => p.TagPosts)
+                .Include(p => p.TagPosts)
                     .ThenInclude(tp => tp.Tag)
-                    .Include(p => p.Comments)
+                .Include(p => p.Comments)
                     .ThenInclude(c => c.User)
-                    .ToListAsync();
+                .ToListAsync();
 
             ArePostNull(posts);
 
@@ -92,20 +92,7 @@ namespace Beer2Beer.Services
             return postDtos;
         }
 
-        public async Task<List<PostDto>> GetPostsByCreatonDate(DateTime createdAfter)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.CreatedOn.CompareTo(createdAfter) >= 0))
-               .Include(p => p.TagPosts)
-                    .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-                    .ThenInclude(c => c.User)
-               .ToListAsync();
 
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CreatedOn));
-        }
 
         public async Task<PostDto> CreatePost(PostCreateDto newPostDTO)
         {
@@ -244,7 +231,7 @@ namespace Beer2Beer.Services
             }
             if (!String.IsNullOrEmpty(parameters.Keyword))
             {
-                query = query.Where(p => p.Title.Contains("") || p.Content.Contains("f"));
+                query = query.Where(p => p.Title.Contains(parameters.Keyword) || p.Content.Contains(parameters.Keyword));
             }
             if (parameters.minLikes.HasValue)
             {
