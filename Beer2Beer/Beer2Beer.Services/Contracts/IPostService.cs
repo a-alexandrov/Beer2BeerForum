@@ -23,11 +23,11 @@ namespace Beer2Beer.Services.Contracts
         #endregion GET
 
         #region POST
-        Task<PostDto> PostNewPost(PostCreateDto post);
+        Task<PostDto> CreatePost(PostCreateDto post);
         #endregion POST 
 
         #region PUT
-        Task<PostDto> ChangePost(int postID, string newTitle, string content,string tagName);
+        Task<PostDto> UpdatePost(int postID, string newTitle, string content,string tagName);
         //Tags???
         #endregion PUT
 

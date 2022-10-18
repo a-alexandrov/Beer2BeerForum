@@ -193,20 +193,18 @@ namespace Beer2Beer.Services
         #endregion GET
 
         #region POST
-        public async Task<PostDto> PostNewPost(PostCreateDto newPostDTO)
+        public async Task<PostDto> CreatePost(PostCreateDto newPostDTO)
         {
-
             var postToAdd = mapper.Map<Post>(newPostDTO);
             this.context.Set<Post>().Add(postToAdd);
             await this.context.SaveChangesAsync();
 
             return mapper.Map<PostDto>(postToAdd);
-
         }
         #endregion POST 
 
         #region PUT
-        public async Task<PostDto> ChangePost(int postID, string newTitle, string content, string tagName)
+        public async Task<PostDto> UpdatePost(int postID, string newTitle, string content, string tagName)
         {
             var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
 
@@ -240,7 +238,6 @@ namespace Beer2Beer.Services
 
 
             }
-
 
             await this.context.SaveChangesAsync();
 
@@ -282,7 +279,6 @@ namespace Beer2Beer.Services
                 throw new EntityNotFoundException("There are no posts to match the criteria");
             }
         }
-
 
         private async Task<Tag> CreateTag(string tagName)
         {

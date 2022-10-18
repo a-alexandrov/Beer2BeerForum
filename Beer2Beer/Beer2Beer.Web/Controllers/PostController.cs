@@ -114,7 +114,7 @@ namespace Beer2Beer.Web.Controllers
         [Route("newPost")]
         public async Task<IActionResult> PostNew([FromQuery] PostCreateDto post)
         {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.PostNewPost(post));
+            return this.StatusCode(StatusCodes.Status200OK, await this.postService.CreatePost(post));
         }
 
         [HttpPut]
@@ -122,7 +122,7 @@ namespace Beer2Beer.Web.Controllers
         [Route("change")]
         public async Task<IActionResult> Change([FromQuery] int postID, string newTitle, string content,string tagName)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.ChangePost(postID, newTitle, content,tagName));
+                return this.StatusCode(StatusCodes.Status200OK, await this.postService.UpdatePost(postID, newTitle, content,tagName));
 
         }
 
