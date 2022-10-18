@@ -32,7 +32,7 @@ namespace Beer2Beer.Web.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetPostById([FromQuery]int id)
+        public async Task<IActionResult> GetPostById(int id)
         {
             return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostById(id));
 
