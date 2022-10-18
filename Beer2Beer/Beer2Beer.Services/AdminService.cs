@@ -75,7 +75,7 @@ namespace Beer2Beer.Services
 
             if (user.IsAdmin)
             {
-                throw new InvalidActionException("User is not an admin yet!");
+                throw new InvalidActionException("User is already an admin!");
             }
             else
             {
