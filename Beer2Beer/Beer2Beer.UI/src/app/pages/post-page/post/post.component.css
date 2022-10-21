@@ -1,3 +1,9 @@
+.container-main {
+    width: 878px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 .post-container {
     width: 878px;
     height: 278px;
@@ -17,6 +23,7 @@
     margin-left: 20px;
     margin-right: 20px;
 }
+
 .post-title {
     color: #a7cf39;
     font-size: 1.8em;
@@ -34,4 +41,19 @@
 
 p {
     font-size: 16px;
+}
+
+.post-comment {
+    width: 578px;
+    min-height: 178px;
+    display: flex;
+    background-color: #FAFAFA;
+    border-color: #D2D2D2;
+    border-style: solid;
+    border-width: 1px 1px 2px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    float: right;
+    padding-bottom: 15px;
 }

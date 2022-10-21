@@ -26,55 +26,49 @@ namespace Beer2Beer.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetPosts([FromQuery]PostQueryParameters parameters)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPosts(parameters));
-
+            return new OkObjectResult(await this.postService.GetPosts(parameters));
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetPostById(int id)
         {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostById(id));
-
+            return new OkObjectResult(await this.postService.GetPostById(id));
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("latest")]
-        public async Task<IActionResult> GetLatestPosts()
+        public async Task<IActionResult> GetLatestPosts(int count)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetLatestPosts(10));
-            
+            return new OkObjectResult(await this.postService.GetLatestPosts(count));
         }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("mostCommented")]
-        public async Task<IActionResult> GetMostCommentedPost()
+        public async Task<IActionResult> GetMostCommentedPost(int count)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.GetPostsByMostComments(10));
-
+            return new OkObjectResult(await this.postService.GetPostsByMostComments(count));
         }
         
 
         [HttpPost]
         public async Task<IActionResult> PostPost([FromQuery] PostCreateDto post)
         {
-            return this.StatusCode(StatusCodes.Status200OK, await this.postService.CreatePost(post));
+            return new OkObjectResult(await this.postService.CreatePost(post));
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdatePost([FromQuery] PostUpdateDto postDto)
         {
-            
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.UpdatePost(postDto));
-
+            return new OkObjectResult(await this.postService.UpdatePost(postDto));
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {
-                return this.StatusCode(StatusCodes.Status200OK, await this.postService.DeletePost(postId));
-
+            return new OkObjectResult(await this.postService.DeletePost(postId));
         }
     }
 }

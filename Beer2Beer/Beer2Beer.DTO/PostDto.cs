@@ -1,6 +1,4 @@
-﻿
-using Beer2Beer.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Beer2Beer.DTO
 {

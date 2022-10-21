@@ -1,12 +1,27 @@
-<div class="post-container">
-    <div class="post-data">
-        <span class="post-title">{{title}}</span>
-        <hr>
-        <p>{{content}}</p>
+<div class="container-main">
+    <div class="post-container">
+        <div class="post-data">
+            <span class="post-title">{{post.title}}</span>
+            <hr>
+            <p>{{post.content}}</p>
+        </div>
+        <div class="user-data">
+            <img class="post-user-image" src="/assets/images/user_Image.jpg" alt="image">
+            <span class="user-name">Beer_User</span>
+            <p class="joined-on">Joined: 1991.7.19</p>
+        </div>
+
     </div>
-    <div class="user-data">
-        <img class="post-user-image" src="/assets/images/user_Image.jpg" alt="image">
-        <span class="user-name">Beer_User</span>
-        <p class="joined-on">Joined: 1991.7.19</p>
+    <div *ngFor="let comment of post.comments">
+        <div class="post-comment">
+            <div class="post-data">
+                <p>{{comment.content}}</p>
+            </div>
+            <div class="user-data">
+                <img class="post-user-image" src="/assets/images/cat_haram.webp" alt="image">
+                <span class="user-name">{{comment.userName}}</span>
+                <p class="joined-on">Joined: 1991.7.19</p>
+            </div>
+        </div>
     </div>
 </div>
