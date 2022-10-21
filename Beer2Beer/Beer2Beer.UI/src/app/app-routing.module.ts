@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostComponent } from './pages/post/post.component';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
+import { PostPageComponent } from './pages/post-page/post-page.component';
 
 const routes: Routes = [
   {
     path: '', component: HomeComponent
   },
   {
-    path: 'post', component: PostComponent
+    path: 'post', component: PostPageComponent
   }
 ];
 
