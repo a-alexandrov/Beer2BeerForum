@@ -4,8 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { PostComponent } from './pages/post/post.component';
 import { PostPageComponent } from './pages/post-page/post-page.component';
+import { PostComponent } from './pages/post-page/post/post.component';
 
 @NgModule({
   declarations: [
