@@ -61,7 +61,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new PostService(dbContextMock.Object, mapperMock.Object);
-            var result = sut.UpdatePost(postUpdateDto);
+            var result = sut.UpdatePost(postUpdateDto,1);
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -84,7 +84,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new PostService(dbContextMock.Object, mapperMock.Object);
-            var result = sut.UpdatePost(postUpdateDto);
+            var result = sut.UpdatePost(postUpdateDto,1);
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -105,7 +105,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new PostService(dbContextMock.Object, mapperMock.Object);
-            var result = sut.UpdatePost(postUpdateDto);
+            var result = sut.UpdatePost(postUpdateDto,1);
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -223,7 +223,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
 
             var sut = new PostService(dbContextMock.Object, mapper);
-            var result = await sut.DeletePost(1);
+            var result = await sut.DeletePost(1,1);
 
             Assert.AreEqual(result.ID, post.ID);
         }

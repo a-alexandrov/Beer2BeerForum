@@ -76,7 +76,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new UserService(dbContextMock.Object, mapperMock.Object);
-            var result = sut.UpdateUser(userUpdateDto);
+            var result = sut.UpdateUser(userUpdateDto,1);
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -101,7 +101,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             var userUnderTest = It.IsAny<User>();
 
             var sut = new UserService(dbContextMock.Object, mapper);
-            var result = await sut.UpdateUser(userUpdateDto);
+            var result = await sut.UpdateUser(userUpdateDto,1);
 
             Assert.IsNotNull(result.FirstName);
             Assert.IsNotNull(result.LastName);
@@ -126,7 +126,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new UserService(dbContextMock.Object, mapperMock.Object);
-            var dto = await sut.UpdateUser(userUpdateDto);
+            var dto = await sut.UpdateUser(userUpdateDto,-1);
         }
 
         [TestMethod]
