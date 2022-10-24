@@ -1,23 +1,62 @@
 .header{
     background-color:#FAFAFA;
     text-align: center;
-    font-size: 40px;
+    font-size: 32pt;
     border-color: #D2D2D2;
     border-style: solid;
     border-width: 3px 3px 6px ;
     grid-template-columns: auto;
-    width: 75%;
+    width: 85%;
+    min-width: 600px;
     margin:auto;
     padding:20px;
     margin-bottom:20px;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    display: grid;
+    grid-template-columns: 200px auto 150px;
 
 }
-.forum-title{
+#forum-title{
     color:#a7cf39;
+    margin:auto;
+    padding:auto;
 }
-.forum-description{
-    color:Black;
-    font-size: 18pt;
+#forum-description{
     
+    font-size: 18pt;
+    text-align: center;
+    margin:auto;
+    padding:auto;
+    
+    
+}
+#counter{
+
+    background-color: #FAFAFA;
+    width:100%;
+    height:100%;
+    margin:auto;
+    padding:auto;
+    width:80%;
+    font-size:12px;
+    align-content: right;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
+#button-container{
+    display:grid;
+    grid-template-columns:auto auto;
+    grid-template-rows:auto;
+    align-content: center;
+    width:100%;
+    height:100%;
+    border-style:solid;
+    border-width: 1px;
+    border-color:black;
+    margin:auto;
+    padding:auto;
+    width:80%;
+    height: 20%;
+    margin-top:5px;
+    margin-right:5px;
+    font-size:10pt;
 }

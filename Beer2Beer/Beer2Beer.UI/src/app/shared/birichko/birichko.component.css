@@ -1,19 +1,18 @@
 #birichko {
-
     width:180px;
     height:200px;
-    position: absolute;
+    position: relative;
 }
 
 #eyes img {
-    place-items: center;
+    place-items:center;
     position: relative;
 }
-#lefteye img{
-    top:0px;
-    left:49px;
+#lefteye{
+    top: -132px;
+    left:-121px;
 }
-#righteye img{
-    top:0px;
-    left:49px;
+#righteye{
+    top:-132px;
+    left:-107px;
 }

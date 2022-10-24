@@ -8,6 +8,8 @@ import { BirichkoComponent } from './shared/birichko/birichko.component';
 import { PostPageComponent } from './pages/post-page/post-page.component';
 import { PostComponent } from './pages/post-page/post/post.component';
 import { HeaderComponent } from './pages/header/header.component';
+import { CounterComponent } from './shared/counter/counter.component';
+import { CounterContainerComponent } from './shared/counter-container/counter-container.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { HeaderComponent } from './pages/header/header.component';
     PostPageComponent,
     BirichkoComponent,
     HeaderComponent,
+    CounterComponent,
+    CounterContainerComponent,
   ],
   imports: [
     BrowserModule,
