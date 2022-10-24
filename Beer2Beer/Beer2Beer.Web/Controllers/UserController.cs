@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
-    //[Authorize]
+    [Authorize(Policy = "UserStatus")]
     [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase
@@ -35,7 +35,6 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
             var loginID = await this.authenticator.GetCurrentUserID(this.User);
@@ -54,7 +53,6 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin,User", Policy = "UserStatus")]
         [Route("avatar")]
         public async Task<IActionResult> UpdateUserAvatarAsync(IFormFile avatarImage, [FromForm] int userId)
         {

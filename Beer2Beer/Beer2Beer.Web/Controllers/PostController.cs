@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
-  //  [Authorize(Policy = "UserStatus")]
+    [Authorize(Policy = "UserStatus")]
     [ApiController]
     [Route("api/posts")]
     public class PostController : ControllerBase
