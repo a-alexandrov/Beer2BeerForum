@@ -2,6 +2,7 @@
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
+using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace Beer2Beer.Web.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostService postService;
+        private readonly IAuthenticator authenticator;
 
-        public PostController(IPostService postService)
+        public PostController(IPostService postService,IAuthenticator authenticator)
         {
             this.postService = postService;
+            this.authenticator = authenticator;
         }
 
         [HttpGet]
@@ -62,13 +65,15 @@ namespace Beer2Beer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePost([FromQuery] PostUpdateDto postDto)
         {
-            return new OkObjectResult(await this.postService.UpdatePost(postDto));
+            var loginID = await this.authenticator.GetCurrentUserID(this.User);
+            return new OkObjectResult(await this.postService.UpdatePost(postDto,loginID));
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {
-            return new OkObjectResult(await this.postService.DeletePost(postId));
+            var loginID = await this.authenticator.GetCurrentUserID(this.User);
+            return new OkObjectResult(await this.postService.DeletePost(postId,loginID));
         }
     }
 }

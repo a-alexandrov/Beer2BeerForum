@@ -91,9 +91,6 @@ namespace Beer2Beer.Services
 
             return postDtos;
         }
-
-
-
         public async Task<PostDto> CreatePost(PostCreateDto newPostDTO)
         {
             var postToAdd = mapper.Map<Post>(newPostDTO);
@@ -103,8 +100,10 @@ namespace Beer2Beer.Services
             return mapper.Map<PostDto>(postToAdd);
         }
 
-        public async Task<PostDto> UpdatePost(PostUpdateDto dto)
+        public async Task<PostDto> UpdatePost(PostUpdateDto dto, int loginID)
         {
+            this.ValidateOwnership(dto.UserID, loginID);
+
             var post = await this.context.Set<Post>()
                 .Where(p => !p.IsDeleted && p.UserID == dto.UserID)
                 .FirstOrDefaultAsync();
@@ -119,8 +118,10 @@ namespace Beer2Beer.Services
             return mapper.Map<PostDto>(post);
         }
 
-        public async Task<PostDto> UpdatePost(PostTagsUpdateDto tagsDto)
+        public async Task<PostDto> UpdatePost(PostTagsUpdateDto tagsDto, int loginID)
         {
+            this.ValidateOwnership(tagsDto.UserID, loginID);
+
             var post = await this.context.Set<Post>()
                 .Where(p => !p.IsDeleted && p.UserID == tagsDto.UserID)
                 .FirstOrDefaultAsync();
@@ -160,8 +161,10 @@ namespace Beer2Beer.Services
             return mapper.Map<PostDto>(post);
         }
 
-        public async Task<PostDto> DeletePost(int postID)
+        public async Task<PostDto> DeletePost(int postID,int loginID)
         {
+            this.ValidateOwnership(postID, loginID);
+
             var postToRemove = this.context.Set<Post>().FirstOrDefault(post => post.ID == postID);
 
             IsPostNull(postToRemove);
@@ -217,6 +220,12 @@ namespace Beer2Beer.Services
             {
                 post.TagPosts.Remove(tag);
                 this.context.Set<TagPost>().Remove(tag);
+            }
+        }
+
+        private void ValidateOwnership(int postUserID, int loginID) {
+            if (postUserID != loginID) {
+                throw new InvalidActionException("You don't have access to this resource!");
             }
         }
 
