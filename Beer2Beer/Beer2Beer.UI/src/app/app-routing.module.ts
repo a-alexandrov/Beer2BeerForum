@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PostPageComponent } from './pages/post-page/post-page.component';
+import { BirichkoComponent } from './shared/birichko/birichko.component';
+import { HeaderComponent } from './pages/header/header.component';
 
 const routes: Routes = [
   {
@@ -10,7 +12,13 @@ const routes: Routes = [
   },
   {
     path: 'post', component: PostPageComponent
-  }
+  },
+  {
+    path: 'birichko', component: BirichkoComponent
+  },
+  {
+    path: 'header', component: HeaderComponent
+  },
 ];
 
 @NgModule({

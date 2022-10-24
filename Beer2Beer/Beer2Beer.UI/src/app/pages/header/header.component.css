@@ -1,0 +1,23 @@
+.header{
+    background-color:#FAFAFA;
+    text-align: center;
+    font-size: 40px;
+    border-color: #D2D2D2;
+    border-style: solid;
+    border-width: 3px 3px 6px ;
+    grid-template-columns: auto;
+    width: 75%;
+    margin:auto;
+    padding:20px;
+    margin-bottom:20px;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+
+}
+.forum-title{
+    color:#a7cf39;
+}
+.forum-description{
+    color:Black;
+    font-size: 18pt;
+    
+}

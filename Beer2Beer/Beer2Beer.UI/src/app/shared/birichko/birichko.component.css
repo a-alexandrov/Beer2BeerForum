@@ -1,0 +1,19 @@
+#birichko {
+
+    width:180px;
+    height:200px;
+    position: absolute;
+}
+
+#eyes img {
+    place-items: center;
+    position: relative;
+}
+#lefteye img{
+    top:0px;
+    left:49px;
+}
+#righteye img{
+    top:0px;
+    left:49px;
+}
