@@ -11,6 +11,8 @@ import { HeaderComponent } from './pages/header/header.component';
 import { CounterComponent } from './shared/counter/counter.component';
 import { CounterContainerComponent } from './shared/counter-container/counter-container.component';
 import { ButtonContainerComponent } from './shared/button-container/button-container.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CommentComponent } from './pages/post-page/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { ButtonContainerComponent } from './shared/button-container/button-conta
     BirichkoComponent,
     HeaderComponent,
     CounterComponent,
+    CommentComponent,
     CounterContainerComponent,
     ButtonContainerComponent,
   ],
