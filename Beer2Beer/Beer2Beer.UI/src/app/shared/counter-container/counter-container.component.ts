@@ -9,6 +9,8 @@ export class CounterContainerComponent implements OnInit {
 
   constructor() { }
 
+  postsCount = 18000;
+  usersCount=9001;
   ngOnInit(): void {
   }
 

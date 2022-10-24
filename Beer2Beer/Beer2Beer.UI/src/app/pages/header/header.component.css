@@ -1,7 +1,7 @@
 .header{
     background-color:#FAFAFA;
     text-align: center;
-    font-size: 32pt;
+    font-size: 38pt;
     border-color: #D2D2D2;
     border-style: solid;
     border-width: 3px 3px 6px ;
@@ -13,7 +13,8 @@
     margin-bottom:20px;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     display: grid;
-    grid-template-columns: 200px auto 150px;
+    grid-template-columns: 200px auto 200px;
+    border-radius: 10px;
 
 }
 #forum-title{
@@ -32,31 +33,7 @@
 }
 #counter{
 
-    background-color: #FAFAFA;
-    width:100%;
-    height:100%;
-    margin:auto;
     padding:auto;
-    width:80%;
-    font-size:12px;
-    align-content: right;
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
-}
-#button-container{
-    display:grid;
-    grid-template-columns:auto auto;
-    grid-template-rows:auto;
-    align-content: center;
-    width:100%;
-    height:100%;
-    border-style:solid;
-    border-width: 1px;
-    border-color:black;
     margin:auto;
-    padding:auto;
-    width:80%;
-    height: 20%;
-    margin-top:5px;
-    margin-right:5px;
-    font-size:10pt;
 }
+

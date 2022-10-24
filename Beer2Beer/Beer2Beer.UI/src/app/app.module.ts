@@ -10,6 +10,7 @@ import { PostComponent } from './pages/post-page/post/post.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { CounterComponent } from './shared/counter/counter.component';
 import { CounterContainerComponent } from './shared/counter-container/counter-container.component';
+import { ButtonContainerComponent } from './shared/button-container/button-container.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CounterContainerComponent } from './shared/counter-container/counter-co
     HeaderComponent,
     CounterComponent,
     CounterContainerComponent,
+    ButtonContainerComponent,
   ],
   imports: [
     BrowserModule,
