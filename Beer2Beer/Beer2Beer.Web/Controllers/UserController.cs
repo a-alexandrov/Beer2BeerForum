@@ -39,17 +39,12 @@ namespace Beer2Beer.Web.Controllers
         {
             var loginID = await this.authenticator.GetCurrentUserID(this.User);
 
-            if (loginID != user.ID)
-            {
-                throw new InvalidActionException("An user can only update his own info");
-            }
-
             // update password should probably require reentering old password for security purposes
             if (user.PasswordHash != null)
             {
                 user.PasswordHash = customHasher.GetHash(user.PasswordHash);
             }
-            return new OkObjectResult(await this.userService.UpdateUser(user));
+            return new OkObjectResult(await this.userService.UpdateUser(user,loginID));
         }
 
         [HttpPut]

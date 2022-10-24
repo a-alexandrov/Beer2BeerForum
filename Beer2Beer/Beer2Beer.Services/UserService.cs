@@ -47,8 +47,13 @@ namespace Beer2Beer.Services
             return mapper.Map<UserFullDto>(user);
         }
 
-        public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto)
+        public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto,int loginID)
         {
+            if (loginID != userDto.ID)
+            {
+                throw new InvalidActionException("An user can only update his own info");
+            }
+
             var user = await this.GetUserById(userDto.ID);
 
             if (user == null || user.IsDeleted || user.ID != userDto.ID)
