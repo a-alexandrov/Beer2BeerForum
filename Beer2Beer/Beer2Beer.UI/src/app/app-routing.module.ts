@@ -6,6 +6,7 @@ import { BirichkoComponent } from './shared/birichko/birichko.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { CounterComponent } from './shared/counter/counter.component';
 import { CounterContainerComponent } from './shared/counter-container/counter-container.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,9 @@ const routes: Routes = [
   },
   {
     path: 'counter-container', component: CounterContainerComponent
+  },
+  {
+    path: 'login', component: LoginComponent
   }
 ];
 

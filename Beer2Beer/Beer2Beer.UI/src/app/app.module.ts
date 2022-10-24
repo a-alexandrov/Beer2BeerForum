@@ -13,6 +13,7 @@ import { CounterContainerComponent } from './shared/counter-container/counter-co
 import { ButtonContainerComponent } from './shared/button-container/button-container.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommentComponent } from './pages/post-page/comment/comment.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CommentComponent } from './pages/post-page/comment/comment.component';
     CommentComponent,
     CounterContainerComponent,
     ButtonContainerComponent,
+    LoginComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
