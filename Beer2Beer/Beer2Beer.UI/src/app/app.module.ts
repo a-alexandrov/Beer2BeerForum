@@ -14,6 +14,7 @@ import { ButtonContainerComponent } from './shared/button-container/button-conta
 import { HttpClientModule } from '@angular/common/http';
 import { CommentComponent } from './pages/post-page/comment/comment.component';
 import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LoginComponent } from './pages/login/login.component';
     CounterContainerComponent,
     ButtonContainerComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
