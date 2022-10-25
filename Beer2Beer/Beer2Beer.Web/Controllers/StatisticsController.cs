@@ -24,7 +24,7 @@ namespace Beer2Beer.Web.Controllers
         [HttpGet("postCount")]
         public async Task<IActionResult> GetPostsCount()
         {
-            return new OkObjectResult(await this.statisticsService.TotalUsersCount());
+            return new OkObjectResult(await this.statisticsService.TotalPostsCount());
         }
 
 
