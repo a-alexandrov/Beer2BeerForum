@@ -1,7 +1,7 @@
 .counter-container{
     margin:auto;
-    color:#FFF;
-    background-color:#ff4081;
+    color:rgba(0,0,0,.87);
+    background-color:#FFF;
     width:170px;
     margin-right:20px;
     font-size:14px;
