@@ -6,13 +6,13 @@
 
 #eyes img {
     place-items:center;
-    position: relative;
+    position: absolute;
 }
 #lefteye{
-    top: -132px;
-    left:-121px;
+    top: -103px;
+    left:47px;
 }
 #righteye{
-    top:-132px;
-    left:-107px;
+    top:-103px;
+    left:85px;
 }
