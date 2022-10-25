@@ -16,6 +16,7 @@ import { CommentComponent } from './pages/post-page/comment/comment.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
+import { RateComponent } from './shared/rate/rate.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +32,7 @@ import { UserPageComponent } from './pages/user-page/user-page.component';
     LoginComponent,
     RegisterComponent,
     UserPageComponent,
+    RateComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
