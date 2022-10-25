@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommentComponent } from './pages/post-page/comment/comment.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-
+import { UserPageComponent } from './pages/user-page/user-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +30,7 @@ import { RegisterComponent } from './pages/register/register.component';
     ButtonContainerComponent,
     LoginComponent,
     RegisterComponent,
+    UserPageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
