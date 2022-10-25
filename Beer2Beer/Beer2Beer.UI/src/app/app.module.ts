@@ -17,6 +17,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { RateComponent } from './shared/rate/rate.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,7 @@ import { RateComponent } from './shared/rate/rate.component';
     UserPageComponent,
     RateComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
