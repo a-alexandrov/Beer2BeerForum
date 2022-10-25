@@ -2,7 +2,7 @@
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 
-namespace QuizOverflow.Services.MappingProfiles
+namespace Beer2Beer.Services.MappingProfiles
 {
     public class MappingProfile : Profile
     {

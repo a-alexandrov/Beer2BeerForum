@@ -7,7 +7,7 @@ using Beer2Beer.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MockQueryable.Moq;
 using Moq;
-using QuizOverflow.Services.MappingProfiles;
+using Beer2Beer.Services.MappingProfiles;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
