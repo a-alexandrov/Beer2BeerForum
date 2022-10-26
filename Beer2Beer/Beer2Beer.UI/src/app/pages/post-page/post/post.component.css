@@ -1,41 +1,10 @@
-.post-container {
-    width: 70%;
-    height: 95%;
+mat-card-footer{
     display: flex;
-    background-color: #FAFAFA;
-    border-color: #D2D2D2;
-    border-style: solid;
-    border-width: 1px 1px 2px;
-    margin-bottom: 20px;
-    margin-left:auto;
-    margin-right:auto;
-    padding: 0 20px;
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    margin-left: auto;
+    align-items: flex-end;
+    justify-content: end;
 }
-
-.post-data {
-    width: 100%;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+mat-card{
+    margin-top: 7px;
+    margin-bottom: 7px;
 }
-
-.post-title {
-    color: #a7cf39;
-    font-size: 1.8em;
-}
-
-.post-user-image{
-    width: 100px;
-    height: 100px;
-}
-
-.user-data {
-    width: 100px;
-    margin-top: 20px;
-}
-
-p {
-    font-size: 16px;
-}
-
