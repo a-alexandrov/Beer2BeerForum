@@ -130,6 +130,7 @@ namespace Beer2Beer.Services
             var user = await this.context.Set<User>()
                 .Where(u => !u.IsDeleted)
                 .Include(u => u.Posts)
+                .Include(u => u.Comments)
                 .FirstOrDefaultAsync(u => u.ID == id);
 
             return user;
