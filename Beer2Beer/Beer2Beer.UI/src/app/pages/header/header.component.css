@@ -13,9 +13,8 @@
     margin-bottom:20px;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     display: grid;
-    grid-template-columns: 200px auto 200px;
+    grid-template-columns: 180px auto;
     border-radius: 10px;
-
 }
 #forum-title{
     color:#a7cf39;
@@ -23,17 +22,17 @@
     padding:auto;
 }
 #forum-description{
-    
     font-size: 18pt;
     text-align: center;
     margin:auto;
     padding:auto;
-    
-    
 }
 #counter{
-
     padding:auto;
     margin:auto;
 }
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
 

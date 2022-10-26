@@ -9,7 +9,7 @@ using System.Reflection;
 using Beer2Beer.Data.Contracts;
 using Beer2Beer.Data;
 using AutoMapper;
-using QuizOverflow.Services.MappingProfiles;
+using Beer2Beer.Services.MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

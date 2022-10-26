@@ -1,17 +1,51 @@
-<div id = "register-panel">
-    <form method = "post">
-        <label for="firstname">First name:</label><br>
-        <input type="text" id="firstname" name="firstname" value="..."><br>
-        <label for="lastname">Last name:</label><br>
-        <input type="text" id="lastname" name="lastname" value="..."><br><br>
-        <label for="email">E-mail:</label><br>
-        <input type="text" id="email" name="email" value="..."><br>
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" value="..."><br><br>
-        <label for="password">Password:</label><br>
-        <input type="text" id="password" name="password" value="..."><br><br>
-        
-        <input type="submit" value="Register" class="custom-button">
-      </form> 
+<mat-grid-list class="register-panel" cols="1" rowHeight="50px">
 
-</div>
+<mat-grid-tile>
+  Welcome to Beer2Beer
+</mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>First Name</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Last Name</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="mail@example.com" formControl="email" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput>
+    </mat-form-field>
+  </mat-grid-tile>
+  
+  <mat-grid-tile>
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-grid-tile>
+  
+  <mat-grid-tile>
+    <button mat-raised-button color="basic">Register</button>
+  </mat-grid-tile>
+
+</mat-grid-list>
+

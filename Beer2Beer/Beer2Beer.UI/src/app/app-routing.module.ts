@@ -4,7 +4,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { PostPageComponent } from './pages/post-page/post-page.component';
 import { BirichkoComponent } from './shared/birichko/birichko.component';
 import { HeaderComponent } from './pages/header/header.component';
-import { CounterComponent } from './shared/counter/counter.component';
 import { CounterContainerComponent } from './shared/counter-container/counter-container.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -22,9 +21,6 @@ const routes: Routes = [
   },
   {
     path: 'header', component: HeaderComponent
-  },
-  {
-    path: 'counter', component: CounterComponent
   },
   {
     path: 'counter-container', component: CounterContainerComponent
