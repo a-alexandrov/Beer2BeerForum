@@ -8,16 +8,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiPath: string = "https://localhost:44305/api/user"
-  private httpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json'
-});
+  private apiPath: string = "https://localhost:44305/api/users"
+
   constructor(private httpClient: HttpClient) { 
 
   }
 
   getUserById(id:number): Observable<User>{
-    return this.httpClient.get<User>(`${this.apiPath}/${id}`, {
-      headers: this.httpHeaders})
+
+    
+    return this.httpClient.get<User>(`${this.apiPath}/${id}`)
     }
+  getUsers(): Observable<User>{
+    return this.httpClient.get<User>(this.apiPath)
+  }
 }

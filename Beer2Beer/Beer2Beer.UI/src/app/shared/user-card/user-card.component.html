@@ -2,17 +2,16 @@
     <mat-card class="profile-card" >
         <mat-card-header>    
             <img mat-card-avatar src="assets/images/user_Image.jpg">
-            <mat-card-title >{{username}}</mat-card-title>
-            <mat-card-subtitle>Role: {{role}}</mat-card-subtitle>
+            <mat-card-title >{{user.username}}</mat-card-title>
+            <mat-card-subtitle>Role: {{user.isAdmin ? "Admin" : "User"}}</mat-card-subtitle>
         </mat-card-header>
     
         <div class="flexbox">
             <img mat-card-lg-image src="assets/images/user_Image.jpg">
             <mat-card-content>
-                <p>First Name: {{firstName}}</p>
-                <p>Last Name: {{lastName}}</p>
-                <p>Joined: {{joinDate}}</p>
-                <p>Posts: {{postCount}}</p>
+                <p>First Name: {{user.firstName}}</p>
+                <p>Last Name: {{user.lastName}}</p>
+                <p>Posts: {{user.posts.length}}</p>
             </mat-card-content>
         </div>
         <mat-card-footer>
