@@ -32,6 +32,20 @@ namespace Beer2Beer.Services
             };
         }
 
+        public async Task<List<UserFullDto>> GetUsers()
+        {
+            var users = await this.context.Set<User>().Where(u => !u.IsDeleted).ToListAsync();
+            return this.mapper.Map<List<UserFullDto>>(users);
+        }
+
+        public async Task<UserFullDto> GetUsersById(int id)
+        {
+            var user = await this.GetUserById(id);
+            this.IsUserNull(user, "This user does not exist");
+
+            return this.mapper.Map<UserFullDto>(user);
+        }
+        
         public async Task<UserFullDto> CreateUser(UserRegisterDto userDto)
         {
             var user = mapper.Map<User>(userDto);
@@ -114,7 +128,7 @@ namespace Beer2Beer.Services
         private async Task<User> GetUserById(int id)
         {
             var user = await this.context.Set<User>()
-                .Where(u=>!u.IsDeleted)
+                .Where(u => !u.IsDeleted)
                 .FirstOrDefaultAsync(u => u.ID == id);
 
             return user;

@@ -26,6 +26,19 @@ namespace Beer2Beer.Web.Controllers
             this.authenticator = authenticator;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Get()
+        {
+            return new OkObjectResult(await this.userService.GetUsers());
+        }
+        [HttpGet]
+        [Route ("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            return new OkObjectResult(await this.userService.GetUsersById(id));
+        }
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
