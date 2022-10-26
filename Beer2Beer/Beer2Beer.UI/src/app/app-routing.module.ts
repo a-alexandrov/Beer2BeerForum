@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 import { PostPageComponent } from './pages/post-page/post-page.component';
 import { BirichkoComponent } from './shared/birichko/birichko.component';
-import { HeaderComponent } from './pages/header/header.component';
-import { CounterContainerComponent } from './shared/counter-container/counter-container.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { CounterContainerComponent } from './shared/components/counter-container/counter-container.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import {UserPageComponent} from './pages/user-page/user-page.component'
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: '', component: HomePageComponent
   },
   {
     path: 'post', component: PostPageComponent
