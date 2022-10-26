@@ -1,0 +1,23 @@
+.container{
+    min-width: 200px;
+    margin-left: 7vmax;
+    margin-right: 7vmax;
+}
+.flexbox{
+    display: flex;
+}
+mat-card-content{
+    margin: 5px 5px 5px 5px;
+}
+p{
+    font-size: medium;
+}
+mat-card-actions{
+    width: inherit;
+    align-items: flex-end;
+    width: 60%;
+    margin-left:50%;
+}
+mat-card-footer{
+    width: inherit;
+}
