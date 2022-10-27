@@ -3,7 +3,7 @@
         <p>{{comment.content}}</p>
     </div>
     <div class="user-data">
-        <img class="comment-user-image" src="/assets/images/cat_haram.webp" alt="image">
+        <img class="comment-user-image" [src]="avatarImage" alt="image">
         <span class="user-name">{{comment.user.username}}</span>
         <p class="joined-on">{{'Joined on: ' + comment.createdOn.substring(0, 10)}}</p>
     </div>

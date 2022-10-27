@@ -10,14 +10,12 @@ export class UserService {
   private apiPath: string = "https://localhost:44305/api/users"
 
   constructor(private httpClient: HttpClient) { 
-
   }
 
   getUserById(id:number): Observable<User>{
-
-    
     return this.httpClient.get<User>(`${this.apiPath}/${id}`)
-    }
+  }
+
   getUsers(): Observable<User>{
     return this.httpClient.get<User>(this.apiPath)
   }
