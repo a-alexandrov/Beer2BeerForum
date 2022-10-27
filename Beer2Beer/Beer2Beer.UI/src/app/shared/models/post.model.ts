@@ -9,6 +9,7 @@ export class Post {
         public userId: number = 0,
         public userName: string = '',
         public avatarImage: Blob = new Blob,
+        public imageType: string = '',
         public createdOn: string = '',
         public likes: number = 0,
         public dislikes: number = 0,

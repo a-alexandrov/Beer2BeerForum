@@ -28,7 +28,7 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
             this.AllowedImageType = new List<string>()
             { 
-                ".bmp", ".jpg", ".jpeg", ".png" 
+                ".bmp", ".jpg", ".jpeg", ".png", ".gif" 
             };
         }
 
@@ -111,6 +111,7 @@ namespace Beer2Beer.Services
             {
                 avatarImage.CopyTo(target);
                 user.AvatarImage = target.ToArray();
+                user.ImageType = avatarImage.FileName;
             }
             
             await this.context.SaveChangesAsync();

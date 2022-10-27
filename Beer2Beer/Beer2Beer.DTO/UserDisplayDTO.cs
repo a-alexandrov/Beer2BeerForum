@@ -9,5 +9,6 @@ namespace Beer2Beer.DTO
         public int ID { get; set; }
         public string Username { get; set; }
         public byte[] AvatarImage { get; set; }
+        public string ImageType { get; set; }
     }
 }

@@ -19,6 +19,8 @@ namespace Beer2Beer.DTO
 
         public byte[] AvatarImage { get; set; }
 
+        public string ImageType { get; set; }
+
         public int PostLikes { get; set; }
 
         public int PostDislikes { get; set; }

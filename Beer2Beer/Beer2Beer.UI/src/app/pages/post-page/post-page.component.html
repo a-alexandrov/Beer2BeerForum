@@ -1,6 +1,6 @@
 <div class="container-main" *ngIf="post && post.comments">
     <app-post [post]="post" [avatarImage]="avatarImage"></app-post>
     <div *ngFor="let comment of post.comments">
-        <app-comment [comment]="comment" [avatarImage]="imageService.getImageFromByteArray(comment.user.avatarImage, 'jpg')"></app-comment>
+        <app-comment [comment]="comment" [avatarImage]="imageService.getImageFromByteArray(comment.user.avatarImage, comment.user.imageType)"></app-comment>
     </div>
 </div>

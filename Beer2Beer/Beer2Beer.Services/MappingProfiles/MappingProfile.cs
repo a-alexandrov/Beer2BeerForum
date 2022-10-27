@@ -12,13 +12,15 @@ namespace Beer2Beer.Services.MappingProfiles
             CreateMap<UserFullDto, User>();
 
             CreateMap<User, UserDisplayDto>()
-                .ForMember(d => d.AvatarImage, d => d.MapFrom(p => p.AvatarImage));
+                .ForMember(d => d.AvatarImage, d => d.MapFrom(p => p.AvatarImage))
+                .ForMember(d => d.ImageType, d => d.MapFrom(p => p.ImageType));
 
             CreateMap<UserDisplayDto, User>();
 
             CreateMap<Post, PostDto>()
                 .ForMember(d => d.Tags, d => d.MapFrom(p => p.TagPosts))
                 .ForMember(d => d.AvatarImage, d => d.MapFrom(p => p.User.AvatarImage))
+                .ForMember(d => d.ImageType, d => d.MapFrom(p => p.User.ImageType))
                 .ForMember(d => d.UserName, d => d.MapFrom(p => p.User.Username));
             CreateMap<PostDto, Post>()
                 .ForMember(p => p.TagPosts, p => p.MapFrom(d => d.Tags));

@@ -20,6 +20,8 @@ namespace Beer2Beer.Models
 
         public byte[] AvatarImage { get; set; }
 
+        public string ImageType { get; set; }
+
         public string PhoneNumber { get; set; }
 
         public List<Post> Posts { get; set; }
