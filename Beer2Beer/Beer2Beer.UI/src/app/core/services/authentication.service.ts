@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoginService } from './login.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UserLogin } from 'src/app/shared/models/userlogin.model';
+import { UserLogin } from 'src/app/shared/models/user-login.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +26,15 @@ export class AuthenticationService {
   }
 
   getStatus(){
-    return this.getToken().UserStatus??"nothing";
+    return this.getToken().UserStatus;
   }
+
   getRole(){
-    return this.getToken().UserRole??"nothing";
+    return this.getToken().UserRole;
   }
+  
   getID(){
-    return this.getToken().UserID??"nothing";
+    return this.getToken().UserID;
   }
 
 

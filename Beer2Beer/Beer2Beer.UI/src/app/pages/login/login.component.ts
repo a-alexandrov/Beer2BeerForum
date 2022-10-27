@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
-import { User } from 'src/app/shared/models/user.model';
-import { UserLogin } from 'src/app/shared/models/userlogin.model';
+import { UserLogin } from 'src/app/shared/models/user-login.model';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +10,7 @@ import { UserLogin } from 'src/app/shared/models/userlogin.model';
 })
 export class LoginComponent implements OnInit {
   hide=true;
-  profileForm = new FormGroup({
+  loginForm = new FormGroup({
     email: new FormControl('',Validators.required),
     password: new FormControl('',Validators.required),
   });
@@ -22,8 +21,8 @@ export class LoginComponent implements OnInit {
   }
   submit(){
     var login:UserLogin={
-      email:this.profileForm.value.email??"",
-      password:this.profileForm.value.password??""
+      email:this.loginForm.value.email??"",
+      password:this.loginForm.value.password??""
     }
 
     this.auth.login(login);

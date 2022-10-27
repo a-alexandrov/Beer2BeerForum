@@ -1,6 +1,6 @@
 <mat-grid-list class="login-panel" cols="1" rowHeight="50px">
 
-  <form [formGroup]="profileForm" (ngSubmit)="submit()">
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
 
     <mat-grid-tile>
       <mat-form-field appearance="fill" class = "custom-text-field">
@@ -20,7 +20,7 @@
     </mat-grid-tile>
 
     <mat-grid-tile>
-      <button mat-raised-button type="submit" color="basic" [disabled]="!profileForm.valid">Submit</button>
+      <button mat-raised-button type="submit" color="basic" [disabled]="!loginForm.valid">Submit</button>
     </mat-grid-tile>
     
   </form>

@@ -34,8 +34,10 @@ namespace Beer2Beer.Services.MappingProfiles
             CreateMap<User, UserLoginDto>();
             CreateMap<UserLoginDto, User>();
 
-            CreateMap<User, UserRegisterDto>();
-            CreateMap<UserRegisterDto, User>();
+            CreateMap<User, UserRegisterDto>()
+                .ForMember(d=>d.Password,d=>d.MapFrom(u=>u.PasswordHash));
+            CreateMap<UserRegisterDto, User>()
+                .ForMember(u=>u.PasswordHash,u=>u.MapFrom(d=>d.Password));
 
             CreateMap<User, UserUpdateDto>();
             CreateMap<UserUpdateDto, User>();
