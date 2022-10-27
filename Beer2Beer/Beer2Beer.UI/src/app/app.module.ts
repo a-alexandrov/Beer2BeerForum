@@ -18,6 +18,7 @@ import { RateComponent } from './shared/components/rate/rate.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MaterialsModule} from './shared/materials/materials.module';
 import { UserCardComponent } from './shared/user-card/user-card.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { UserCardComponent } from './shared/user-card/user-card.component';
     UserPageComponent,
     RateComponent,
     UserCardComponent,
+    AdminPageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule],
   providers: [],

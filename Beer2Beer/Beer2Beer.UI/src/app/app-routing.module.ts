@@ -8,6 +8,7 @@ import { CounterContainerComponent } from './shared/components/counter-container
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import {UserPageComponent} from './pages/user-page/user-page.component'
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,9 @@ const routes: Routes = [
   },
   {
     path: 'user/:id', component: UserPageComponent
+  },
+  {
+    path: 'admin', component: AdminPageComponent
   }
 ];
 

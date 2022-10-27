@@ -32,6 +32,7 @@ namespace Beer2Beer.Web.Controllers
         {
             return new OkObjectResult(await this.userService.GetUsers());
         }
+
         [HttpGet]
         [Route ("{id}")]
         [AllowAnonymous]

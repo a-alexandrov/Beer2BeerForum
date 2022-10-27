@@ -29,7 +29,6 @@ export class PostPageComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.notifier))
       .subscribe((post) => {
         this.post = post;
-        //GET DB ENTRY FOR FILE NAME!
         this.avatarImage = this.imageService.getImageFromByteArray(post.avatarImage, post.imageType);
       })
   }
