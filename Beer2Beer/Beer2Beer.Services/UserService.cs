@@ -92,7 +92,8 @@ namespace Beer2Beer.Services
                 throw new InvalidUserInputException(message: "Invalid Input.");
             }
 
-            var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
+            var fileExtension = Path.GetExtension(avatarImage.FileName);
+            var isValidType = AllowedImageType.Contains(fileExtension);
             var isCorrectSize = avatarImage.Length <= MaxAvatarImageSizeBytes && avatarImage.Length != 0;
 
             if (!isValidType || !isCorrectSize)

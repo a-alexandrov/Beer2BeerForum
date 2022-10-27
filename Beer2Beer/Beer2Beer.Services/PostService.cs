@@ -64,6 +64,7 @@ namespace Beer2Beer.Services
         {
             var post = await this.context.Set<Post>()
                 .Where(p => !p.IsDeleted)
+                .Include(u => u.User)
                 .Include(p => p.TagPosts)
                     .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)

@@ -1,13 +1,13 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>Post Title</mat-card-title>
-        <mat-card-subtitle>By: User</mat-card-subtitle>
-        <img mat-card-avatar src="assets/images/user_Image.jpg">
-    </mat-card-header>
-    <mat-card-content>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </mat-card-content>
-    <mat-card-footer>
+<div class="post-container">
+    <div class="post-data">
+        <span class="post-title">{{post.title}}</span>
+        <hr>
+        <p>{{ post.content }}</p>
         <app-rate></app-rate>
-    </mat-card-footer>
-</mat-card>
+    </div>
+    <div class="user-data">
+        <img class="post-user-image" [src]="avatarImage" alt="image">
+        <span class="user-name">{{ post.userName }}</span>
+        <p class="joined-on">{{ 'Joined on: ' + post.createdOn.substring(0, 10) }}</p>
+    </div>
+</div>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Beer2Beer.DTO
 {
@@ -12,6 +13,12 @@ namespace Beer2Beer.DTO
 
         public int UserID { get; set; }
 
+        public string UserName { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public byte[] AvatarImage { get; set; }
+
         public int PostLikes { get; set; }
 
         public int PostDislikes { get; set; }
@@ -21,5 +28,6 @@ namespace Beer2Beer.DTO
         public List<string> Tags { get; set; }
 
         public List<CommentInPostDTO> Comments { get; set; }
+
     }
 }

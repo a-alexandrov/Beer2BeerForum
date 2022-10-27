@@ -8,5 +8,6 @@ import { Post } from '../../../shared/models/post.model';
 
 export class PostComponent {
   @Input() post!: Post;
+  @Input() avatarImage!: any;
 }
 

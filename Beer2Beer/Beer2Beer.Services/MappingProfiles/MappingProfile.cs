@@ -15,7 +15,9 @@ namespace Beer2Beer.Services.MappingProfiles
             CreateMap<UserDisplayDto, User>();
 
             CreateMap<Post, PostDto>()
-                .ForMember(d => d.Tags, d => d.MapFrom(p => p.TagPosts));
+                .ForMember(d => d.Tags, d => d.MapFrom(p => p.TagPosts))
+                .ForMember(d => d.AvatarImage, d => d.MapFrom(p => p.User.AvatarImage))
+                .ForMember(d => d.UserName, d => d.MapFrom(p => p.User.Username));
             CreateMap<PostDto, Post>()
                 .ForMember(p => p.TagPosts, p => p.MapFrom(d => d.Tags));
 

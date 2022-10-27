@@ -7,6 +7,7 @@ import { Comment } from 'src/app/shared/models/comment.model';
   styleUrls: ['./comment.component.css']
 })
 
-export class CommentComponent{
-  @Input() comment!: Comment
+export class CommentComponent {
+  @Input() comment!: Comment;
+  @Input() avatarImage!: any;
 }

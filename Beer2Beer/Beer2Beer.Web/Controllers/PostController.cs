@@ -1,18 +1,13 @@
-﻿using AutoMapper;
-using Beer2Beer.DTO;
-using Beer2Beer.Models;
+﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
 using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Data;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
-    [Authorize(Policy = "UserStatus")]
+    //[Authorize(Policy = "UserStatus")]
     [ApiController]
     [Route("api/posts")]
     public class PostController : ControllerBase
@@ -39,7 +34,6 @@ namespace Beer2Beer.Web.Controllers
             return new OkObjectResult(await this.postService.GetPostById(id));
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("latest")]
         public async Task<IActionResult> GetLatestPosts(int count)
@@ -47,14 +41,12 @@ namespace Beer2Beer.Web.Controllers
             return new OkObjectResult(await this.postService.GetLatestPosts(count));
         }
 
-        [AllowAnonymous]
         [HttpGet]
         [Route("mostCommented")]
         public async Task<IActionResult> GetMostCommentedPost(int count)
         {
             return new OkObjectResult(await this.postService.GetPostsByMostComments(count));
         }
-        
 
         [HttpPost]
         public async Task<IActionResult> PostPost([FromQuery] PostCreateDto post)

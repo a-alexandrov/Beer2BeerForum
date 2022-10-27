@@ -11,6 +11,7 @@
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     float: right;
     padding-bottom: 15px;
+    border-radius: 8px;
 }
 
 .comment-data {
