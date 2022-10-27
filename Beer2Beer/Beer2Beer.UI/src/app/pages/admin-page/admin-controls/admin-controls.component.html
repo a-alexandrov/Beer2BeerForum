@@ -1,0 +1,10 @@
+<div>
+    <div>
+        <mat-slide-toggle [checked]="user.isBlocked" (toggleChange)="onToggleUserBlocking()"></mat-slide-toggle>
+        <span>{{ user.isBlocked ? 'Unblock' : 'Block' }}</span>
+    </div>
+    <div>
+        <mat-slide-toggle [checked]="user.isAdmin"></mat-slide-toggle>
+        <span>{{ user.isAdmin ? 'Demote to User' : 'Promote to Admin' }}</span>
+    </div>
+</div>

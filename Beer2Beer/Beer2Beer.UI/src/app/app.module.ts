@@ -21,6 +21,7 @@ import { UserCardComponent } from './shared/user-card/user-card.component';
 import {JwtModule} from '@auth0/angular-jwt';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AdminControlsComponent } from './pages/admin-page/admin-controls/admin-controls.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
     RateComponent,
     UserCardComponent,
     AdminPageComponent,
+    AdminControlsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule,ReactiveFormsModule,
     JwtModule.forRoot({

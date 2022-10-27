@@ -11,8 +11,8 @@ import { User } from 'src/app/shared/models/user.model';
 })
 export class UserPageComponent implements OnInit, OnDestroy{
   notifier = new Subject<void>;
-  userId !: any;
-  user ! :User;
+  userId!: any;
+  user!: User;
 
   constructor(
     private activatedRoute : ActivatedRoute,
@@ -20,7 +20,6 @@ export class UserPageComponent implements OnInit, OnDestroy{
     ) { }
 
   ngOnInit(): void {
-
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
     this.getUser()
   }
