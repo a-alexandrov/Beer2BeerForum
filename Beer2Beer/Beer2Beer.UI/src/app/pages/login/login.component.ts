@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl,Validators } from '@angular/forms';
+import { FormControl,FormGroup,Validators } from '@angular/forms';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { User } from 'src/app/shared/models/user.model';
+import { UserLogin } from 'src/app/shared/models/userlogin.model';
 
 @Component({
   selector: 'app-login',
@@ -7,21 +10,23 @@ import { FormControl,Validators } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  email = new FormControl('', [Validators.required, Validators.email]);
   hide=true;
+  profileForm = new FormGroup({
+    email: new FormControl('',Validators.required),
+    password: new FormControl('',Validators.required),
+  });
 
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
+  constructor(private auth:AuthenticationService) { }
+
+  ngOnInit(){
+  }
+  submit(){
+    var login:UserLogin={
+      email:this.profileForm.value.email??"",
+      password:this.profileForm.value.password??""
     }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    this.auth.login(login);
   }
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-  
 
 }

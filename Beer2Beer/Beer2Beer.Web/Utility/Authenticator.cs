@@ -23,6 +23,7 @@ namespace Beer2Beer.Web.Utility
         private UserRoles userRole;
         private UserStatuses userStatus;
         private const string userStatusClaimsName = "UserStatus";
+        private const string userRoleClaimsName = "UserRole";
         private const string userIDClaimsName = "UserID";
 
         public Authenticator(ILoginService loginService, IConfiguration config, ICustomHasher customHasher)
@@ -55,6 +56,7 @@ namespace Beer2Beer.Web.Utility
                 new Claim(ClaimTypes.Role,Enum.GetName(typeof(UserRoles),this.userRole)),
                 new Claim(userIDClaimsName,userFullDto.ID.ToString()),
                 new Claim(userStatusClaimsName,Enum.GetName(typeof(UserStatuses),this.userStatus)),
+                new Claim(userRoleClaimsName,Enum.GetName(typeof(UserRoles),this.userRole)),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

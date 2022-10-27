@@ -18,6 +18,8 @@ import { RateComponent } from './shared/components/rate/rate.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MaterialsModule} from './shared/materials/materials.module';
 import { UserCardComponent } from './shared/user-card/user-card.component';
+import {JwtModule} from '@auth0/angular-jwt';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 @NgModule({
@@ -38,7 +40,16 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
     UserCardComponent,
     AdminPageComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule,ReactiveFormsModule,
+    JwtModule.forRoot({
+    config: {
+      authScheme: 'Bearer',
+      headerName: 'Authorization',
+      tokenGetter: () => {
+        return localStorage.getItem('access_token');
+      },
+    }
+  })],
   providers: [],
   bootstrap: [AppComponent],
 })
