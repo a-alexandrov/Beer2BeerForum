@@ -23,6 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminControlsComponent } from './pages/admin-page/admin-controls/admin-controls.component';
 import { UniversalAppInterceptor } from './core/services/universal-app-interceptor.service';
+import { PostThumbnailComponent } from './shared/components/post-thumbnail/post-thumbnail.component';
+import { PostListComponent } from './shared/components/post-list/post-list.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,7 @@ import { UniversalAppInterceptor } from './core/services/universal-app-intercept
     AdminControlsComponent,
     PostListComponent,
     PostThumbnailComponent,
+
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule,ReactiveFormsModule,
     JwtModule.forRoot({
