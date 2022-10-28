@@ -21,6 +21,7 @@
     font-family: "Romantiques" !important;
     margin:auto;
     padding:auto;
+    line-height: 50px;
 }
 #forum-description{
     font-size: 18pt;

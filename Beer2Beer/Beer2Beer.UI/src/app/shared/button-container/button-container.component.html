@@ -1,4 +1,6 @@
 <div>
-    <button mat-raised-button color="basic">Login</button>
-    <button mat-raised-button color="basic">Register</button>
+    <button mat-raised-button [routerLink]="['/login']"color="basic">Login</button>
+    <button mat-raised-button [routerLink]="['/register']"color="basic">Register</button>
+    <button mat-raised-button (click)="logout()"[routerLink]="['/login']" color="basic">Logout</button>
+    <button mat-raised-button (click)="debug()" color="primary">ShowActiveUser</button>
 </div>

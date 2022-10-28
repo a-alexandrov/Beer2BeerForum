@@ -13,12 +13,14 @@ export class CounterContainerComponent implements OnInit,OnDestroy {
   
   constructor(private readonly statisticsService: StatisticsService) { }
 
-  postsCount!: number;
+  postsCount!:number;
   usersCount!:number;
+
   ngOnInit(): void {
     this.getUserCount();
     this.getPostCount();
   }
+  
   getUserCount(){
     this.statisticsService.getUserCount()
     .pipe(takeUntil(this.notifier))
@@ -26,6 +28,7 @@ export class CounterContainerComponent implements OnInit,OnDestroy {
         this.usersCount=count;
       })
   }
+
   getPostCount(){
     this.statisticsService.getPostCount()
     .pipe(takeUntil(this.notifier))

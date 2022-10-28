@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl,FormGroup,Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { UserLogin } from 'src/app/shared/models/user-login.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('',Validators.required),
   });
 
-  constructor(private auth:AuthenticationService) { }
+  constructor(private auth:AuthenticationService,private router:Router) { }
 
   ngOnInit(){
   }
@@ -24,7 +25,6 @@ export class LoginComponent implements OnInit {
       email:this.loginForm.value.email??"",
       password:this.loginForm.value.password??""
     }
-
     this.auth.login(login);
   }
 
