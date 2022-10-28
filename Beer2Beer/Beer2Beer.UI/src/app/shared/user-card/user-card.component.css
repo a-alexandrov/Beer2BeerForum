@@ -2,7 +2,8 @@
     min-width: 200px;
     margin-left: 7vmax;
     margin-right: 7vmax;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    box-shadow: 4px 4px 2px lightgrey !important;
 }
 .flexbox{
     display: flex;

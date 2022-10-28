@@ -9,13 +9,15 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import {UserPageComponent} from './pages/user-page/user-page.component'
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { AuthorizeGuardService } from './core/services/authorize-guard.service';
 
 const routes: Routes = [
   {
     path: '', component: HomePageComponent
   },
   {
-    path: 'post', component: PostPageComponent
+    path: 'post', component: PostPageComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'birichko', component: BirichkoComponent
@@ -36,8 +38,9 @@ const routes: Routes = [
     path: 'user/:id', component: UserPageComponent
   },
   {
-    path: 'admin', component: AdminPageComponent
-  },
+    path: 'admin', component: AdminPageComponent,
+    canActivate: [AuthorizeGuardService]
+  }
 ];
 
 @NgModule({
