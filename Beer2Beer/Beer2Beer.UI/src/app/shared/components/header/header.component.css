@@ -17,7 +17,8 @@
     border-radius: 10px;
 }
 #forum-title{
-    color:#a7cf39;
+    color: rgb(159, 85, 14);
+    font-family: "Romantiques" !important;
     margin:auto;
     padding:auto;
 }
