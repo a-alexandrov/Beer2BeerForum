@@ -1,0 +1,12 @@
+mat-card-subtitle{
+    margin-bottom: 3px;
+}
+img{
+    height: 60px !important;
+    width: 60px !important;
+}
+
+.end-button{
+    margin-left: auto;
+    height: auto;
+}

@@ -1,2 +1,9 @@
 <app-user-card class="card" [user]="user"></app-user-card>
-
+<div *ngIf="user.posts.length > 0">
+    <app-post-list [posts]="user.posts"> </app-post-list>
+</div>
+<div *ngIf="user.posts.length === 0">
+    <mat-card>
+        <mat-card-title> THIS USER HAS NO POSTS</mat-card-title>
+    </mat-card>
+</div>

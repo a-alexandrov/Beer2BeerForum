@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-header>
+        <img matCardAvatar />
+        <mat-card-title>{{post.title}}</mat-card-title>
+        <mat-card-subtitle>By: {{post.userName}}</mat-card-subtitle>
+
+        <mat-card-subtitle>Posted On: {{post.createdOn.substring(0,10)}}</mat-card-subtitle>
+        <div class="end-button">
+            <button mat-button >VIEW POST</button>
+        </div>
+    </mat-card-header>
+</mat-card>

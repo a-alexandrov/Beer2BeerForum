@@ -22,6 +22,8 @@ import {JwtModule} from '@auth0/angular-jwt';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminControlsComponent } from './pages/admin-page/admin-controls/admin-controls.component';
+import { PostListComponent } from './shared/components/post-list/post-list.component';
+import { PostThumbnailComponent } from './shared/components/post-thumbnail/post-thumbnail.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { AdminControlsComponent } from './pages/admin-page/admin-controls/admin-
     UserCardComponent,
     AdminPageComponent,
     AdminControlsComponent,
+    PostListComponent,
+    PostThumbnailComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule,ReactiveFormsModule,
     JwtModule.forRoot({
