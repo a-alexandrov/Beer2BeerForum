@@ -2,7 +2,7 @@
     min-width: 200px;
     margin-left: 7vmax;
     margin-right: 7vmax;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
     box-shadow: 4px 4px 2px lightgrey !important;
 }
 .flexbox{
@@ -14,12 +14,11 @@ mat-card-content{
 p{
     font-size: medium;
 }
-mat-card-actions{
-    width: inherit;
-    align-items: flex-end;
-    width: 60%;
-    margin-left:50%;
-}
 mat-card-footer{
     width: inherit;
+}
+
+.end-button{
+    margin-left: auto;
+    height: auto;
 }

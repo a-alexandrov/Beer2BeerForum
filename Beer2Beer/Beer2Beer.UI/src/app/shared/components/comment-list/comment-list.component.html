@@ -1,0 +1,10 @@
+<div class="container">
+    <mat-card>
+        <mat-card-content>
+            <div *ngFor="let comment of comments">
+                <app-comment-thumbnail [comment]="comment" [commenterName]="commenterName"></app-comment-thumbnail>
+                <br/>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,13 @@
+.container{
+    margin-right: 7vmax;
+    margin-left: 7vmax;
+}
+p{
+    text-align: center;
+}
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+    min-width: 50%!important;
+   }
+::ng-deep.mat-tab-group{
+    background-color: white!important;
+}

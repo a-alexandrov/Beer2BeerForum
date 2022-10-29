@@ -4,6 +4,9 @@
             <img mat-card-avatar [src]="imageService.getImageFromByteArray(user.avatarImage, user.imageType)">
             <mat-card-title >{{user.username}}</mat-card-title>
             <mat-card-subtitle>Role: {{user.isAdmin ? "Admin" : "User"}}</mat-card-subtitle>
+            <mat-card-actions class="end-button">
+                <button mat-button>EDIT PROFILE</button>
+            </mat-card-actions>
         </mat-card-header>
     
         <div class="flexbox">
@@ -15,11 +18,6 @@
                 <p>Comments: {{user.comments.length}}</p>
             </mat-card-content>
         </div>
-        <mat-card-footer>
-            <mat-card-actions>
-                <button mat-button>EDIT PROFILE</button>
-            </mat-card-actions>
-        </mat-card-footer>
     </mat-card>
 </div>
     

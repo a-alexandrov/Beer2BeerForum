@@ -14,7 +14,6 @@ export class PostThumbnailComponent implements OnInit {
 
   @Input () post: Post = new Post;
 
-  panelOpenState : boolean= false;
 
   constructor(public readonly imageService: Imageservice) { }
 

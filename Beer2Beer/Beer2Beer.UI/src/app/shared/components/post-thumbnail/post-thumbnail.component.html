@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header>
-        <img matCardAvatar />
+        <img matCardAvatar [src]="imageService.getImageFromByteArray(post.avatarImage, post.imageType)"/>
         <mat-card-title>{{post.title}}</mat-card-title>
         <mat-card-subtitle>By: {{post.userName}}</mat-card-subtitle>
 

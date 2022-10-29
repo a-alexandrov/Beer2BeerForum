@@ -25,6 +25,8 @@ import { AdminControlsComponent } from './pages/admin-page/admin-controls/admin-
 import { UniversalAppInterceptor } from './core/services/universal-app-interceptor.service';
 import { PostThumbnailComponent } from './shared/components/post-thumbnail/post-thumbnail.component';
 import { PostListComponent } from './shared/components/post-list/post-list.component';
+import { CommentThumbnailComponent } from './shared/components/comment-thumbnail/comment-thumbnail.component';
+import { CommentListComponent } from './shared/components/comment-list/comment-list.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { PostListComponent } from './shared/components/post-list/post-list.compo
     AdminControlsComponent,
     PostListComponent,
     PostThumbnailComponent,
+    CommentThumbnailComponent,
+    CommentListComponent,
 
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule,ReactiveFormsModule,
