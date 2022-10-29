@@ -19,7 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialsModule } from './shared/materials/materials.module';
 import { UserCardComponent } from './shared/user-card/user-card.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AdminControlsComponent } from './pages/admin-page/admin-controls/admin-controls.component';
 import { UniversalAppInterceptor } from './core/services/universal-app-interceptor.service';
@@ -27,6 +27,7 @@ import { PostThumbnailComponent } from './shared/components/post-thumbnail/post-
 import { PostListComponent } from './shared/components/post-list/post-list.component';
 import { CommentThumbnailComponent } from './shared/components/comment-thumbnail/comment-thumbnail.component';
 import { CommentListComponent } from './shared/components/comment-list/comment-list.component';
+import { AdminSearchComponent } from './pages/admin-page/admin-search/admin-search.component';
 
 @NgModule({
   declarations: [
@@ -50,9 +51,13 @@ import { CommentListComponent } from './shared/components/comment-list/comment-l
     PostThumbnailComponent,
     CommentThumbnailComponent,
     CommentListComponent,
-
+    AdminSearchComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule,ReactiveFormsModule,
+  imports: [
+    BrowserModule, 
+    AppRoutingModule, HttpClientModule, BrowserAnimationsModule, MaterialsModule,
+    ReactiveFormsModule,
+    FormsModule,
     JwtModule.forRoot({
     config: {
       authScheme: 'Bearer',

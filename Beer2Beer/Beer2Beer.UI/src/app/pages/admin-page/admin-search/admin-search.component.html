@@ -1,0 +1,16 @@
+<div class = "admin-search">
+    <mat-form-field>
+        <mat-label>Search by</mat-label>
+        <mat-select (selectionChange)="onSelect($event)">  
+            <mat-option value="firstName"> first name </mat-option>  
+            <mat-option value="userName"> user name </mat-option>
+            <mat-option value="email"> e-mail </mat-option>   
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <div class="search-bar">
+            <input matNativeControl [(ngModel)]="searchParam">
+        </div>
+    </mat-form-field>
+    <button mat-button [disabled]="(searchParam === null || searchParam === '')" (click)="onBtnClick($event)">search</button>
+</div>

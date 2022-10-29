@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { AdminService } from 'src/app/core/services/admin.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/shared/models/user.model';
 
@@ -12,7 +13,7 @@ export class AdminPageComponent implements OnInit, OnDestroy {
   notifier = new Subject<void>;
   users!: User[]
 
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService, private readonly adminService: AdminService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -23,8 +24,38 @@ export class AdminPageComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.notifier))
       .subscribe((users) => {
         this.users = users;
-        console.log(users);
       })
+  }
+
+  onSearch(obj: {searchType: string, searchInput: string}){
+    if(obj.searchType === 'firstName'){
+      this.adminService.getUsersByFirstName(obj.searchInput)
+      .pipe(takeUntil(this.notifier))
+      .subscribe((users) => {
+        this.users = users;
+      })
+    }
+    else if(obj.searchType === 'userName'){
+      this.adminService.getUsersByUserName(obj.searchInput)
+      .pipe(takeUntil(this.notifier))
+      .subscribe((user) => {
+        this.resetUsers();
+        this.users.push(user);
+      })
+    }
+    else if(obj.searchType === 'email'){
+      this.adminService.getUsersByEmail(obj.searchInput)
+      .pipe(takeUntil(this.notifier))
+      .subscribe((user) => {
+        this.resetUsers();
+        this.users.push(user);
+      })
+    }
+  }
+
+  resetUsers()
+  {
+    this.users.length = 0;
   }
 
   ngOnDestroy(): void {

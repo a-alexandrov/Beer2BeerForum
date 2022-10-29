@@ -27,4 +27,16 @@ export class AdminService {
   demoteUserByUserName(username: string): Observable<User>{
     return this.httpClient.put<User>(`${this.apiPath}/demote?username=${username}`, '')
   }
+
+  getUsersByFirstName(firstName: string): Observable<User[]>{
+    return this.httpClient.get<User[]>(`${this.apiPath}/byFirstName?firstName=${firstName}`)
+  }
+  
+  getUsersByUserName(username: string): Observable<User>{
+    return this.httpClient.get<User>(`${this.apiPath}/byUserName?username=${username}`)
+  }
+  
+  getUsersByEmail(email: string): Observable<User>{
+    return this.httpClient.get<User>(`${this.apiPath}/byEmail?email=${email}`)
+  }
 }
