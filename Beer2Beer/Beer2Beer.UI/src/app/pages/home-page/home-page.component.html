@@ -1,3 +1,26 @@
-<div>
-  
-</div>
+<mat-tab-group class="container">
+    <mat-tab label="LATEST POSTS" >
+        <div *ngIf="latestPosts.length > 0">
+            <app-post-list [posts]="latestPosts"> </app-post-list>
+        </div>
+        <div *ngIf="latestPosts.length === 0" >
+            <mat-card>
+                <mat-card-content>
+                    <p>The forum has no posts :(</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-tab>
+    <mat-tab label="MOST COMMENTED POSTS">
+        <div *ngIf="mostComentedPosts.length > 0">
+            <app-post-list [posts]="mostComentedPosts"> </app-post-list>
+        </div>
+        <div *ngIf="mostComentedPosts.length === 0" >
+            <mat-card>
+                <mat-card-content>
+                    <p>The forum has no posts to be commented :(</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </mat-tab>
+</mat-tab-group>
