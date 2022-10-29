@@ -17,4 +17,13 @@ export class PostsService {
             headers: this.httpHeaders
         })
     }
+    getLatest() : Observable<Post[]> {
+        let latest10 = "latest?count=10"
+        return this.httpClient.get<Post[]>(`${this.apiPath}/${latest10}`)
+    }
+    getMostComented() : Observable<Post[]> {
+        let mostCommented10 = "mostCommented?count=10"
+        return this.httpClient.get<Post[]>(`${this.apiPath}/${mostCommented10}`)
+    }
+
 }
