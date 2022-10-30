@@ -21,5 +21,9 @@ export class ButtonContainerComponent implements OnInit {
   debug(){
     this.auth.showActiveUser();
   }
+  
+  userIsLogged(){
+    return this.auth.isLogged();
+  }
 
 }
