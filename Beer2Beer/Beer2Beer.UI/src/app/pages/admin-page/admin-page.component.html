@@ -1,17 +1,16 @@
 <div>
-    <app-admin-search (newSearchEvent)="onSearch($event)"></app-admin-search>
+    <app-admin-search (newSearchEvent)="onSearch($event)" (newShowAllEvent)="getUsers()"></app-admin-search>
 </div>
-<ng-container *ngIf="users.length > 0">
-    <div #elseBlock *ngFor="let user of users">
+<ng-container *ngIf="users !== undefined && users.length > 0; else elseBlock">
+    <div *ngFor="let user of users">
         <div class = "user-container">
             <app-user-card class="card" [user]="user"></app-user-card>
         </div>
         <app-admin-controls [user]="user"></app-admin-controls>
     </div>
-    
 </ng-container>
 
-<ng-template *ngIf="users.length === 0">
-    <p>No matching results</p>
+<ng-template #elseBlock>
+    <div class="no-result">No matching results</div>
 </ng-template>
 

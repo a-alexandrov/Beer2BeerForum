@@ -64,7 +64,7 @@ namespace Beer2Beer.Web.Utility
                 issuer: null,
                 audience: null,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credentials);
 
             await Task.CompletedTask;

@@ -8,8 +8,9 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class AdminSearchComponent implements OnInit {
   @Output() newSearchEvent = new EventEmitter<{searchType: string, searchInput: string}>();
-
-  searchBy: string ='';
+  @Output() newShowAllEvent = new EventEmitter();
+  ngSelect = "userName";
+  searchBy: string ='userName';
   public searchParam: string = '';
   constructor() { }
 
@@ -20,8 +21,11 @@ export class AdminSearchComponent implements OnInit {
     this.searchBy = event.value;
   }
 
-  onBtnClick(event: Event){
-    this.newSearchEvent.emit({searchType: this.searchBy, searchInput: this.searchParam})
-    console.log('child event');
+  onSearchClick(event: Event){
+    this.newSearchEvent.emit({searchType: this.searchBy, searchInput: this.searchParam});
+  }
+
+  onShowAllClick(event: Event){
+    this.newShowAllEvent.emit();
   }
 }

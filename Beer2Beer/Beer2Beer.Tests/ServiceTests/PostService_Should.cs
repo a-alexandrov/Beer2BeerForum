@@ -8,11 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MockQueryable.Moq;
 using Moq;
 using Beer2Beer.Services.MappingProfiles;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,8 +39,6 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
 
-
-
         [TestMethod]
         public void UpdatePost_ShouldUpdate_When_ParamAreValidAsync()
         {
@@ -65,7 +60,6 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
-
 
         [TestMethod]
         public void UpdatePost_ShouldUpdate_When_ParamAreValidAndTitleIsNullAsync()
@@ -156,8 +150,6 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             Assert.AreEqual(result.Count, posts.Count);
         }
 
-
-
         [TestMethod]
         [ExpectedException(typeof(EntityNotFoundException))]
         public async Task GetPostByID_Should_Throw_When_NoPostsFound()
@@ -181,6 +173,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             Assert.AreEqual(result.Count, posts.Count);
         }
+
         [TestMethod]
         public async Task GetPostByID_Should_FindPost_When_ParamAreCorrect()
         {
@@ -204,7 +197,6 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             Assert.AreEqual(result.Content, post.Content);
         }
 
-
         [TestMethod]
         public async Task GetPostByID_Should_DeletePost_When_ParamAreCorrect()
         {
@@ -227,11 +219,5 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             Assert.AreEqual(result.ID, post.ID);
         }
-
-
-
-
-
-
     }
 }

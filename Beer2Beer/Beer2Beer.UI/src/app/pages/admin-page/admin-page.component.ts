@@ -38,17 +38,16 @@ export class AdminPageComponent implements OnInit, OnDestroy {
     else if(obj.searchType === 'userName'){
       this.adminService.getUsersByUserName(obj.searchInput)
       .pipe(takeUntil(this.notifier))
-      .subscribe((user) => {
-        this.resetUsers();
-        this.users.push(user);
+      .subscribe((users) => {
+        this.users = users;
       })
+      console.log(this.users);
     }
     else if(obj.searchType === 'email'){
       this.adminService.getUsersByEmail(obj.searchInput)
       .pipe(takeUntil(this.notifier))
-      .subscribe((user) => {
-        this.resetUsers();
-        this.users.push(user);
+      .subscribe((users) => {
+        this.users = users;
       })
     }
   }
