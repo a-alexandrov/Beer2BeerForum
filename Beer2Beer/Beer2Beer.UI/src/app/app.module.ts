@@ -28,6 +28,7 @@ import { PostListComponent } from './shared/components/post-list/post-list.compo
 import { CommentThumbnailComponent } from './shared/components/comment-thumbnail/comment-thumbnail.component';
 import { CommentListComponent } from './shared/components/comment-list/comment-list.component';
 import { AdminSearchComponent } from './pages/admin-page/admin-search/admin-search.component';
+import { UserEditPageComponent } from './pages/user-edit-page/user-edit-page.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AdminSearchComponent } from './pages/admin-page/admin-search/admin-sear
     CommentThumbnailComponent,
     CommentListComponent,
     AdminSearchComponent,
+    UserEditPageComponent,
   ],
   imports: [
     BrowserModule, 
