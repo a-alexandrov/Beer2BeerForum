@@ -31,9 +31,9 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.Set<User>()).Returns(mock.Object);
 
             var sut = new AdminService(dbContextMock.Object, mapper);
-            var result = await sut.FindUserByUserName("TestUser");
+            var result = await sut.FindUsersByUserName("TestUser");
 
-            Assert.IsTrue(result.Username == "TestUser");
+            Assert.IsTrue(result[0].Username == "TestUser");
         }
 
         [TestMethod]
@@ -50,9 +50,9 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.Set<User>()).Returns(mock.Object);
 
             var sut = new AdminService(dbContextMock.Object, mapper);
-            var result = await sut.FindUserByEmail("TestMail@test.com");
+            var result = await sut.FindUsersByEmail("TestMail@test.com");
 
-            Assert.IsTrue(result.Email == "TestMail@test.com");
+            Assert.IsTrue(result[0].Email == "TestMail@test.com");
         }
 
         [TestMethod]
@@ -75,8 +75,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EntityNotFoundException))]
-        public async Task FindUsersByFirstName_Should_Throw_WHen_ParamAreInvalid()
+        public async Task FindUsersByFirstName_Should_ReturnEmptyList_WHen_ParamAreInvalid()
         {
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = new Mapper(config);
@@ -90,6 +89,8 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             var sut = new AdminService(dbContextMock.Object, mapper);
             var result = await sut.FindUsersByFirstName("invalid");
+
+            Assert.IsTrue(result.Count == 0);
         }
 
         [TestMethod]
