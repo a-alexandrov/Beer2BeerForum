@@ -11,8 +11,8 @@ export class Post {
         public avatarImage: Blob = new Blob,
         public imageType: string = '',
         public createdOn: string = '',
-        public likes: number = 0,
-        public dislikes: number = 0,
+        public postLikes: number = 0,
+        public postDislikes: number = 0,
         public commentsCount: number = 0,
         public tags: string[] = [],
         public comments: Comment[] = []) {

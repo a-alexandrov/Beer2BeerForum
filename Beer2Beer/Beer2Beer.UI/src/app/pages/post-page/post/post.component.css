@@ -18,3 +18,10 @@ mat-card{
 
     box-shadow: 4px 4px 2px lightgrey !important; 
 }
+
+.post-like-dislike{
+    font-size: 12pt;
+    position: absolute;
+    bottom: 14%;
+    left: 50%;
+}
