@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { PostsService } from 'src/app/core/services/posts.service';
 import { Post } from 'src/app/shared/models/post.model';
 import { Imageservice } from 'src/app/core/services/image.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-page',
@@ -14,14 +15,18 @@ export class PostPageComponent implements OnInit, OnDestroy {
   notifier = new Subject<void>;
   post!: Post;
   avatarImage: any;
+  postId!: any;
   
   constructor(
      private readonly postsService: PostsService,
-     public readonly imageService: Imageservice) { 
+     public readonly imageService: Imageservice,
+     private activatedRoute : ActivatedRoute) { 
   }
 
   ngOnInit(): void {
-    this.getPostById(1);
+    this.postId = this.activatedRoute.snapshot.paramMap.get("id");
+    console.log(this.postId);
+    this.getPostById(parseInt(this.postId));
   }
 
   getPostById(id: number) {
@@ -29,7 +34,8 @@ export class PostPageComponent implements OnInit, OnDestroy {
     .pipe(takeUntil(this.notifier))
       .subscribe((post) => {
         this.post = post;
-        this.avatarImage = this.imageService.getImageFromByteArray(post.avatarImage, post.imageType);
+        this.avatarImage = this.imageService
+        .getImageFromByteArray(post.avatarImage, post.imageType);
       })
   }
 

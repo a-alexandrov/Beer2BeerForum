@@ -16,7 +16,7 @@ const routes: Routes = [
     path: '', component: HomePageComponent
   },
   {
-    path: 'post', component: PostPageComponent,
+    path: 'post/:id', component: PostPageComponent,
     canActivate: [AuthorizeGuardService]
   },
   {

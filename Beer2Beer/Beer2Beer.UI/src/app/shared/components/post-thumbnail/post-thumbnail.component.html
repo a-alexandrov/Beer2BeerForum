@@ -6,7 +6,7 @@
 
         <mat-card-subtitle>Posted On: {{post.createdOn.substring(0,10)}}</mat-card-subtitle>
         <div class="end-button">
-            <button mat-button >VIEW POST</button>
+            <button mat-button (click)="onClick()">VIEW POST</button>
         </div>
     </mat-card-header>
 </mat-card>
