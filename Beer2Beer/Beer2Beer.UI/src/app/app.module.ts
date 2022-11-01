@@ -29,6 +29,8 @@ import { CommentThumbnailComponent } from './shared/components/comment-thumbnail
 import { CommentListComponent } from './shared/components/comment-list/comment-list.component';
 import { AdminSearchComponent } from './pages/admin-page/admin-search/admin-search.component';
 import { UserEditPageComponent } from './pages/user-edit-page/user-edit-page.component';
+import { InputModalFormComponent } from './pages/user-edit-page/input-modal-form/input-modal-form.component';
+import { UploadAvatarModalComponent } from './pages/user-edit-page/upload-avatar-modal/upload-avatar-modal.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { UserEditPageComponent } from './pages/user-edit-page/user-edit-page.com
     CommentListComponent,
     AdminSearchComponent,
     UserEditPageComponent,
+    InputModalFormComponent,
+    UploadAvatarModalComponent,
   ],
   imports: [
     BrowserModule, 

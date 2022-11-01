@@ -1,1 +1,32 @@
-<p>user-edit-page works!</p>
+<div class="container">
+    <mat-card class="profile-card" >
+        <mat-card-header>    
+            <img mat-card-avatar [src]="imageService.getImageFromByteArray(user.avatarImage, user.imageType)">
+            <mat-card-title >{{user.username}}</mat-card-title>
+            <mat-card-subtitle>Role: {{user.isAdmin ? "Admin" : "User"}}</mat-card-subtitle>
+            <mat-card-actions>
+                <button mat-raised-button class="img-edit-btn">Change Picture</button>
+                <button mat-raised-button class="first-name-edit-btn"(click)="changeFirstNameDialog(user.firstName)">Change first name</button>
+                <button mat-raised-button class="last-name-edit-btn"(click)="changeLastNameDialog(user.lastName)">Change last name</button>
+                <button mat-raised-button class="pass-edit-btn" (click)="changePassDialog()">Change Password</button>
+                <button mat-raised-button class="save-changes-btn">Save changes</button>
+            </mat-card-actions>
+        </mat-card-header>
+    
+        <div class="contents">
+            <img mat-card-lg-image class="large-image" [src]="imageService.getImageFromByteArray(user.avatarImage, user.imageType)">
+            <div class="first-name">
+                First Name
+            </div>
+            <div class="first-name-value">
+                {{user.firstName}}
+            </div>
+            <div class="Last-name">
+                Last Name
+            </div>
+            <div class="first-name-value">
+                {{user.lastName}}
+            </div>
+        </div>
+    </mat-card>
+</div>

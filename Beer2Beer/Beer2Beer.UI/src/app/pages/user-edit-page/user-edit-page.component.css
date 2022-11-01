@@ -1,0 +1,67 @@
+.container{
+    min-width: 200px;
+    min-height: 300px;
+    margin-left: 7vmax;
+    margin-right: 7vmax;
+    box-shadow: 4px 4px 2px lightgrey !important;
+}
+
+.contents{
+    height: 225px;
+}
+
+mat-card-content{
+    margin: 5px 5px 5px 5px;
+}
+
+p{
+    font-size: medium;
+}
+
+mat-card-footer{
+    width: inherit;
+}
+
+.large-image{
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    border-width: 1px !important;
+    border-color: black!important;
+    border-style: groove!important;
+    border-radius: 12px !important;
+    box-shadow: 4px 4px 2px lightgrey !important;
+}
+
+.img-edit-btn{
+    position: absolute;
+    right: 6%;
+    top: 55%;
+}
+
+.first-name{
+    margin-top: 30px;
+    font-size: 24pt;
+}
+
+.first-name-value{
+    margin-top: 10px;
+    font-size: 16pt;
+}
+
+.Last-name{
+    margin-top: 30px;
+    font-size: 24pt;
+}
+
+.last-name-value{
+    margin-top: 10px;
+    font-size: 16pt;
+}
+
+.save-changes-btn{
+    position: absolute;
+    bottom: 5%;
+    left: 43%;
+    background-color: lightgreen;
+}
