@@ -25,7 +25,6 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.postId = this.activatedRoute.snapshot.paramMap.get("id");
-    console.log(this.postId);
     this.getPostById(parseInt(this.postId));
   }
 

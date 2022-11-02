@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
-    [Authorize(Policy = "UserStatus")]
+    //[Authorize(Policy = "UserStatus")]
     [ApiController]
     [Route("api/posts")]
     public class PostController : ControllerBase
@@ -36,6 +36,7 @@ namespace Beer2Beer.Web.Controllers
 
         [HttpGet]
         [Route("latest")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetLatestPosts(int count)
         {
             return new OkObjectResult(await this.postService.GetLatestPosts(count));
@@ -43,6 +44,7 @@ namespace Beer2Beer.Web.Controllers
 
         [HttpGet]
         [Route("mostCommented")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetMostCommentedPost(int count)
         {
             return new OkObjectResult(await this.postService.GetPostsByMostComments(count));
