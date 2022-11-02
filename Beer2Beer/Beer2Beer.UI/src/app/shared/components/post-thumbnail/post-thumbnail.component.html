@@ -1,8 +1,8 @@
 <mat-card>
     <mat-card-header>
-        <img matCardAvatar [src]="imageService.getImageFromByteArray(post.avatarImage, post.imageType)"/>
+        <img matCardAvatar [src]="imageService.getImageFromByteArray(post.avatarImage, post.imageType)" (click) = "clickProfile()"/>
         <mat-card-title>{{post.title}}</mat-card-title>
-        <mat-card-subtitle>By: {{post.userName}}</mat-card-subtitle>
+        <mat-card-subtitle (click) = "clickProfile()" class="clickable">By: {{post.userName}}</mat-card-subtitle>
 
         <mat-card-subtitle>Posted On: {{post.createdOn.substring(0,10)}}</mat-card-subtitle>
         <div class="end-button">

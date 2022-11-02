@@ -9,3 +9,9 @@ P{
 mat-card{
     margin-bottom: 10px;
 }
+.clickable{
+    cursor: pointer !important;
+}
+.clickable:hover{
+    text-decoration: underline;
+}

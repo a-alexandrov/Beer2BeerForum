@@ -29,7 +29,14 @@ mat-card{
 img{
     height: 60px;
     width: 60px;
+    cursor: pointer;
 }
 P{
     margin-top: 5px !important;
+}
+.clickable{
+    cursor: pointer !important;
+}
+.clickable:hover{
+    text-decoration: underline;
 }

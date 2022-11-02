@@ -4,9 +4,16 @@ mat-card-subtitle{
 img{
     height: 60px !important;
     width: 60px !important;
+    cursor: pointer;
 }
 
 .end-button{
     margin-left: auto;
     height: auto;
+}
+.clickable{
+    cursor: pointer !important;
+}
+.clickable:hover{
+    text-decoration: underline;
 }

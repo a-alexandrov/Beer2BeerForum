@@ -5,7 +5,8 @@ export class Comment {
         public id: number = 0,
         public content: string = '',
         public user: UserComment = new UserComment,
-        public createdOn: string = ''
+        public createdOn: string = '',
+        public postId: number = 0,
         ) {
     }
 }

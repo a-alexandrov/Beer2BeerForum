@@ -6,7 +6,7 @@ export class Post {
         public id: number = 0,
         public title: string = '',
         public content: string = '',
-        public userId: number = 0,
+        public userID: number = 0,
         public userName: string = '',
         public avatarImage: Blob = new Blob,
         public imageType: string = '',
