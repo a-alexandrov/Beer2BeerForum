@@ -5,7 +5,7 @@
             <mat-card-title >{{user.username}}</mat-card-title>
             <mat-card-subtitle>Role: {{user.isAdmin ? "Admin" : "User"}}</mat-card-subtitle>
             <mat-card-actions>
-                <button mat-raised-button class="img-edit-btn">Change Picture</button>
+                <button mat-raised-button class="img-edit-btn"(click)="changeAvatarDialog()">Change Picture</button>
                 <button mat-raised-button class="first-name-edit-btn"(click)="changeFirstNameDialog(user.firstName)">Change first name</button>
                 <button mat-raised-button class="last-name-edit-btn"(click)="changeLastNameDialog(user.lastName)">Change last name</button>
                 <button mat-raised-button class="pass-edit-btn" (click)="changePassDialog()">Change Password</button>
@@ -14,7 +14,8 @@
         </mat-card-header>
     
         <div class="contents">
-            <img mat-card-lg-image class="large-image" [src]="imageService.getImageFromByteArray(user.avatarImage, user.imageType)">
+            <img mat-card-lg-image class="large-image"  *ngIf="url === undefined" [src]="imageService.getImageFromByteArray(this.user.avatarImage, this.user.imageType)">
+            <img mat-card-lg-image class="large-image" *ngIf="url !== undefined" [src]="url">
             <div class="first-name">
                 First Name
             </div>

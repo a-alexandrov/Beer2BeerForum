@@ -1,0 +1,11 @@
+.form-group{
+    width: 350px;
+}
+
+.info{
+    font-size: 12pt;
+}
+
+.warning-message{
+    color: red;
+}

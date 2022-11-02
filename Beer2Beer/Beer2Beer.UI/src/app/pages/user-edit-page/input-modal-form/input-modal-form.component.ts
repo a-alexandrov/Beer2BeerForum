@@ -27,6 +27,7 @@ export class InputModalFormComponent implements OnInit {
     {
         this.input = this.currentValue;
     }
+
     this.dialogRef.close(this.input);
   }
 }

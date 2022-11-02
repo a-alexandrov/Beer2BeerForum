@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/models/user.model';
 import { Imageservice } from 'src/app/core/services/image.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InputModalFormComponent } from './input-modal-form/input-modal-form.component';
+import { UploadAvatarModalComponent } from './upload-avatar-modal/upload-avatar-modal.component';
 
 @Component({
   selector: 'app-user-edit-page',
@@ -21,6 +22,7 @@ export class UserEditPageComponent implements OnInit {
   minNameLength: number = 4;
   maxNameLength: number = 32;
   newPassword!: string;
+  url!: string | ArrayBuffer | null;
 
   constructor(
     private activatedRoute : ActivatedRoute,
@@ -31,7 +33,7 @@ export class UserEditPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
-    this.getUser()
+    this.getUser();
   }
 
   getUser(){
@@ -59,7 +61,10 @@ export class UserEditPageComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      this.user.firstName = result;
+      if(result !== undefined)
+      {
+        this.user.firstName = result;
+      }
     });
   }
   
@@ -76,7 +81,10 @@ export class UserEditPageComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      this.user.lastName = result;
+      if(result !== undefined)
+      {
+        this.user.lastName = result;
+      }
     });
   }
 
@@ -93,19 +101,24 @@ export class UserEditPageComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      this.newPassword = result;
+      if(result !== undefined)
+      {
+        this.newPassword = result;
+      }
     });
   }
 
   changeAvatarDialog(): void {
-    let dialogRef = this.dialog.open(InputModalFormComponent, {
-      width: '350px',
+    let dialogRef = this.dialog.open(UploadAvatarModalComponent, {
+      width: '400px',
       data: {
+        sizeMessage: "Size limit: 1Mb.",
+        filesMessage: "Accepted formats: bmp, jpg, jpeg, png, gif",
         }
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      this.newPassword = result;
+      this.url = result;
     });
   }
 }

@@ -1,0 +1,11 @@
+<div class="form-group">
+    <p class="info">
+        {{data.sizeMessage}}
+    </p>
+    <p class="info">
+        {{data.filesMessage}}
+    </p>
+    <input type="file" accept=".bmp, .jpg, .jpeg, .png, .gif" (change)="handleFileInput($event)">
+    <p class="warning-message" *ngIf="warning !== null">{{warning}}</p>
+    <button mat-raised-button class="ok-btn" [disabled]="fileToUpload === undefined || warning !== undefined" (click)="onClick()">Ok</button>
+</div>
