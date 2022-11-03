@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./upload-avatar-modal.component.css']
 })
 export class UploadAvatarModalComponent implements OnInit {
-  fileToUpload!: any;
+  fileToUpload!: File;
   warning!: string;
   url!: string | ArrayBuffer | null;
 
@@ -25,7 +25,7 @@ export class UploadAvatarModalComponent implements OnInit {
       this.fileToUpload = event.target.files[0];
     }
 
-    if (this.fileToUpload.length === 0)
+    if (this.fileToUpload.size === 0)
           return;
 
       const mimeType = this.fileToUpload.type;
@@ -36,14 +36,13 @@ export class UploadAvatarModalComponent implements OnInit {
       }
 
       const reader = new FileReader();
-      reader.readAsDataURL(this.fileToUpload); 
+      reader.readAsDataURL(this.fileToUpload);
       reader.onload = (_event) => { 
-          this.url = reader.result; 
+          this.url = reader.result;
       }
-      console.log(this.warning);
   }
 
   onClick(){
-    this.dialogRef.close(this.url);
+    this.dialogRef.close({url:this.url, file:this.fileToUpload});
   }
 }

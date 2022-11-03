@@ -11,6 +11,6 @@ namespace Beer2Beer.Services.Contracts
         Task<UserFullDto> GetUsersById(int id);
         Task<UserFullDto> CreateUser(UserRegisterDto userDto);
         Task<UserFullDto> UpdateUser(UserUpdateDto userDto, int loginID);
-        Task<UserFullDto> UpdateUser(IFormFile avatarImage, int userId);
+        Task<UserFullDto> UpdateUser(UserAvatarUpdateDto avatarDto);
     }
 }

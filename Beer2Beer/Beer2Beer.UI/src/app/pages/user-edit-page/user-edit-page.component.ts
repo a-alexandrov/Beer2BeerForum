@@ -7,6 +7,8 @@ import { Imageservice } from 'src/app/core/services/image.service';
 import { MatDialog } from '@angular/material/dialog';
 import { InputModalFormComponent } from './input-modal-form/input-modal-form.component';
 import { UploadAvatarModalComponent } from './upload-avatar-modal/upload-avatar-modal.component';
+import { UserUpdate } from 'src/app/shared/models/user-update.model';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
   selector: 'app-user-edit-page',
@@ -18,17 +20,19 @@ export class UserEditPageComponent implements OnInit {
   notifier = new Subject<void>;
   userId!: any;
   user!: User;
+  newUserParam: UserUpdate = new UserUpdate;
   messageName: string = 'Name must be between 4 and 32 symbols.';
   minNameLength: number = 4;
   maxNameLength: number = 32;
-  newPassword!: string;
-  url!: string | ArrayBuffer | null;
+  url!: any;
+  file!: File;
 
   constructor(
     private activatedRoute : ActivatedRoute,
     private readonly userService: UserService,
     public readonly imageService: Imageservice,
     private dialog: MatDialog,
+    private auth: AuthenticationService,
     ) { }
 
   ngOnInit(): void {
@@ -40,7 +44,7 @@ export class UserEditPageComponent implements OnInit {
     this.userService
       .getUserById(parseInt(this.userId))
       .pipe(takeUntil(this.notifier))
-      .subscribe((currentUser) => this.user = currentUser)
+      .subscribe((currentUser) => this.user = currentUser);
   }
   
   ngOnDestroy(): void {
@@ -64,6 +68,7 @@ export class UserEditPageComponent implements OnInit {
       if(result !== undefined)
       {
         this.user.firstName = result;
+        this.newUserParam.firstName = result;
       }
     });
   }
@@ -84,6 +89,7 @@ export class UserEditPageComponent implements OnInit {
       if(result !== undefined)
       {
         this.user.lastName = result;
+        this.newUserParam.lastName = result;
       }
     });
   }
@@ -103,7 +109,7 @@ export class UserEditPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result !== undefined)
       {
-        this.newPassword = result;
+        this.newUserParam.passwordHash = result;
       }
     });
   }
@@ -118,7 +124,30 @@ export class UserEditPageComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      this.url = result;
+      this.url = result.url;
+      this.file = result.file;
     });
+  }
+
+  onSaveChanges(){
+
+     if(this.newUserParam.firstName !== "" 
+     || this.newUserParam.lastName !== "" 
+     || this.newUserParam.passwordHash !== "")
+     {    
+        this.newUserParam.currentUserId = this.auth.getID();
+        this.newUserParam.id = this.user.id;
+        this.userService.updateUser(this.newUserParam)
+        .pipe(takeUntil(this.notifier))
+        .subscribe((currentUser) => this.user = currentUser);
+     }
+
+     if(this.url !== undefined)
+     {
+        this.userService.updateUserAvatar(this.file, this.user.id)
+        .pipe(takeUntil(this.notifier))
+        .subscribe((currentUser) => this.user = currentUser);
+     }
+
   }
 }

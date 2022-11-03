@@ -42,6 +42,8 @@ namespace Beer2Beer.Tests.TestHelper
             {
                 return new UserUpdateDto
                 {
+                    CurrentUserId = 1
+                    ,
                     ID = 1
                     ,
                     FirstName = "NewTestName"

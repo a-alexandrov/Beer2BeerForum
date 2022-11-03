@@ -5,7 +5,6 @@ using Beer2Beer.Models;
 using Beer2Beer.Services;
 using Beer2Beer.Services.CustomExceptions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MockQueryable.Moq;
 using Moq;
@@ -89,7 +88,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             var dbContextMock = new Mock<IBeer2BeerDbContext>();
 
-            var userUpdateDto = new UserUpdateDto { ID = 1 };
+            var userUpdateDto = new UserUpdateDto { CurrentUserId = 1,ID = 1 };
             var user = TestHelper.TestHelper.User;
             var users = new List<User> { user, new User { ID = 2 } };
 
@@ -133,12 +132,12 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
         [ExpectedException(typeof(InvalidUserInputException))]
         public async Task UpdateUser_ShouldNotUpdateAvatar_When_ParamAreInvalid()
         {
-            IFormFile nullFormFile = null;
+            var avatarDto = new UserAvatarUpdateDto{ AvatarImage = null , UserId = 0};
             var dbContextMock = new Mock<IBeer2BeerDbContext>();
             var mapperMock = new Mock<IMapper>();
 
             var sut = new UserService(dbContextMock.Object, mapperMock.Object);
-            await sut.UpdateUser(nullFormFile, 0);
+            await sut.UpdateUser(avatarDto);
         }
 
         [TestMethod]
@@ -162,7 +161,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
                                Headers = new HeaderDictionary()
                            };
             formFile.ContentType = ".png";
-
+            var avatarDto = new UserAvatarUpdateDto { AvatarImage = formFile, UserId = 1 };
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = new Mapper(config);
 
@@ -176,7 +175,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             var initialInput = Encoding.ASCII.GetBytes(content);
             var sut = new UserService(dbContextMock.Object, mapper);
-            var result = await sut.UpdateUser(formFile, 1);
+            var result = await sut.UpdateUser(avatarDto);
 
             CollectionAssert.AreEqual(initialInput, result.AvatarImage);
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
@@ -204,7 +203,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
                                Headers = new HeaderDictionary()
                            };
             formFile.ContentType = ".png";
-
+            var avatarDto = new UserAvatarUpdateDto { AvatarImage = formFile, UserId = 1 };
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = new Mapper(config);
 
@@ -217,7 +216,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             var initialInput = Encoding.ASCII.GetBytes(content);
             var sut = new UserService(dbContextMock.Object, mapper);
-            var result = await sut.UpdateUser(formFile, 1);
+            var result = await sut.UpdateUser(avatarDto);
         }
 
         [TestMethod]
@@ -242,7 +241,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
                                Headers = new HeaderDictionary()
                            };
             formFile.ContentType = ".png";
-
+            var avatarDto = new UserAvatarUpdateDto { AvatarImage = formFile, UserId = 1 };
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = new Mapper(config);
 
@@ -256,7 +255,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             var initialInput = Encoding.ASCII.GetBytes(content);
             var sut = new UserService(dbContextMock.Object, mapper);
-            var result = await sut.UpdateUser(formFile, 1);
+            var result = await sut.UpdateUser(avatarDto);
         }
     }
 }

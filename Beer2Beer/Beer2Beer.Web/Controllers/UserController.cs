@@ -52,21 +52,24 @@ namespace Beer2Beer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
-            var loginID = await this.authenticator.GetCurrentUserID(this.User);
+            //Something is wrong with this.User contents
+            //var loginID = await this.authenticator.GetCurrentUserID(this.User);
 
             // update password should probably require reentering old password for security purposes
             if (user.PasswordHash != null)
             {
                 user.PasswordHash = customHasher.GetHash(user.PasswordHash);
             }
-            return new OkObjectResult(await this.userService.UpdateUser(user,loginID));
+
+            return new OkObjectResult(await this.userService.UpdateUser(user, 0));
         }
 
         [HttpPut]
-        [Route("avatar")]
-        public async Task<IActionResult> UpdateUserAvatarAsync(IFormFile avatarImage, [FromForm] int userId)
+        [Route("avatar/{id}")]
+        public async Task<IActionResult> UpdateUserAvatarAsync(IFormFile avatarImage, [FromRoute] int id)
         {
-            return new OkObjectResult(await this.userService.UpdateUser(avatarImage, userId));
+            return new OkObjectResult(await this.userService
+                .UpdateUser(new UserAvatarUpdateDto { AvatarImage = avatarImage, UserId = id }));
         }
 
     }

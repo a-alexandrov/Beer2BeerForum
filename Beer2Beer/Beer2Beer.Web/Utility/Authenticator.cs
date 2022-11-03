@@ -93,8 +93,11 @@ namespace Beer2Beer.Web.Utility
 
         public async Task<int> GetCurrentUserID(ClaimsPrincipal claimsPrincipal)
         {
+            var input = claimsPrincipal;
             await Task.CompletedTask;
-            return int.Parse(claimsPrincipal.Claims.First(i => i.Type == userIDClaimsName).Value);
+            var claim = input.Claims.First(i => i.Type == userIDClaimsName);
+            var value = claim.Value;
+            return int.Parse(value);
         }
     }
 }

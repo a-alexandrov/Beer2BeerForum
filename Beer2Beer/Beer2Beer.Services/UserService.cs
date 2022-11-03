@@ -63,16 +63,17 @@ namespace Beer2Beer.Services
 
         public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto,int loginID)
         {
-            if (loginID != userDto.ID)
-            {
-                throw new InvalidActionException("An user can only update his own info");
-            }
-
+            
             var user = await this.GetUserById(userDto.ID);
 
             if (user == null || user.IsDeleted || user.ID != userDto.ID)
             {
                 throw new EntityNotFoundException(message: $"User with ID:{userDto.ID} not found.");
+            }
+
+            if (userDto.CurrentUserId != userDto.ID && !user.IsAdmin)
+            {
+                throw new InvalidActionException("An user can only update his own info");
             }
 
             user.FirstName = userDto.FirstName ?? user.FirstName;
@@ -85,16 +86,16 @@ namespace Beer2Beer.Services
             return mapper.Map<UserFullDto>(user);
         }
 
-        public async Task<UserFullDto> UpdateUser(IFormFile avatarImage, int userId)
+        public async Task<UserFullDto> UpdateUser(UserAvatarUpdateDto avatarDto)
         {
-            if (avatarImage == null)
+            if (avatarDto.AvatarImage == null)
             {
                 throw new InvalidUserInputException(message: "Invalid Input.");
             }
 
-            var fileExtension = Path.GetExtension(avatarImage.FileName);
+            var fileExtension = Path.GetExtension(avatarDto.AvatarImage.FileName);
             var isValidType = AllowedImageType.Contains(fileExtension);
-            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSizeBytes && avatarImage.Length != 0;
+            var isCorrectSize = avatarDto.AvatarImage.Length <= MaxAvatarImageSizeBytes && avatarDto.AvatarImage.Length != 0;
 
             if (!isValidType || !isCorrectSize)
             {
@@ -103,15 +104,15 @@ namespace Beer2Beer.Services
                              $"Allowed formats: {string.Join(',', AllowedImageType)}");
             }
 
-            var user = await this.GetUserById(userId);
+            var user = await this.GetUserById(avatarDto.UserId);
 
-            this.IsUserNull(user, $"User with ID: {userId} not found.");
+            this.IsUserNull(user, $"User with ID: {avatarDto.UserId} not found.");
 
             using (var target = new MemoryStream())
             {
-                avatarImage.CopyTo(target);
+                avatarDto.AvatarImage.CopyTo(target);
                 user.AvatarImage = target.ToArray();
-                user.ImageType = avatarImage.FileName;
+                user.ImageType = avatarDto.AvatarImage.FileName;
             }
             
             await this.context.SaveChangesAsync();
