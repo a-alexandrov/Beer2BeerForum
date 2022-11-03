@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginService } from './login.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserLogin } from 'src/app/shared/models/user-login.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { UserLogin } from 'src/app/shared/models/user-login.model';
 export class AuthenticationService {
 
   token:any;
-  constructor(private loginservice:LoginService,private jwt:JwtHelperService) { }
+  constructor(private loginservice:LoginService,private jwt:JwtHelperService,private router:Router) { }
 
   login(user:UserLogin){
     this.loginservice.post(user);
@@ -23,6 +24,10 @@ export class AuthenticationService {
     this.token = localStorage.getItem('token');
     var decodedToken = this.jwt.decodeToken(this.token);
     return decodedToken;
+  }
+
+  getJWT(){
+    return localStorage.getItem('token');
   }
 
   getStatus(){
@@ -47,6 +52,13 @@ export class AuthenticationService {
       return ((1000 * expiryTime) - (new Date()).getTime()) < 5000;
     } else {
       return false;
+    }
+  }
+  
+  validateExpTime(){
+    if(this.isTokenExpired()){
+      this.logout();
+      this.router.navigate([''])
     }
   }
 

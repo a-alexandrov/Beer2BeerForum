@@ -7,7 +7,9 @@ export class UniversalAppInterceptor implements HttpInterceptor {
   constructor( private authService: AuthenticationService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = this.authService.getToken();
+    this.authService.validateExpTime();
+    const token = this.authService.getJWT();
+
     req = req.clone({
       url:  req.url,
       setHeaders: {
