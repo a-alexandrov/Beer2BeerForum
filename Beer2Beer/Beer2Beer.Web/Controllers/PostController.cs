@@ -57,7 +57,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePost([FromQuery] PostUpdateDto postDto)
+        public async Task<IActionResult> UpdatePost([FromBody] PostUpdateDto postDto)
         {
             var loginID = await this.authenticator.GetCurrentUserID(this.User);
             return new OkObjectResult(await this.postService.UpdatePost(postDto,loginID));

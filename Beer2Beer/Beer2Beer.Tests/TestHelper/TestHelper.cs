@@ -126,6 +126,7 @@ namespace Beer2Beer.Tests.TestHelper
             {
                 return new PostUpdateDto
                 {
+                    ID = 1,
                     UserID = 1,
                     Title = "VeryValidTestTitleForTesting",
                     Content = "Test Post Content for testing purposes - it absolutely contains more than 64 symbols, I really promise",

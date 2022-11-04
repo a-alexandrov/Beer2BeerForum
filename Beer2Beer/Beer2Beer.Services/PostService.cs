@@ -109,7 +109,7 @@ namespace Beer2Beer.Services
             this.ValidateOwnership(dto.UserID, loginID);
 
             var post = await this.context.Set<Post>()
-                .Where(p => !p.IsDeleted && p.UserID == dto.UserID)
+                .Where(p => !p.IsDeleted && p.ID == dto.ID)
                 .FirstOrDefaultAsync();
 
             this.IsPostNull(post);
