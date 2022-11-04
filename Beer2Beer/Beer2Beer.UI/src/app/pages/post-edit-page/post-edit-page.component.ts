@@ -72,10 +72,9 @@ export class PostEditPageComponent implements OnInit {
       content:this.postEditForm.value.content??this.post.content
 
     }
-    console.log(postUpdate);
 
-    this.postService.putPost(postUpdate).subscribe();
-    this.router.navigate([route]);
+    this.postService.putPost(postUpdate).pipe(takeUntil(this.notifier)).subscribe(()=>this.router.navigate([route]));
+    
   }
 
 }
