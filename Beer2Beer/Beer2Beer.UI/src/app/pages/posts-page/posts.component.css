@@ -1,6 +1,7 @@
 .post-container{
     margin-right: 7vmax;
     margin-left: 7vmax;
+    min-width: 550px;
 }
 .search-panel{
     width:200px;

@@ -13,6 +13,7 @@
 .container{
     margin-right: 7vmax;
     margin-left: 7vmax;
+    min-width: 550px;
 }
 p{
     text-align: center;

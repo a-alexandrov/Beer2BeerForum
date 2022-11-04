@@ -1,10 +1,16 @@
-<mat-card>
+<mat-card class="card">
     <mat-card-header>
-        <img matCardAvatar [src]="imageService.getImageFromByteArray(post.avatarImage, post.imageType)" (click) = "clickProfile()"/>
-        <mat-card-title>{{post.title}}</mat-card-title>
-        <mat-card-subtitle (click) = "clickProfile()" class="clickable">By: {{post.userName}}</mat-card-subtitle>
-
-        <mat-card-subtitle>Posted On: {{post.createdOn.substring(0,10)}}</mat-card-subtitle>
+        <span class = "content-container">
+            <img matCardAvatar [src]="imageService.getImageFromByteArray(post.avatarImage, post.imageType)" (click) = "clickProfile()"/>
+            <mat-card-title>{{post.title}}</mat-card-title>
+            <mat-card-subtitle (click) = "clickProfile()" class="clickable">By: {{post.userName}}</mat-card-subtitle>
+    
+            <mat-card-subtitle>Posted On: {{post.createdOn.substring(0,10)}}</mat-card-subtitle>
+        </span>
+        
+        <div class="edit-button" *ngIf="isEditable()">
+            <button mat-button (click)="onClick()">EDIT POST</button>
+        </div>
         <div class="end-button">
             <button mat-button (click)="onClick()">VIEW POST</button>
         </div>

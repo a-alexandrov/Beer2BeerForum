@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../../models/post.model';
 import { Imageservice } from 'src/app/core/services/image.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class PostThumbnailComponent implements OnInit {
   @Input () post: Post = new Post;
   
 
-  constructor(public readonly imageService: Imageservice, private router: Router) { }
+  constructor(public readonly imageService: Imageservice, private router: Router,private auth:AuthenticationService) { }
 
   ngOnInit(): void {
 
@@ -30,5 +31,19 @@ export class PostThumbnailComponent implements OnInit {
   clickProfile(){
     var route = "/user/" + this.post.userID;
     this.router.navigate([route]);
+  }
+
+  isEditable():boolean{
+
+    if(this.auth.isLogged()){
+
+      console.log(this.auth.getID())
+      if(this.auth.getID()==this.post.userID){
+
+        console.log(this.auth.getID())
+        return true;
+      }
+    }
+    return false;
   }
 }
