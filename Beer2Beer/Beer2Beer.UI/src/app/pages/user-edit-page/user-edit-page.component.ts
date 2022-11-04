@@ -152,10 +152,10 @@ export class UserEditPageComponent implements OnInit {
 
   onSaveChanges(){
 
-     if(this.newUserParam.firstName !== "" 
-     || this.newUserParam.lastName !== "" 
-     || this.newUserParam.passwordHash !== ""
-     || this.newUserParam.phoneNumber !== "")
+     if(this.newUserParam.firstName !== null 
+     || this.newUserParam.lastName !== null 
+     || this.newUserParam.passwordHash !== null
+     || this.newUserParam.phoneNumber !== null)
      {    
         this.newUserParam.currentUserId = this.auth.getID();
         this.newUserParam.id = this.user.id;
