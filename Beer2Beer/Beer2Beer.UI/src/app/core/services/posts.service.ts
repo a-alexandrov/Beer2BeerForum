@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from '../../shared/models/post.model';
 import { PostUpdate } from 'src/app/shared/models/post-update.model';
 import { Observable } from 'rxjs';
+import { PostCreate } from 'src/app/shared/models/post-create.model';
 
 @Injectable({ providedIn: "root" })
 export class PostsService {
@@ -27,13 +28,17 @@ export class PostsService {
         return this.httpClient.get<Post[]>(`${this.apiPath}/${mostCommented10}`, {headers: this.httpHeaders})
     }
 
-    getPosts(query:string): Observable<Post[]>{
+    get(query:string): Observable<Post[]>{
 
         return this.httpClient.get<Post[]>(`${this.apiPath}/${query}`,{headers: this.httpHeaders});
     }
 
-    putPost(post:PostUpdate):Observable<Post>{
+    put(post:PostUpdate):Observable<Post>{
         return this.httpClient.put<Post>(this.apiPath,post);
+    }
+
+    post(post:PostCreate):Observable<Post>{
+        return this.httpClient.post<Post>(this.apiPath,post);
     }
 
 }

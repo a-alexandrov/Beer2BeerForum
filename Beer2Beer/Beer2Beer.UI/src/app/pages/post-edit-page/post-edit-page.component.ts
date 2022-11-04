@@ -73,7 +73,7 @@ export class PostEditPageComponent implements OnInit {
 
     }
 
-    this.postService.putPost(postUpdate).pipe(takeUntil(this.notifier)).subscribe(()=>this.router.navigate([route]));
+    this.postService.put(postUpdate).pipe(takeUntil(this.notifier)).subscribe(()=>this.router.navigate([route]));
     
   }
 

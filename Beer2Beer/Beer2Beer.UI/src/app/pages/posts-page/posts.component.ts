@@ -41,7 +41,7 @@ export class PostsComponent implements OnInit {
 
     console.log(this.query);
 
-    return this.postsService.getPosts(this.query)
+    return this.postsService.get(this.query)
       .pipe(takeUntil(this.notifier))
       .subscribe(posts => {
         this.postList = posts,
