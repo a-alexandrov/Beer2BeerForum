@@ -51,7 +51,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostPost([FromQuery] PostCreateDto post)
+        public async Task<IActionResult> PostPost([FromBody] PostCreateDto post)
         {
             return new OkObjectResult(await this.postService.CreatePost(post));
         }
