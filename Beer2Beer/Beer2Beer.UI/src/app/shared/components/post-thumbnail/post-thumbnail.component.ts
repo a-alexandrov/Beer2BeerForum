@@ -37,10 +37,8 @@ export class PostThumbnailComponent implements OnInit {
 
     if(this.auth.isLogged()){
 
-      console.log(this.auth.getID())
       if(this.auth.getID()==this.post.userID){
 
-        console.log(this.auth.getID())
         return true;
       }
     }
