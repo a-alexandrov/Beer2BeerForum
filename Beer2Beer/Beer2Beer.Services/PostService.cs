@@ -33,6 +33,7 @@ namespace Beer2Beer.Services
                     .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
                     .ThenInclude(c => c.User)
+                .Include(p => p.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -51,6 +52,7 @@ namespace Beer2Beer.Services
                     .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
                     .ThenInclude(c => c.User)
+                .Include(p=>p.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -84,6 +86,7 @@ namespace Beer2Beer.Services
                     .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
                     .ThenInclude(c => c.User)
+                .Include(p=>p.User)
                 .ToListAsync();
 
             ArePostNull(posts);
