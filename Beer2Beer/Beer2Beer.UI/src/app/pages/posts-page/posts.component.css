@@ -25,4 +25,16 @@
     border-color:#D2D2D2;
     background-color:#F2F2F2;
 }
+.toolbar-inside {
+padding:auto;
+margin:auto;
+  }
+.toolbar{
+    background-color: #F2F2F2;
+    width:100%;
+    margin:auto;
+    padding:auto;
+    min-width: 145px;
+    border-radius: 10px;
+}
 

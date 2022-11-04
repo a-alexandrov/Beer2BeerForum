@@ -11,17 +11,29 @@
     
 
     <mat-grid-tile>
-      <button mat-raised-button type="submit" color="basic" [disabled]="!queryForm.valid">Search</button>
+      <button mat-raised-button type="submit" color="basic" [disabled]="!queryForm.valid">Search posts</button>
     </mat-grid-tile>
     
   </form>
 
 </mat-grid-list>
 
-
 <div class = post-container>
   <mat-card>
     <mat-card-content>
+      <div>
+        <mat-toolbar color="basic" class="toolbar">
+          <mat-toolbar-row>
+              <div class="toolbar-inside">
+                <div>
+                  <button mat-raised-button [routerLink]="['/posts/create']" color="primary">Create a new post</button>
+                </div>
+              </div>
+              
+          </mat-toolbar-row>
+        </mat-toolbar>
+      </div>
+
       <div *ngFor="let post of postList| 
       slice: lowValue : highValue">
         <app-post-thumbnail [post]="post"></app-post-thumbnail>

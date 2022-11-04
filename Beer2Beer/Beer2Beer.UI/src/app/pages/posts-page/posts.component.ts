@@ -73,9 +73,8 @@ export class PostsComponent implements OnInit {
     }
 
     console.log(this.query);
-
-
   }
+
   ngOnDestroy(): void {
     this.notifier.next();
     this.notifier.complete();
