@@ -7,7 +7,7 @@
       </div>
     </mat-card-content>
   </mat-card>
-  <mat-paginator class = "paginator" [length]="postList.length
+  <mat-paginator *ngIf="postList" class = "paginator" [length]="postList.length
   " [pageSize]="pageSize"  
      (page)="pageEvent = getPaginatorData($event)">
   </mat-paginator> 
