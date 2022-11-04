@@ -79,7 +79,7 @@ namespace Beer2Beer.Services
             user.FirstName = userDto.FirstName ?? user.FirstName;
             user.LastName = userDto.LastName ?? user.LastName;
             user.PasswordHash = userDto.PasswordHash ?? user.PasswordHash;
-
+            user.PhoneNumber = userDto.PhoneNumber ?? user.PhoneNumber;
 
             await this.context.SaveChangesAsync();
 

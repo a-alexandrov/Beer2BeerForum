@@ -40,6 +40,7 @@ namespace Beer2Beer.Web.Controllers
         {
             return new OkObjectResult(await this.userService.GetUsersById(id));
         }
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
@@ -52,10 +53,6 @@ namespace Beer2Beer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserUpdateDto user)
         {
-            //Something is wrong with this.User contents
-            //var loginID = await this.authenticator.GetCurrentUserID(this.User);
-
-            // update password should probably require reentering old password for security purposes
             if (user.PasswordHash != null)
             {
                 user.PasswordHash = customHasher.GetHash(user.PasswordHash);

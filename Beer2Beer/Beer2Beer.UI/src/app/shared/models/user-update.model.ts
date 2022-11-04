@@ -5,6 +5,7 @@ export class UserUpdate {
         public id:number=0,
         public firstName:string="",
         public lastName:string="",
-        public passwordHash:string = ""
+        public passwordHash:string = "",
+        public phoneNumber:string = ""
     ){}
 }

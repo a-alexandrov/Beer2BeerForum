@@ -11,12 +11,12 @@ export class User {
         public firstName:string = "",
         public lastName:string = "",
         public username:string = "",
+        public email: string = "",
         public avatarImage: Blob = new Blob,
         public imageType: string = '',
         public phoneNumber?:string,
         public posts: Post[] = [],
         public comments: Comment[] = []
-
     ){}
 
     

@@ -129,11 +129,33 @@ export class UserEditPageComponent implements OnInit {
     });
   }
 
+  changePhoneDialog(){
+    let dialogRef = this.dialog.open(InputModalFormComponent, {
+      width: '350px',
+      data: { 
+        message: "Type in new phone number",
+         minValue: 1,
+         maxValue: 15,
+         currentValue: '',
+         isPassword: false
+        }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if(result !== undefined)
+      {
+        this.user.phoneNumber = result;
+        this.newUserParam.phoneNumber = result;
+      }
+    });
+  }
+
   onSaveChanges(){
 
      if(this.newUserParam.firstName !== "" 
      || this.newUserParam.lastName !== "" 
-     || this.newUserParam.passwordHash !== "")
+     || this.newUserParam.passwordHash !== ""
+     || this.newUserParam.phoneNumber !== "")
      {    
         this.newUserParam.currentUserId = this.auth.getID();
         this.newUserParam.id = this.user.id;
