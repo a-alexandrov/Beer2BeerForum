@@ -12,6 +12,7 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AuthorizeGuardService } from './core/services/authorize-guard.service';
 import { UserEditPageComponent } from './pages/user-edit-page/user-edit-page.component';
 import { PostsComponent } from './pages/posts-page/posts.component';
+import { PostEditPageComponent } from './pages/post-edit-page/post-edit-page.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   },
   {
     path: 'user/edit/:id', component: UserEditPageComponent,
+    canActivate: [AuthorizeGuardService]
+  },
+  {
+    path: 'post/edit/:id', component: PostEditPageComponent,
     canActivate: [AuthorizeGuardService]
   }
 ];

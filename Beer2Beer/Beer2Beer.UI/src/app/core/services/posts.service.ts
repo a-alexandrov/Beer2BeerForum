@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from '../../shared/models/post.model';
+import { PostUpdate } from 'src/app/shared/models/post-update.model';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: "root" })
@@ -29,6 +30,10 @@ export class PostsService {
     getPosts(query:string): Observable<Post[]>{
 
         return this.httpClient.get<Post[]>(`${this.apiPath}/${query}`,{headers: this.httpHeaders});
+    }
+
+    putPost(post:PostUpdate):Observable<Post>{
+        return this.httpClient.put<Post>(this.apiPath,post);
     }
 
 }

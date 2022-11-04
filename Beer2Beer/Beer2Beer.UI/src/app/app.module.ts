@@ -32,6 +32,7 @@ import { UserEditPageComponent } from './pages/user-edit-page/user-edit-page.com
 import { InputModalFormComponent } from './pages/user-edit-page/input-modal-form/input-modal-form.component';
 import { UploadAvatarModalComponent } from './pages/user-edit-page/upload-avatar-modal/upload-avatar-modal.component';
 import { PostsComponent } from './pages/posts-page/posts.component';
+import { PostEditPageComponent } from './pages/post-edit-page/post-edit-page.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { PostsComponent } from './pages/posts-page/posts.component';
     InputModalFormComponent,
     UploadAvatarModalComponent,
     PostsComponent,
+    PostEditPageComponent,
   ],
   imports: [
     BrowserModule, 
