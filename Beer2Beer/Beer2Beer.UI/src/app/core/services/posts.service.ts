@@ -26,9 +26,9 @@ export class PostsService {
         return this.httpClient.get<Post[]>(`${this.apiPath}/${mostCommented10}`, {headers: this.httpHeaders})
     }
 
-    getPosts(): Observable<Post[]>{
+    getPosts(query:string): Observable<Post[]>{
 
-        return this.httpClient.get<Post[]>(`${this.apiPath}`,{headers: this.httpHeaders});
+        return this.httpClient.get<Post[]>(`${this.apiPath}/${query}`,{headers: this.httpHeaders});
     }
 
 }

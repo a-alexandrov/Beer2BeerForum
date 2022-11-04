@@ -1,4 +1,25 @@
-<div class = container>
+<mat-grid-list class="search-panel" cols="1" rowHeight="50px">
+
+  <form [formGroup]="queryForm" (ngSubmit)="getPosts()">
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill" class = "custom-text-field">
+        <mat-label for="keyword">Keyword</mat-label>
+        <input matInput id="keyword" type="text" formControlName="keyword">
+      </mat-form-field>
+    </mat-grid-tile>
+    
+
+    <mat-grid-tile>
+      <button mat-raised-button type="submit" color="basic" [disabled]="!queryForm.valid">Search</button>
+    </mat-grid-tile>
+    
+  </form>
+
+</mat-grid-list>
+
+
+<div class = post-container>
   <mat-card>
     <mat-card-content>
       <div *ngFor="let post of postList| 
