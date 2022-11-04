@@ -1,0 +1,14 @@
+<div class = container>
+  <mat-card>
+    <mat-card-content>
+      <div *ngFor="let post of postList| 
+      slice: lowValue : highValue">
+        <app-post-thumbnail [post]="post"></app-post-thumbnail>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-paginator class = "paginator" [length]="postList.length
+  " [pageSize]="pageSize"  
+     (page)="pageEvent = getPaginatorData($event)">
+  </mat-paginator> 
+</div>

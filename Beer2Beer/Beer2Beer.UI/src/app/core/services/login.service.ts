@@ -16,7 +16,7 @@ export class LoginService {
     .subscribe(response => 
     {
       localStorage.setItem ('token', response.token);
-      this.router.navigate(['/admin'])
+      this.router.navigate([''])
     }
     )
   }

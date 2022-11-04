@@ -31,6 +31,7 @@ import { AdminSearchComponent } from './pages/admin-page/admin-search/admin-sear
 import { UserEditPageComponent } from './pages/user-edit-page/user-edit-page.component';
 import { InputModalFormComponent } from './pages/user-edit-page/input-modal-form/input-modal-form.component';
 import { UploadAvatarModalComponent } from './pages/user-edit-page/upload-avatar-modal/upload-avatar-modal.component';
+import { PostsComponent } from './pages/posts-page/posts.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { UploadAvatarModalComponent } from './pages/user-edit-page/upload-avatar
     UserEditPageComponent,
     InputModalFormComponent,
     UploadAvatarModalComponent,
+    PostsComponent,
   ],
   imports: [
     BrowserModule, 

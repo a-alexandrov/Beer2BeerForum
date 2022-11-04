@@ -11,6 +11,7 @@ import {UserPageComponent} from './pages/user-page/user-page.component'
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { AuthorizeGuardService } from './core/services/authorize-guard.service';
 import { UserEditPageComponent } from './pages/user-edit-page/user-edit-page.component';
+import { PostsComponent } from './pages/posts-page/posts.component';
 
 const routes: Routes = [
   {
@@ -21,13 +22,8 @@ const routes: Routes = [
     canActivate: [AuthorizeGuardService]
   },
   {
-    path: 'birichko', component: BirichkoComponent
-  },
-  {
-    path: 'header', component: HeaderComponent
-  },
-  {
-    path: 'counter-container', component: CounterContainerComponent
+    path: 'posts', component: PostsComponent,
+    canActivate: [AuthorizeGuardService]
   },
   {
     path: 'login', component: LoginComponent
