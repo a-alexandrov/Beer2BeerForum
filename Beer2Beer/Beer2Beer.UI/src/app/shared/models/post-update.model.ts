@@ -4,5 +4,6 @@ export class PostUpdate {
         public userID: number = 0,
         public title: string = '',
         public content: string = '',
+        public tags: string[],
     ) { }
 }

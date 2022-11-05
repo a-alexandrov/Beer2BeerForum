@@ -69,7 +69,8 @@ export class PostEditPageComponent implements OnInit {
       id:this.post.id,
       userID:this.post.userID,
       title:this.postEditForm.value.title??this.post.title,
-      content:this.postEditForm.value.content??this.post.content
+      content:this.postEditForm.value.content??this.post.content,
+      tags:this.post.tags
 
     }
 

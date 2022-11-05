@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Beer2Beer.DTO
 {
@@ -13,6 +14,6 @@ namespace Beer2Beer.DTO
 
         public string Content { get; set; }
 
-        //Tags
+        public List<string> Tags { get; set; }
     }
 }
