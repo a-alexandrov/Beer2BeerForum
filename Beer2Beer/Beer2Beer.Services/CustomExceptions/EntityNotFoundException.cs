@@ -10,10 +10,5 @@ namespace Beer2Beer.Services.CustomExceptions
             : base(message)
         {
         }
-
-        public EntityNotFoundException(string message, Exception innerException)
-            : base(message, innerException)
-        {
-        }
     }
 }

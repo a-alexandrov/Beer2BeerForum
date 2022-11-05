@@ -9,7 +9,7 @@ using System.Reflection;
 using Beer2Beer.Data.Contracts;
 using Beer2Beer.Data;
 using AutoMapper;
-using QuizOverflow.Services.MappingProfiles;
+using Beer2Beer.Services.MappingProfiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -67,9 +67,10 @@ namespace Beer2Beer.Web
                         },
                         new string[]{ }
                     }
-
                 });
             });
+
+            services.AddCors();
 
             services.AddControllersWithViews();
 
@@ -117,7 +118,7 @@ namespace Beer2Beer.Web
             });
         }
             // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -134,6 +135,13 @@ namespace Beer2Beer.Web
 
             app.UseRouting();
 
+            // Cross Origin Resource Sharing
+            // TODO: Limit to only Beer2Beer.UI
+            app.UseCors(x => x
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .SetIsOriginAllowed(origin => true) // allow any origin
+              .AllowCredentials()); // allow credentials
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -153,8 +161,6 @@ namespace Beer2Beer.Web
             {
                 c.SwaggerEndpoint("/swagger/v2/swagger.json", "Beer2BeerAPI");
             });
-
-            
         }
 
         public void RegisterServices(IServiceCollection services)

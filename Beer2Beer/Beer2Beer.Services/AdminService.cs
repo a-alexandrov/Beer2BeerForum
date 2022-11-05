@@ -5,7 +5,6 @@ using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Beer2Beer.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,29 +22,26 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
         }
 
-        public async Task<UserFullDto> FindUserByUserName(string username)
+        public async Task<List<UserFullDto>> FindUsersByUserName(string username)
         {
-            var user = await this.context.Set<User>()
-                .Where(u=>!u.IsDeleted)
-                .FirstOrDefaultAsync(u => u.Username == username);
+            var users = await this.context.Set<User>()
+                .Where(u => !u.IsDeleted && u.Username.Contains(username))
+                .ToListAsync();
 
-            IsUserNull(user);
+            var usersDto = mapper.Map<List<UserFullDto>>(users) ?? new List<UserFullDto>();
 
-            var userDto = mapper.Map<UserFullDto>(user);
-
-            return userDto;
+            return usersDto;
         }
 
-        public async Task<UserFullDto> FindUserByEmail(string email)
+        public async Task<List<UserFullDto>> FindUsersByEmail(string email)
         {
-            var user = await this.context.Set<User>()
-                .Where(u => !u.IsDeleted)
-                .FirstOrDefaultAsync(u => u.Email == email);
+            var users = await this.context.Set<User>()
+                .Where(u => !u.IsDeleted && u.Email.Contains(email))
+                .ToListAsync();
 
-            IsUserNull(user);
+            var usersDto = mapper.Map<List<UserFullDto>>(users) ?? new List<UserFullDto>();
 
-            var userDto = mapper.Map<UserFullDto>(user);
-            return userDto;
+            return usersDto;
         }
 
         public async Task<List<UserFullDto>> FindUsersByFirstName(string firstName)
@@ -55,14 +51,9 @@ namespace Beer2Beer.Services
             .Where(u => !u.IsDeleted)
             .ToListAsync();
 
-            if (!users.Any())
-            {
-                throw new EntityNotFoundException($"There aren't any users with firstname {firstName}");
-            }
+            var usersDto = mapper.Map<List<UserFullDto>>(users) ?? new List<UserFullDto>();
 
-            var userDtos = mapper.Map<List<UserFullDto>>(users);
-
-            return userDtos;
+            return usersDto;
         }
 
         public async Task<UserFullDto> Promote(string username)

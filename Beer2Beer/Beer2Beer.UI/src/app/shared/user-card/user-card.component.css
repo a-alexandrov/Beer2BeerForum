@@ -1,0 +1,24 @@
+.container{
+    min-width: 200px;
+    margin-left: 7vmax;
+    margin-right: 7vmax;
+    margin-bottom: 20px;
+    box-shadow: 4px 4px 2px lightgrey !important;
+}
+.flexbox{
+    display: flex;
+}
+mat-card-content{
+    margin: 5px 5px 5px 5px;
+}
+p{
+    font-size: medium;
+}
+mat-card-footer{
+    width: inherit;
+}
+
+.end-button{
+    margin-left: auto;
+    height: auto;
+}

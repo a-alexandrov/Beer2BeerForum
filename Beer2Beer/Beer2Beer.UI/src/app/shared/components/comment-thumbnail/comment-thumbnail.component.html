@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Commented: {{comment.content}}</mat-card-title>
+        <mat-card-subtitle>By: {{commenterName}}</mat-card-subtitle>
+
+        <mat-card-subtitle>Posted On: {{comment.createdOn.substring(0,10)}}</mat-card-subtitle>
+        <div class="end-button">
+            <button mat-button >VIEW POST</button>
+        </div>
+    </mat-card-header>
+</mat-card>

@@ -1,0 +1,24 @@
+<div class="container">
+    <mat-card class="profile-card" >
+        <mat-card-header>    
+            <img mat-card-avatar [src]="imageService.getImageFromByteArray(user.avatarImage, user.imageType)">
+            <mat-card-title >{{user.username}}</mat-card-title>
+            <mat-card-subtitle>Role: {{user.isAdmin ? "Admin" : "User"}}</mat-card-subtitle>
+            <mat-card-actions class="end-button">
+                <button mat-button (click)="onClick()" >EDIT PROFILE</button>
+            </mat-card-actions>
+        </mat-card-header>
+    
+        <div class="flexbox">
+            <img mat-card-lg-image [src]="imageService.getImageFromByteArray(user.avatarImage, user.imageType)">
+            <mat-card-content>
+                <p>First Name: {{user.firstName}}</p>
+                <p>Last Name: {{user.lastName}}</p>
+                <p>E-mail: {{user.email}}</p>
+                <p>Posts: {{user.posts.length}}</p>
+                <p>Comments: {{user.comments.length}}</p>
+            </mat-card-content>
+        </div>
+    </mat-card>
+</div>
+    

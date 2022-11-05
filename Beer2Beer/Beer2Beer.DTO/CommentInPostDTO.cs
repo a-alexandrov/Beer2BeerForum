@@ -1,7 +1,4 @@
-﻿using Beer2Beer.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace Beer2Beer.DTO
 {
@@ -10,8 +7,5 @@ namespace Beer2Beer.DTO
         public UserDisplayDto User { get; set; }
         public string Content { get; set; }
         public DateTime CreatedOn { get; set; }
-
-
-
     }
 }

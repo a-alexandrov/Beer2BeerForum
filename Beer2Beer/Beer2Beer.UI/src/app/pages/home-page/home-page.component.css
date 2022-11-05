@@ -1,0 +1,26 @@
+.home-posts-grid {
+    padding:20px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: auto;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #D2D2D2;
+    width:80%;
+    margin:auto;
+}
+
+.container{
+    margin-right: 7vmax;
+    margin-left: 7vmax;
+    min-width: 550px;
+}
+p{
+    text-align: center;
+}
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+    min-width: 50%!important;
+   }
+::ng-deep.mat-tab-group{
+    background-color: white!important;
+}

@@ -1,5 +1,6 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Beer2Beer.Tests.TestHelper
@@ -41,6 +42,8 @@ namespace Beer2Beer.Tests.TestHelper
             {
                 return new UserUpdateDto
                 {
+                    CurrentUserId = 1
+                    ,
                     ID = 1
                     ,
                     FirstName = "NewTestName"
@@ -74,8 +77,8 @@ namespace Beer2Beer.Tests.TestHelper
                 return new Post
                 {
                     ID = 1,
-                    Title = "TestTitle",
-                    Content = "Test Post Content for testing purposes",
+                    Title = "VeryValidTestTitleForTesting",
+                    Content = "Test Post Content for testing purposes - it absolutely contains more than 64 symbols, I really promise",
                     UserID = 1,
                     PostLikes = 1,
                     PostDislikes = 1,
@@ -97,6 +100,83 @@ namespace Beer2Beer.Tests.TestHelper
                     User = User,
                     PostID = 1,
                     Post = Post
+                };
+            }
+        }
+
+
+        public static PostCreateDto PostCreateDto
+        {
+            get
+            {
+                return new PostCreateDto
+                {
+                    UserID = 1,
+                    Title = "VeryValidTestTitleForTesting",
+                    Content = "Test Post Content for testing purposes - it absolutely contains more than 64 symbols, I really promise"
+
+                };
+            }
+
+        }
+
+        public static PostUpdateDto PostUpdateDto
+        {
+            get
+            {
+                return new PostUpdateDto
+                {
+                    ID = 1,
+                    UserID = 1,
+                    Title = "VeryValidTestTitleForTesting",
+                    Content = "Test Post Content for testing purposes - it absolutely contains more than 64 symbols, I really promise",
+                };
+
+            }
+
+        }
+
+        public static PostQueryParameters EmptyQuery
+        {
+            get
+            {
+                return new PostQueryParameters();
+            }
+        }
+
+
+        public static PostQueryParameters FullQuery
+        {
+            get
+            {
+                return new PostQueryParameters
+                {
+                    minComments = 0,
+                    maxComments = 10000,
+                    minLikes=0,
+                    maxLikes=10000,
+                    minDislikes=0,
+                    maxDislikes=10000,
+                    Keyword="Test",
+                    UserId=1,
+                    minDate=System.DateTime.MaxValue,
+                    maxDate=System.DateTime.MinValue
+                };
+            }
+        }
+
+
+        public static PostQueryParameters NotFullQuery
+        {
+            get
+            {
+                return new PostQueryParameters
+                {
+                    minComments = 0,
+                    maxComments = 10000,
+                    Keyword = "Test",
+                    UserId = 1
+
                 };
             }
         }

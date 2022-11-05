@@ -1,0 +1,22 @@
+.admin-controls{
+    width: 150px;
+    min-height: 50px;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px 1px 2px;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 5px;
+    border-radius: 12px;
+    position: relative;
+    z-index: 1;
+    bottom: 180px;
+    left: 600px;
+    box-shadow: 4px 4px 2px lightgrey !important;
+}
+
+.btn-slide{
+    color:#000000 !important;
+}

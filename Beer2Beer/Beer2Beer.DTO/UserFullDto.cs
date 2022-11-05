@@ -23,6 +23,8 @@ namespace Beer2Beer.DTO
 
         public byte[] AvatarImage { get; set; }
 
+        public string ImageType { get; set; }
+
         public string PhoneNumber { get; set; }
 
         public List<PostDto> Posts { get; set; }

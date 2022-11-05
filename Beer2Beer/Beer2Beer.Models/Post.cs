@@ -16,6 +16,8 @@ namespace Beer2Beer.Models
 
         public int PostDislikes { get; set; }
 
+        public List<Like> Likes { get; set; }
+
         public int CommentsCount { get; set; }
 
         public List<Comment> Comments { get; set; }

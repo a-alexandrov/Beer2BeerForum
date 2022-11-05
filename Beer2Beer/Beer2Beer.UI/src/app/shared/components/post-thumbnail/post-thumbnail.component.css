@@ -1,0 +1,27 @@
+mat-card-subtitle{
+    margin-bottom: 3px;
+}
+img{
+    height: 60px !important;
+    width: 60px !important;
+    cursor: pointer;
+}
+.edit-button{
+margin:auto;
+height: auto;
+}
+
+.end-button{
+    margin:auto;
+    margin-left: 10px;
+    height: auto;
+}
+.clickable{
+    cursor: pointer !important;
+}
+.clickable:hover{
+    text-decoration: underline;
+}
+.content-container{
+    width:90%;
+}

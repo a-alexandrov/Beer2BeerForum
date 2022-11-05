@@ -1,0 +1,46 @@
+mat-card-footer{
+
+    display: flex;
+
+    margin-left: auto;
+
+    align-items: flex-end;
+
+    justify-content: flex-end;
+
+}
+
+mat-card{
+
+    margin-top: 7px;
+
+    margin-bottom: 7px;
+
+    box-shadow: 4px 4px 2px lightgrey !important; 
+}
+
+.post-like-dislike{
+    font-size: 12pt;
+    position: absolute;
+    bottom: 14%;
+    left: 50%;
+}
+
+img{
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+}
+P{
+    margin-top: 5px !important;
+}
+.clickable{
+    cursor: pointer !important;
+}
+.clickable:hover{
+    text-decoration: underline;
+}
+
+.tags{
+    position: relative;
+}

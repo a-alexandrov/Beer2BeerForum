@@ -1,0 +1,13 @@
+<div class="container">
+    <p>
+        {{message}}
+    </p>
+    <mat-form-field>
+        <div class="search-bar">
+            <input matNativeControl  
+            minlength={{data.minValue}} maxlength={{data.maxValue}} 
+            [placeholder]="currentValue" [(ngModel)]="input">
+        </div>
+    </mat-form-field>
+    <button mat-raised-button class="ok-btn" [disabled]="input.length < data.minValue" (click)="onClick()">Ok</button>
+</div>

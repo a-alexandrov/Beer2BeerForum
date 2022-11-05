@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
+    [AllowAnonymous]
     [Route("api/login")]
     [ApiController]
     public class LoginController : Controller
@@ -17,7 +18,6 @@ namespace Beer2Beer.Web.Controllers
             this.authenticator = authenticator;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto) 
         {

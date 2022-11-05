@@ -1,10 +1,12 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
+    [Authorize(Policy = "UserStatus")]
     [ApiController]
     [Route("api/comments")]
     public class CommentController : ControllerBase

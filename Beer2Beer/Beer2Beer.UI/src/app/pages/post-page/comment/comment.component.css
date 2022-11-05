@@ -1,0 +1,17 @@
+img{
+    width: 60px;
+    height: 60px;
+}
+P{
+    margin-top: 5px !important;
+}
+
+mat-card{
+    margin-bottom: 10px;
+}
+.clickable{
+    cursor: pointer !important;
+}
+.clickable:hover{
+    text-decoration: underline;
+}

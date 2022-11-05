@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
+    [Authorize(Roles = "Admin", Policy = "UserStatus")]
     [ApiController]
     [Route("api/admin")]
     public class AdminController : ControllerBase
@@ -21,13 +22,12 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin",Policy = "UserStatus")]
         [Route("byFirstName")]
         public async Task<IActionResult> GetUsersByFirstName([FromQuery] string firstName)
         {
             var users = await this.adminService.FindUsersByFirstName(firstName);
 
-            if (!users.Any())
+            if (users == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
@@ -36,37 +36,34 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("byUsername")]
         public async Task<IActionResult> GetUsersByUsername([FromQuery] string username)
         {
-            var user = await this.adminService.FindUserByUserName(username);
+            var users = await this.adminService.FindUsersByUserName(username);
 
-            if (user == null)
+            if (users == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
 
-            return this.StatusCode(StatusCodes.Status200OK, user);
+            return this.StatusCode(StatusCodes.Status200OK, users);
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("byEmail")]
         public async Task<IActionResult> GetUsersByEmail([FromQuery] string email)
         {
-            var user = await this.adminService.FindUserByEmail(email);
+            var users = await this.adminService.FindUsersByEmail(email);
 
-            if (user == null)
+            if (users == null)
             {
                 return this.StatusCode(StatusCodes.Status404NotFound);
             }
 
-            return this.StatusCode(StatusCodes.Status200OK, user);
+            return this.StatusCode(StatusCodes.Status200OK, users);
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("block")]
         public async Task<IActionResult> BlockUser([FromQuery] string username)
         {
@@ -81,7 +78,6 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("unblock")]
         public async Task<IActionResult> UnblockUser([FromQuery] string username)
         {
@@ -96,7 +92,6 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("promote")]
         public async Task<IActionResult> PromoteUser([FromQuery] string username)
         {
@@ -111,7 +106,6 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin", Policy = "UserStatus")]
         [Route("demote")]
         public async Task<IActionResult> DemoteUser([FromQuery] string username)
         {

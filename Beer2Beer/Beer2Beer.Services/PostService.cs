@@ -23,7 +23,6 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
         }
 
-        #region GET
         public async Task<List<PostDto>> GetLatestPosts(int count = 10)
         {
             var posts = await this.context.Set<Post>()
@@ -31,9 +30,10 @@ namespace Beer2Beer.Services
                 .Where(x => !x.IsDeleted)
                 .Take(count)
                 .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
+                    .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c=>c.User)
+                    .ThenInclude(c => c.User)
+                .Include(p => p.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -49,9 +49,10 @@ namespace Beer2Beer.Services
                 .OrderByDescending(p => p.CommentsCount).Where(x => !x.IsDeleted)
                 .Take(count)
                 .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
+                    .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.User)
+                .Include(p=>p.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -61,30 +62,15 @@ namespace Beer2Beer.Services
             return postDtos;
         }
 
-        public async Task<List<PostDto>> GetPostsByUserID(int userId)
-        {
-            var posts = await this.context.Set<Post>()
-                .Where(post => post.UserID == userId && !post.IsDeleted)
-                .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
-                .ToListAsync();
-
-            ArePostNull(posts);
-
-            var postDto = mapper.Map<List<PostDto>>(posts);
-            return postDto;
-        }
-
         public async Task<PostDto> GetPostById(int id)
         {
             var post = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted)
+                .Where(p => !p.IsDeleted)
+                .Include(u => u.User)
                 .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
+                    .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(post => post.ID == id);
 
             IsPostNull(post);
@@ -93,14 +79,14 @@ namespace Beer2Beer.Services
             return postDto;
         }
 
-        public async Task<List<PostDto>> GetAllPosts()
+        public async Task<List<PostDto>> GetPosts(PostQueryParameters parameters)
         {
-            var posts = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted)
+            var posts = await this.FilterBy(parameters)
                 .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
+                    .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
+                    .ThenInclude(c => c.User)
+                .Include(p=>p.User)
                 .ToListAsync();
 
             ArePostNull(posts);
@@ -109,151 +95,81 @@ namespace Beer2Beer.Services
 
             return postDtos;
         }
-        public async Task<List<PostDto>> GetPostsByKeyword(string keyword)
+        public async Task<PostDto> CreatePost(PostCreateDto newPostDTO)
         {
-            var posts = await this.context.Set<Post>()
-                .Where(x => !x.IsDeleted &&(x.Title.Contains(keyword) || x.Content.Contains(keyword)))                
-                .Include(p => p.TagPosts)
-                .ThenInclude(tp => tp.Tag)
-                .Include(p => p.Comments)
-                .ThenInclude(c => c.User)
-                .ToListAsync();
-
-            ArePostNull(posts);
-
-            posts.OrderBy(x => x.Title == keyword).ThenBy(x => x.Content == keyword);
-
-            return mapper.Map<List<PostDto>>(posts);
-        }
-
-        public async Task<List<PostDto>> GetPostsByLikesRange(int minLikes, int maxLikes)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.PostLikes >= minLikes && x.PostLikes <= maxLikes))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.PostLikes));
-
-        }
-
-        public async Task<List<PostDto>> GetPostsByDislikesRange(int minDislikes, int maxDislikes)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.PostDislikes >= minDislikes && x.PostLikes <= maxDislikes))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.PostDislikes));
-
-        }
-
-        public async Task<List<PostDto>> GetPostsByCommentRange(int minComments, int maxComments)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.CommentsCount >= minComments && x.CommentsCount <= maxComments))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CommentsCount));
-
-        }
-
-        public async Task<List<PostDto>> GetPostsByCreatonDate(DateTime createdAfter)
-        {
-            var posts = await this.context.Set<Post>()
-               .Where(x => !x.IsDeleted && (x.CreatedOn.CompareTo(createdAfter) >= 0))
-               .Include(p => p.TagPosts)
-               .ThenInclude(tp => tp.Tag)
-               .Include(p => p.Comments)
-               .ThenInclude(c => c.User)
-               .ToListAsync();
-
-            ArePostNull(posts);
-
-            return mapper.Map<List<PostDto>>(posts.OrderBy(x => x.CreatedOn));
-
-        }
-
-        #endregion GET
-
-        #region POST
-        public async Task<PostDto> PostNewPost(PostCreateDto newPostDTO)
-        {
-
             var postToAdd = mapper.Map<Post>(newPostDTO);
             this.context.Set<Post>().Add(postToAdd);
             await this.context.SaveChangesAsync();
 
             return mapper.Map<PostDto>(postToAdd);
-
         }
-        #endregion POST 
 
-        #region PUT
-        public async Task<PostDto> ChangePost(int postID, string newTitle, string content, string tagName)
+        public async Task<PostDto> UpdatePost(PostUpdateDto dto, int loginID, string role)
         {
-            var post = await this.context.Set<Post>().Where(x => !x.IsDeleted).FirstOrDefaultAsync(post => post.ID == postID);
-
-            IsPostNull(post);
-
-            post.Title = newTitle ?? post.Title;
-            post.Content = content ?? post.Content;
-
-            if (!String.IsNullOrEmpty(tagName))
+            if(role != "Admin")
             {
-                Tag tag;
-                if (!this.context.Set<Tag>().Any(t => t.Name == tagName))
-                {
-                    tag = await this.CreateTag(tagName);
-                }
-                else
-                {
-                    tag = await this.context.Set<Tag>().FirstOrDefaultAsync(t => t.Name == tagName);
-                }
-
-                var tagPost = new TagPost { PostID = post.ID, TagID = tag.ID };
-                var tagExists = this.context
-                    .Set<TagPost>()
-                    .Any(tp => tp.TagID == tagPost.TagID
-                    &&
-                    tp.PostID == tagPost.PostID);
-                if (!tagExists)
-                {
-                    this.context.Set<TagPost>().Add(tagPost);
-                }
-
-
+                this.ValidateOwnership(dto.UserID, loginID);
             }
 
+            var post = await this.context.Set<Post>()
+                .Where(p => !p.IsDeleted && p.ID == dto.ID)
+                .Include(p => p.TagPosts)
+                    .ThenInclude(tp => tp.Tag)
+                .FirstOrDefaultAsync();
+
+            this.IsPostNull(post);
+
+            post.Title = dto.Title ?? post.Title;
+            post.Content = dto.Content ?? post.Content;
+
+            if(dto.Tags != null)
+            {
+                // remove tags
+                var tagPosts = await this.context.Set<TagPost>().ToListAsync();
+
+                foreach (var oldTag in post.TagPosts)
+                {
+                    if (!dto.Tags.Contains(oldTag.Tag.Name))
+                    {
+                        tagPosts.Remove(oldTag);
+                        post.TagPosts.Remove(oldTag);
+                    }
+                }
+
+                //add tags
+                var tags = await this.context.Set<Tag>().ToListAsync();
+
+                foreach (var newTag in dto.Tags)
+                {
+                    var tag = tags.Where(t => t.Name == newTag).FirstOrDefault();
+
+                    if (tag == null)
+                    {
+                        tag = new Tag { Name = newTag };
+                        this.context.Set<Tag>().Add(tag);
+
+                        var newTagPost = new TagPost { Tag = tag, PostID = post.ID };
+                        this.context.Set<TagPost>().Add(newTagPost);
+                        post.TagPosts.Add(newTagPost);
+                    }
+                    else if (!post.TagPosts.Where(tp => tp.TagID == tag.ID).Any())
+                    {
+                        var newTagPost = new TagPost { Tag = tag, PostID = post.ID };
+                        this.context.Set<TagPost>().Add(newTagPost);
+                        post.TagPosts.Add(newTagPost);
+                    }
+                }
+            }
 
             await this.context.SaveChangesAsync();
 
-            var postDto = mapper.Map<PostDto>(post);
-            return postDto;
+            return mapper.Map<PostDto>(post);
         }
 
-        //Tags???
-        #endregion PUT
-
-        #region DELETE
-        public async Task<PostDto> DeletePost(int postID)
+        public async Task<PostDto> DeletePost(int postID,int loginID)
         {
+            this.ValidateOwnership(postID, loginID);
+
             var postToRemove = this.context.Set<Post>().FirstOrDefault(post => post.ID == postID);
 
             IsPostNull(postToRemove);
@@ -264,9 +180,7 @@ namespace Beer2Beer.Services
             var postDto = mapper.Map<PostDto>(postToRemove);
             return postDto;
         }
-        #endregion DELETE
 
-        #region Private
         private void IsPostNull(Post post)
         {
             if (post == null)
@@ -277,23 +191,65 @@ namespace Beer2Beer.Services
 
         private void ArePostNull(ICollection<Post> posts)
         {
-            if (posts.Count == 0)
+            if (posts==null)
             {
-                throw new EntityNotFoundException("There are no posts to match the criteria");
+                posts = new List<Post>();
+
             }
         }
 
-
-        private async Task<Tag> CreateTag(string tagName)
-        {
-            var tag = new Tag { Name = tagName };
-            this.context.Set<Tag>().Add(tag);
-            await this.context.SaveChangesAsync();
-
-            return tag;
+        private void ValidateOwnership(int postUserID, int loginID) {
+            if (postUserID != loginID) {
+                throw new InvalidActionException("You don't have access to this resource!");
+            }
         }
-        #endregion Private
 
+        private IQueryable<Post> FilterBy(PostQueryParameters parameters)
+        {
+            var query = this.context.Set<Post>()
+                .Where(p => !p.IsDeleted);
 
+            if (parameters.UserId.HasValue)
+            {
+                query = query.Where(post => post.UserID == parameters.UserId);
+            }
+            if (!String.IsNullOrEmpty(parameters.Keyword))
+            {
+                query = query.Where(p => p.Title.Contains(parameters.Keyword) || p.Content.Contains(parameters.Keyword));
+            }
+            if (parameters.minLikes.HasValue)
+            {
+                query = query.Where(p => p.PostLikes >= parameters.minLikes);
+            }
+            if (parameters.maxLikes.HasValue)
+            {
+                query = query.Where(p => p.PostLikes <= parameters.maxLikes);
+            }
+            if (parameters.minDislikes.HasValue)
+            {
+                query = query.Where(p => p.PostDislikes >= parameters.minDislikes);
+            }
+            if (parameters.maxDislikes.HasValue)
+            {
+                query = query.Where(p => p.PostDislikes <= parameters.maxDislikes);
+            }
+            if (parameters.minComments.HasValue)
+            {
+                query = query.Where(p => p.CommentsCount >= parameters.minComments);
+            }
+            if (parameters.maxComments.HasValue)
+            {
+                query = query.Where(p => p.CommentsCount <= parameters.maxComments);
+            }
+            if (parameters.minDate.HasValue)
+            {
+                query = query.Where(p => p.CreatedOn >= parameters.minDate);
+            }
+            if (parameters.maxDate.HasValue)
+            {
+                query = query.Where(p => p.CreatedOn <= parameters.maxDate);
+            }
+            return query;
+        }
     }
 }

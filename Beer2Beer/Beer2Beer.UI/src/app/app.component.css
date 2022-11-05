@@ -1,0 +1,8 @@
+body {
+    background: #a7cf39;
+    background-attachment: fixed;
+    min-height: 100%;
+    height: auto;
+    background-image: url("../../src/assets/images/beerBackground.jpg");
+    background-size: cover;
+}

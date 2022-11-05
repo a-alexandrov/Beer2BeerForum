@@ -2,7 +2,7 @@
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 
-namespace QuizOverflow.Services.MappingProfiles
+namespace Beer2Beer.Services.MappingProfiles
 {
     public class MappingProfile : Profile
     {
@@ -11,11 +11,17 @@ namespace QuizOverflow.Services.MappingProfiles
             CreateMap<User, UserFullDto>();
             CreateMap<UserFullDto, User>();
 
-            CreateMap<User, UserDisplayDto>();
+            CreateMap<User, UserDisplayDto>()
+                .ForMember(d => d.AvatarImage, d => d.MapFrom(p => p.AvatarImage))
+                .ForMember(d => d.ImageType, d => d.MapFrom(p => p.ImageType));
+
             CreateMap<UserDisplayDto, User>();
 
             CreateMap<Post, PostDto>()
-                .ForMember(d => d.Tags, d => d.MapFrom(p => p.TagPosts));
+                .ForMember(d => d.Tags, d => d.MapFrom(p => p.TagPosts))
+                .ForMember(d => d.AvatarImage, d => d.MapFrom(p => p.User.AvatarImage))
+                .ForMember(d => d.ImageType, d => d.MapFrom(p => p.User.ImageType))
+                .ForMember(d => d.UserName, d => d.MapFrom(p => p.User.Username));
             CreateMap<PostDto, Post>()
                 .ForMember(p => p.TagPosts, p => p.MapFrom(d => d.Tags));
 
@@ -28,8 +34,10 @@ namespace QuizOverflow.Services.MappingProfiles
             CreateMap<User, UserLoginDto>();
             CreateMap<UserLoginDto, User>();
 
-            CreateMap<User, UserRegisterDto>();
-            CreateMap<UserRegisterDto, User>();
+            CreateMap<User, UserRegisterDto>()
+                .ForMember(d=>d.Password,d=>d.MapFrom(u=>u.PasswordHash));
+            CreateMap<UserRegisterDto, User>()
+                .ForMember(u=>u.PasswordHash,u=>u.MapFrom(d=>d.Password));
 
             CreateMap<User, UserUpdateDto>();
             CreateMap<UserUpdateDto, User>();

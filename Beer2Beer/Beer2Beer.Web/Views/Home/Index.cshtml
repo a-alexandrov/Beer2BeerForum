@@ -2,6 +2,34 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+<script defer src="js/app.js"></script>
+
+<style>
+    #birichko {
+        display: grid;
+        place-items: center;
+        min-height: 100px;
+        position: absolute;
+    }
+
+    #eyes img {
+        position: absolute;
+    }
+</style>
+<div id="birichko">
+    <img id="anchor" src="img/birichko.png">
+    <div id="eyes">
+        <img class="eye" src="img/eye.png" style="top:49px;left:49px;">
+        <img class="eye" src="img/eye.png" style="top:49px;left:84px;">
+    </div>
+
+</div>
+
+
+
+
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>

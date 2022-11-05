@@ -1,0 +1,25 @@
+<div class="post-panel">
+  <app-post-tags [tags]="post.tags" [disableEdit]="false" [selectable]="true" [removable]="true" *ngIf="post"></app-post-tags>
+  <mat-grid-list class="grid-panel" cols="1" rowHeight="fit">
+    <form [formGroup]="postEditForm" (ngSubmit)="submit()">
+      <mat-grid-tile>
+        <mat-form-field appearance="fill" class = "custom-title-field">
+          <mat-label for="title">The title must be between {{minTitleLen}} and {{maxTitleLen}} symbols.</mat-label>
+          <input matInput id="title" type="text" [minlength]="minTitleLen" [maxlength]="maxTitleLen" formControlName="title" [(ngModel)] = "postTitle">
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field appearance="fill" class = "custom-content-field">
+          <mat-label for="content">The content must be between {{minContentLen}} symbols and {{maxContentLen}} symbols.</mat-label>
+          <textarea matInput id="content" type="text" [minlength]="minContentLen" [maxlength]="maxContentLen" formControlName="content" [(ngModel)] = "postContent"> </textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+  
+      <mat-grid-tile>
+        <button class = "submit" mat-raised-button type="submit" color="basic" [disabled]="!postEditForm.valid">Submit</button>
+      </mat-grid-tile>
+      
+    </form>  
+  </mat-grid-list>
+</div>

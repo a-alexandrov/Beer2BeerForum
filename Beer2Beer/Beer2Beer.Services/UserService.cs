@@ -28,10 +28,24 @@ namespace Beer2Beer.Services
             this.mapper = mapper;
             this.AllowedImageType = new List<string>()
             { 
-                ".bmp", ".jpg", ".jpeg", ".png" 
+                ".bmp", ".jpg", ".jpeg", ".png", ".gif" 
             };
         }
 
+        public async Task<List<UserFullDto>> GetUsers()
+        {
+            var users = await this.context.Set<User>().Where(u => !u.IsDeleted).ToListAsync();
+            return this.mapper.Map<List<UserFullDto>>(users);
+        }
+
+        public async Task<UserFullDto> GetUsersById(int id)
+        {
+            var user = await this.GetUserById(id);
+            this.IsUserNull(user, "This user does not exist");
+
+            return this.mapper.Map<UserFullDto>(user);
+        }
+        
         public async Task<UserFullDto> CreateUser(UserRegisterDto userDto)
         {
             var user = mapper.Map<User>(userDto);
@@ -47,8 +61,9 @@ namespace Beer2Beer.Services
             return mapper.Map<UserFullDto>(user);
         }
 
-        public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto)
+        public async Task<UserFullDto> UpdateUser(UserUpdateDto userDto,int loginID)
         {
+            
             var user = await this.GetUserById(userDto.ID);
 
             if (user == null || user.IsDeleted || user.ID != userDto.ID)
@@ -56,28 +71,31 @@ namespace Beer2Beer.Services
                 throw new EntityNotFoundException(message: $"User with ID:{userDto.ID} not found.");
             }
 
+            if (userDto.CurrentUserId != userDto.ID && !user.IsAdmin)
+            {
+                throw new InvalidActionException("An user can only update his own info");
+            }
+
             user.FirstName = userDto.FirstName ?? user.FirstName;
             user.LastName = userDto.LastName ?? user.LastName;
             user.PasswordHash = userDto.PasswordHash ?? user.PasswordHash;
-
+            user.PhoneNumber = userDto.PhoneNumber ?? user.PhoneNumber;
 
             await this.context.SaveChangesAsync();
 
             return mapper.Map<UserFullDto>(user);
         }
 
-        public async Task<UserFullDto> UpdateUser(IFormFile avatarImage, int userId)
+        public async Task<UserFullDto> UpdateUser(UserAvatarUpdateDto avatarDto)
         {
-            if (avatarImage == null)
+            if (avatarDto.AvatarImage == null)
             {
                 throw new InvalidUserInputException(message: "Invalid Input.");
             }
 
-            var isValidType = AllowedImageType.Contains(avatarImage.ContentType);
-            var isCorrectSize = avatarImage.Length <= MaxAvatarImageSizeBytes && avatarImage.Length != 0;
-
-            //Should we keep a name in db for the uploaded file?
-            //var fileName = Guid.NewGuid() + "_" + userId + avatarImage.ContentType;
+            var fileExtension = Path.GetExtension(avatarDto.AvatarImage.FileName);
+            var isValidType = AllowedImageType.Contains(fileExtension);
+            var isCorrectSize = avatarDto.AvatarImage.Length <= MaxAvatarImageSizeBytes && avatarDto.AvatarImage.Length != 0;
 
             if (!isValidType || !isCorrectSize)
             {
@@ -86,14 +104,15 @@ namespace Beer2Beer.Services
                              $"Allowed formats: {string.Join(',', AllowedImageType)}");
             }
 
-            var user = await this.GetUserById(userId);
+            var user = await this.GetUserById(avatarDto.UserId);
 
-            this.IsUserNull(user, $"User with ID: {userId} not found.");
+            this.IsUserNull(user, $"User with ID: {avatarDto.UserId} not found.");
 
             using (var target = new MemoryStream())
             {
-                avatarImage.CopyTo(target);
+                avatarDto.AvatarImage.CopyTo(target);
                 user.AvatarImage = target.ToArray();
+                user.ImageType = avatarDto.AvatarImage.FileName;
             }
             
             await this.context.SaveChangesAsync();
@@ -112,7 +131,9 @@ namespace Beer2Beer.Services
         private async Task<User> GetUserById(int id)
         {
             var user = await this.context.Set<User>()
-                .Where(u=>!u.IsDeleted)
+                .Where(u => !u.IsDeleted)
+                .Include(u => u.Posts)
+                .Include(u => u.Comments)
                 .FirstOrDefaultAsync(u => u.ID == id);
 
             return user;

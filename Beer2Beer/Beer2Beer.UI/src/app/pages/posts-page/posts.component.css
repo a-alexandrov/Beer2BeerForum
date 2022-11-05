@@ -1,0 +1,45 @@
+.post-container{
+    margin-right: 7vmax;
+    margin-left: 7vmax;
+    min-width: 550px;
+}
+.search-panel{
+    width:60%;
+    padding:15px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color:#D2D2D2;
+    background-color:#F2F2F2;
+    margin:auto;
+    margin-bottom: 20px;
+}
+.custom-text-field{
+    width:200px;
+    height: 52px;
+    background-color:#D2D2D2;
+    margin:5px;
+}
+.paginator{
+    margin-top: 5px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color:#D2D2D2;
+    background-color:#F2F2F2;
+}
+.toolbar-inside {
+padding:auto;
+margin:auto;
+  }
+.toolbar{
+    background-color: #F2F2F2;
+    width:100%;
+    margin:auto;
+    padding:auto;
+    min-width: 145px;
+    border-radius: 10px;
+}
+
+.search-button{
+    margin-top:10px;
+}
+
