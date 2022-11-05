@@ -34,6 +34,12 @@
         </mat-toolbar>
       </div>
 
+
+
+      <div *ngIf="postList&&postList.length===0">
+        There are no posts or beers that match the criteria... maybe you should create one first?
+      </div>
+
       <div *ngFor="let post of postList| 
       slice: lowValue : highValue">
         <app-post-thumbnail [post]="post"></app-post-thumbnail>

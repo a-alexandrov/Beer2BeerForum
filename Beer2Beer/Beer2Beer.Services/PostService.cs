@@ -190,9 +190,11 @@ namespace Beer2Beer.Services
 
         private void ArePostNull(ICollection<Post> posts)
         {
-            if (posts.Count == 0)
+            if (posts==null)
             {
-                throw new EntityNotFoundException("There are no posts to match the criteria");
+                //throw new EntityNotFoundException("There are no posts to match the criteria");
+                posts = new List<Post>();
+
             }
         }
 
