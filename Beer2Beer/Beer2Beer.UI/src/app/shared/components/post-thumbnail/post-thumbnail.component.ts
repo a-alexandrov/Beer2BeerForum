@@ -27,6 +27,11 @@ export class PostThumbnailComponent implements OnInit {
     var route = "/post/" + this.post.id;
     this.router.navigate([route]);
   }
+
+  editPost(){
+    var route = "/post/edit/"+this.post.id;
+    this.router.navigate([route]);
+  }
   
   clickProfile(){
     var route = "/user/" + this.post.userID;
