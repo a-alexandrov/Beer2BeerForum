@@ -5,8 +5,6 @@
     <div *ngFor="let user of users">
         <div class = "user-container">
             <app-user-card class="card" [user]="user">
-                <ng-content select="E-mail: {{user.email}}"></ng-content>
-                <p class="email"></p>
             </app-user-card>
         </div>
         <app-admin-controls [user]="user"></app-admin-controls>

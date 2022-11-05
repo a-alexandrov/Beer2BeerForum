@@ -7,10 +7,35 @@
     border-color:#D2D2D2;
     background-color:#F2F2F2;
     margin:auto;
-
 }
+
 .custom-text-field{
     width:200px;
     height: 45px;
     background-color:#D2D2D2;
+}
+
+.message{
+    width: 600px;
+    min-height: 44px;
+    background-color: white;
+    border-color: #000000;
+    border-style: solid;
+    border-width: 1px 1px 2px;
+    font-family: "Romantiques", Arial, Helvetica, sans-serif;
+    font-size: 24pt;
+    text-align: center;
+    line-height: 44px;
+    color: rgb(159, 85, 14);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 5px;
+    border-radius: 12px;
+
+    position: absolute;
+    z-index: 1;
+    left: 30%;
+    top: 60%;
+    box-shadow: 4px 4px 2px lightgrey !important;
 }

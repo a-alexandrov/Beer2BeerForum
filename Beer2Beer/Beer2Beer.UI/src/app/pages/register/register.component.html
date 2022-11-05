@@ -1,25 +1,27 @@
-<mat-grid-list class="register-panel" cols="1" rowHeight="50px">
+<mat-grid-list class="register-panel" cols="1" rowHeight="50px" *ngIf="success === undefined">
 
   <form [formGroup]="registerForm" (ngSubmit)="submit()">
 
     <mat-grid-tile>
       <mat-form-field appearance="fill" class = "custom-text-field">
         <mat-label for="firstname">First Name</mat-label>
-        <input matInput id="firstname" type="text" formControlName="firstname">
+        <input matInput id="firstname" type="text" formControlName="firstname"
+        minlength ="4"  maxlength="32">
       </mat-form-field>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <mat-form-field appearance="fill" class = "custom-text-field">
         <mat-label for="lastname">Last Name</mat-label>
-        <input matInput id="lastname" type="text" formControlName="lastname">
+        <input matInput id="lastname" type="text" formControlName="lastname"
+        minlength ="4"  maxlength="32">
       </mat-form-field>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <mat-form-field appearance="fill" class = "custom-text-field">
         <mat-label for="email">Email</mat-label>
-        <input matInput id="email" type="text" formControlName="email">
+        <input matInput id="email" type="email" formControlName="email">
       </mat-form-field>
     </mat-grid-tile>
 
@@ -47,3 +49,8 @@
   </form>
 
 </mat-grid-list>
+
+<div *ngIf="success === false" class="message">
+  Oops, something went wrong, please try again.
+  <button mat-raised-button color="basic" (click)="onClickFailRegister()">Register</button>
+</div>

@@ -12,5 +12,7 @@ namespace Beer2Beer.DTO
         public string Title { get; set; }
 
         public string Content { get; set; }
+
+        //Tags
     }
 }

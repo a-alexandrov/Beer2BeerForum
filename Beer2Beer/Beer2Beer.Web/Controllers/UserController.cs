@@ -46,8 +46,7 @@ namespace Beer2Beer.Web.Controllers
         public async Task<IActionResult> CreateUserAsync([FromBody] UserRegisterDto user)
         {
             user.Password = customHasher.GetHash(user.Password);
-            await this.userService.CreateUser(user);
-            return new OkObjectResult($"User {user.Username} created!");
+            return new OkObjectResult(await this.userService.CreateUser(user));
         }
 
         [HttpPut]
