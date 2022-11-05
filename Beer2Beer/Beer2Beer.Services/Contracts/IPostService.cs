@@ -11,8 +11,7 @@ namespace Beer2Beer.Services.Contracts
         Task<PostDto> GetPostById(int id);
         Task<List<PostDto>> GetPosts(PostQueryParameters parameters);
         Task<PostDto> CreatePost(PostCreateDto post);
-        Task<PostDto> UpdatePost(PostUpdateDto dto,int loginID);
-        Task<PostDto> UpdatePost(PostTagsUpdateDto tagsDto,int loginID);
+        Task<PostDto> UpdatePost(PostUpdateDto dto,int loginID, string role);
         Task<PostDto> DeletePost(int postID,int loginID);
     }
 }

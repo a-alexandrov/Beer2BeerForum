@@ -10,9 +10,9 @@ import {MatChipInputEvent} from '@angular/material/chips';
 export class PostTagsComponent implements OnInit {
   @Input() tags!: string[];
   @Input() disableEdit!: boolean;
+  @Input() selectable!: boolean;
+  @Input() removable!: boolean;
   visible = true;
-  selectable = !this.disableEdit;
-  removable = !this.disableEdit;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor() { }
@@ -22,7 +22,9 @@ export class PostTagsComponent implements OnInit {
     const value = event.value;
   
     if ((value || '').trim()) {
-      this.tags.push(value.toLowerCase());
+      if(!this.tags.includes(value.toLowerCase())){
+        this.tags.push(value.toLowerCase());
+      }
     }
   
     if (input) {

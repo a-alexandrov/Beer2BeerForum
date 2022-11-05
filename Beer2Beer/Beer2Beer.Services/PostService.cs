@@ -104,12 +104,17 @@ namespace Beer2Beer.Services
             return mapper.Map<PostDto>(postToAdd);
         }
 
-        public async Task<PostDto> UpdatePost(PostUpdateDto dto, int loginID)
+        public async Task<PostDto> UpdatePost(PostUpdateDto dto, int loginID, string role)
         {
-            this.ValidateOwnership(dto.UserID, loginID);
+            if(role != "Admin")
+            {
+                this.ValidateOwnership(dto.UserID, loginID);
+            }
 
             var post = await this.context.Set<Post>()
                 .Where(p => !p.IsDeleted && p.ID == dto.ID)
+                .Include(p => p.TagPosts)
+                    .ThenInclude(tp => tp.Tag)
                 .FirstOrDefaultAsync();
 
             this.IsPostNull(post);
@@ -117,47 +122,43 @@ namespace Beer2Beer.Services
             post.Title = dto.Title ?? post.Title;
             post.Content = dto.Content ?? post.Content;
 
-            await this.context.SaveChangesAsync();
-
-            return mapper.Map<PostDto>(post);
-        }
-
-        public async Task<PostDto> UpdatePost(PostTagsUpdateDto tagsDto, int loginID)
-        {
-            this.ValidateOwnership(tagsDto.UserID, loginID);
-
-            var post = await this.context.Set<Post>()
-                .Where(p => !p.IsDeleted && p.UserID == tagsDto.UserID)
-                .FirstOrDefaultAsync();
-
-            this.IsPostNull(post);
-
-            if (tagsDto.AreTagsToBeAdded)
+            if(dto.Tags != null)
             {
-                this.AddTags(tagsDto.Tags);
+                // remove tags
+                var tagPosts = await this.context.Set<TagPost>().ToListAsync();
 
-                var tags = this.context.Set<Tag>()
-                    .Where(t => tagsDto.Tags.Contains(t.Name))
-                    .ToList();
-
-                foreach (var tag in tags)
+                foreach (var oldTag in post.TagPosts)
                 {
-                    var tagPost = new TagPost { PostID = post.ID, TagID = tag.ID };
-
-                    var tagExists = this.context.Set<TagPost>()
-                        .Any(tp => tp.TagID == tagPost.TagID
-                        && tp.PostID == tagPost.PostID);
-
-                    if (!tagExists)
+                    if (!dto.Tags.Contains(oldTag.Tag.Name))
                     {
-                        this.context.Set<TagPost>().Add(tagPost);
-                        post.TagPosts.Add(tagPost);
+                        tagPosts.Remove(oldTag);
+                        post.TagPosts.Remove(oldTag);
                     }
                 }
-            }
-            else
-            {
-                this.RemoveTags(tagsDto.Tags, post);
+
+                //add tags
+                var tags = await this.context.Set<Tag>().ToListAsync();
+
+                foreach (var newTag in dto.Tags)
+                {
+                    var tag = tags.Where(t => t.Name == newTag).FirstOrDefault();
+
+                    if (tag == null)
+                    {
+                        tag = new Tag { Name = newTag };
+                        this.context.Set<Tag>().Add(tag);
+
+                        var newTagPost = new TagPost { Tag = tag, PostID = post.ID };
+                        this.context.Set<TagPost>().Add(newTagPost);
+                        post.TagPosts.Add(newTagPost);
+                    }
+                    else if (!post.TagPosts.Where(tp => tp.TagID == tag.ID).Any())
+                    {
+                        var newTagPost = new TagPost { Tag = tag, PostID = post.ID };
+                        this.context.Set<TagPost>().Add(newTagPost);
+                        post.TagPosts.Add(newTagPost);
+                    }
+                }
             }
 
             await this.context.SaveChangesAsync();
@@ -192,40 +193,8 @@ namespace Beer2Beer.Services
         {
             if (posts==null)
             {
-                //throw new EntityNotFoundException("There are no posts to match the criteria");
                 posts = new List<Post>();
 
-            }
-        }
-
-        private void AddTags(List<string> tags)
-        {
-            var tagMap = new HashSet<string>();
-            var dbTags = this.context.Set<Tag>().Where(t => tagMap.Add(t.Name));
-
-            foreach (var tag in tags)
-            {
-                if (string.IsNullOrEmpty(tag) || tagMap.Contains(tag))
-                {
-                    continue;
-                }
-
-                var tagToAdd = new Tag { Name = tag };
-
-                this.context.Set<Tag>().Add(tagToAdd);
-            }
-
-            this.context.SaveChangesAsync();
-        }
-
-        private void RemoveTags(List<string> tags, Post post)
-        {
-            var tagPosts = this.context.Set<TagPost>().Where(tp => tags.Contains(tp.Tag.Name));
-
-            foreach (var tag in tagPosts)
-            {
-                post.TagPosts.Remove(tag);
-                this.context.Set<TagPost>().Remove(tag);
             }
         }
 

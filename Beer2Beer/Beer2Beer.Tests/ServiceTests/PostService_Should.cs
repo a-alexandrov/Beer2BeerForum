@@ -56,7 +56,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new PostService(dbContextMock.Object, mapperMock.Object);
-            var result = sut.UpdatePost(postUpdateDto,1);
+            var result = sut.UpdatePost(postUpdateDto,1,"Admin");
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -78,7 +78,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new PostService(dbContextMock.Object, mapperMock.Object);
-            var result = sut.UpdatePost(postUpdateDto,1);
+            var result = sut.UpdatePost(postUpdateDto,1,"Admin");
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -99,7 +99,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
 
             var sut = new PostService(dbContextMock.Object, mapperMock.Object);
-            var result = sut.UpdatePost(postUpdateDto,1);
+            var result = sut.UpdatePost(postUpdateDto,1,"User");
 
             dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -151,8 +151,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(EntityNotFoundException))]
-        public async Task GetPostByID_Should_Throw_When_NoPostsFound()
+        public async Task GetPostByID_Should_Return_Empty_When_NoPostsFound()
         {
             var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
             var mapper = new Mapper(config);
@@ -171,7 +170,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
             var sut = new PostService(dbContextMock.Object, mapper);
             List<PostDto> result = await sut.GetPosts(query);
 
-            Assert.AreEqual(result.Count, posts.Count);
+            Assert.IsTrue(result.Count == 0);
         }
 
         [TestMethod]

@@ -1,5 +1,5 @@
 <div class="post-panel">
-  <app-post-tags [tags]="post.tags" [disableEdit]="false"></app-post-tags>
+  <app-post-tags [tags]="post.tags" [disableEdit]="false" [selectable]="true" [removable]="true" *ngIf="post"></app-post-tags>
   <mat-grid-list class="grid-panel" cols="1" rowHeight="fit">
     <form [formGroup]="postEditForm" (ngSubmit)="submit()">
       <mat-grid-tile>

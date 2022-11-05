@@ -70,14 +70,13 @@ export class PostEditPageComponent implements OnInit {
   submit(){
     var route = "/post/" + this.post.id;
     
-    var postUpdate:PostUpdate={
+    var postUpdate: PostUpdate={
       id:this.post.id,
       userID:this.post.userID,
-      title:this.postEditForm.value.title??this.post.title,
-      content:this.postEditForm.value.content??this.post.content,
+      title:this.postEditForm.value.title ?? this.post.title,
+      content:this.postEditForm.value.content ?? this.post.content,
       tags:this.post.tags
-
-    }
+    };
 
     this.postService.put(postUpdate).pipe(takeUntil(this.notifier)).subscribe(()=>this.router.navigate([route]));
     

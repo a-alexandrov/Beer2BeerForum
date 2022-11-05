@@ -3,6 +3,7 @@ using Beer2Beer.Services.Contracts;
 using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -51,7 +52,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostPost([FromBody] PostCreateDto post)
+        public async Task<IActionResult> CreatePost([FromBody] PostCreateDto post)
         {
             return new OkObjectResult(await this.postService.CreatePost(post));
         }
@@ -60,7 +61,8 @@ namespace Beer2Beer.Web.Controllers
         public async Task<IActionResult> UpdatePost([FromBody] PostUpdateDto postDto)
         {
             var loginID = await this.authenticator.GetCurrentUserID(this.User);
-            return new OkObjectResult(await this.postService.UpdatePost(postDto,loginID));
+            var role = this.User.Claims.FirstOrDefault(i => i.Type == "UserRole").Value;
+            return new OkObjectResult(await this.postService.UpdatePost(postDto, loginID, role));
         }
 
         [HttpDelete]
