@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
 {
-    //[Authorize(Roles = "Admin", Policy = "UserStatus")]
+    [Authorize(Roles = "Admin", Policy = "UserStatus")]
     [ApiController]
     [Route("api/admin")]
     public class AdminController : ControllerBase
