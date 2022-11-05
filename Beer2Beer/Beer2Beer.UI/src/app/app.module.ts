@@ -34,6 +34,7 @@ import { UploadAvatarModalComponent } from './pages/user-edit-page/upload-avatar
 import { PostsComponent } from './pages/posts-page/posts.component';
 import { PostEditPageComponent } from './pages/post-edit-page/post-edit-page.component';
 import { PostCreatePageComponent } from './pages/post-create-page/post-create-page.component';
+import { PostTagsComponent } from './shared/components/post-tags/post-tags.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { PostCreatePageComponent } from './pages/post-create-page/post-create-pa
     PostsComponent,
     PostEditPageComponent,
     PostCreatePageComponent,
+    PostTagsComponent,
   ],
   imports: [
     BrowserModule, 

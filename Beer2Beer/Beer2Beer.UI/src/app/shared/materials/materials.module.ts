@@ -12,6 +12,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import{MatPaginatorModule} from '@angular/material/paginator';
+import {MatChipsModule} from '@angular/material/chips';
+
 @NgModule({
   declarations: [],
   exports: [
@@ -28,6 +30,7 @@ import{MatPaginatorModule} from '@angular/material/paginator';
     MatSelectModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatChipsModule,
   ]
 })
 export class MaterialsModule { }

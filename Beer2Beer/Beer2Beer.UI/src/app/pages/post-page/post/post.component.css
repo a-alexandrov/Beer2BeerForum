@@ -40,3 +40,7 @@ P{
 .clickable:hover{
     text-decoration: underline;
 }
+
+.tags{
+    position: relative;
+}

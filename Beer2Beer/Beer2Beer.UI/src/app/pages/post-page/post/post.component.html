@@ -1,6 +1,7 @@
 <div class="post-container">
     <mat-card>
         <mat-card-header>
+            <app-post-tags class="tags" [tags]="post.tags" [disableEdit]="true"></app-post-tags>
             <mat-card-title>{{post.title}}</mat-card-title>
             <mat-card-subtitle (click)="clickProfile()" class="clickable">By: {{post.userName}}</mat-card-subtitle>
             <img mat-card-avatar [src]="avatarImage" alt="image" (click)="clickProfile()">
