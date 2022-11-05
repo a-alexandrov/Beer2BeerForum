@@ -1,36 +1,99 @@
-<mat-grid-list class="search-panel" cols="1" rowHeight="50px">
-
+<div class="search-panel">
+<mat-accordion>
   <form [formGroup]="queryForm" (ngSubmit)="getPosts()">
-
-    <mat-grid-tile>
-      <mat-form-field appearance="fill" class = "custom-text-field">
-        <mat-label for="keyword">Keyword</mat-label>
-        <input matInput id="keyword" type="text" formControlName="keyword">
-      </mat-form-field>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-      <mat-form-field appearance="fill" class = "custom-text-field">
-        <mat-label for="minComments">Minimum comments</mat-label>
-        <input matInput id="minComments" type="text" formControlName="minComments">
-      </mat-form-field>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-      <mat-form-field appearance="fill" class = "custom-text-field">
-        <mat-label for="maxComments">Maximum comments</mat-label>
-        <input matInput id="maxComments" type="text" formControlName="maxComments">
-      </mat-form-field>
-    </mat-grid-tile>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Basic search:
+      </mat-panel-title>
+      <mat-panel-description>
+        Display basic search options.
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label for="keyword">Keyword</mat-label>
+      <input matInput id="keyword" type="text" formControlName="keyword">
+    </mat-form-field>
     
 
-    <mat-grid-tile>
-      <button mat-raised-button type="submit" color="basic" [disabled]="!queryForm.valid">Search posts</button>
-    </mat-grid-tile>
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Advanced options:
+      </mat-panel-title>
+      <mat-panel-description>
+        {{panelOpenState ? 'Hide advanced search options.' : 'Display advanced search options.'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
     
-  </form>
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label for="minComments">Minimum comments</mat-label>
+      <input matInput id="minComments" type="text" formControlName="minComments">
+    </mat-form-field>
 
-</mat-grid-list>
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label for="maxComments">Maximum comments</mat-label>
+      <input matInput id="maxComments" type="text" formControlName="maxComments">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label for="minLikes">Minimum likes</mat-label>
+      <input matInput id="minLikes" type="text" formControlName="minLikes">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label for="maxLikes">Maximum likes</mat-label>
+      <input matInput id="maxLikes" type="text" formControlName="maxLikes">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label for="minDislikes">Minimum dislikes</mat-label>
+      <input matInput id="minDislikes" type="text" formControlName="minDislikes">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class = "custom-text-field">
+      <mat-label for="maxDislikes">Maximum dislikes</mat-label>
+      <input matInput id="maxDislikes" type="text" formControlName="maxDislikes">
+    </mat-form-field>
+    
+
+  </mat-expansion-panel>
+  <button mat-raised-button type="submit" color="basic" [disabled]="!queryForm.valid">Search posts</button>
+</form>
+</mat-accordion>
+
+
+</div>
+
+
+
+
+
+
+      
+
+
+
+      
+
+
+
+      
+
+    
+
+
+      
+
+
+
+
+
+
+
+
 
 <div class = post-container>
   <mat-card>

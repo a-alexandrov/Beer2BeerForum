@@ -4,7 +4,7 @@
     min-width: 550px;
 }
 .search-panel{
-    width:200px;
+    width:60%;
     padding:15px;
     border-radius: 10px;
     border-style: solid;
@@ -15,8 +15,9 @@
 }
 .custom-text-field{
     width:200px;
-    height: 45px;
+    height: 52px;
     background-color:#D2D2D2;
+    margin:5px;
 }
 .paginator{
     margin-top: 5px;

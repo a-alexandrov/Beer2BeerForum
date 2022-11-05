@@ -12,6 +12,7 @@ import { Post } from 'src/app/shared/models/post.model';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
+  panelOpenState = false;
   pageEvent!: PageEvent;
   pageIndex: number = 0;
   pageSize: number = 10;
@@ -24,11 +25,19 @@ export class PostsComponent implements OnInit {
   keyword: string = "";
   minComments:string="";
   maxComments:string="";
+  minLikes:string="";
+  maxLikes:string="";
+  minDislikes:string="";
+  maxDislikes:string="";
 
   queryForm = new FormGroup({
     keyword: new FormControl(''),
     minComments:new FormControl(''),
-    maxComments:new FormControl('')
+    maxComments:new FormControl(''),
+    minLikes:new FormControl(''),
+    maxLikes:new FormControl(''),
+    minDislikes:new FormControl(''),
+    maxDislikes:new FormControl('')
   });
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -71,6 +80,11 @@ export class PostsComponent implements OnInit {
     this.keyword = this.queryForm.value.keyword ?? "";
     this.minComments = this.queryForm.value.minComments??"";
     this.maxComments = this.queryForm.value.maxComments??"";
+    this.minLikes = this.queryForm.value.minLikes??"";
+    this.maxLikes = this.queryForm.value.maxLikes??"";
+    this.minDislikes = this.queryForm.value.minDislikes??"";
+    this.maxDislikes = this.queryForm.value.maxDislikes??"";
+
 
     var queryParam:string[]=[];
 
@@ -82,6 +96,18 @@ export class PostsComponent implements OnInit {
     }
     if(this.maxComments){
       queryParam.push("maxComments="+this.maxComments);
+    }
+    if(this.minLikes){
+      queryParam.push("minLikes="+this.minLikes);
+    }
+    if(this.maxLikes){
+      queryParam.push("maxLikes="+this.maxLikes);
+    }
+    if(this.minDislikes){
+      queryParam.push("minDislikes="+this.minDislikes);
+    }
+    if(this.maxDislikes){
+      queryParam.push("maxDislikes="+this.maxDislikes);
     }
 
     if (queryParam) {
