@@ -8,6 +8,20 @@
         <input matInput id="keyword" type="text" formControlName="keyword">
       </mat-form-field>
     </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill" class = "custom-text-field">
+        <mat-label for="minComments">Minimum comments</mat-label>
+        <input matInput id="minComments" type="text" formControlName="minComments">
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill" class = "custom-text-field">
+        <mat-label for="maxComments">Maximum comments</mat-label>
+        <input matInput id="maxComments" type="text" formControlName="maxComments">
+      </mat-form-field>
+    </mat-grid-tile>
     
 
     <mat-grid-tile>
@@ -44,6 +58,7 @@
       slice: lowValue : highValue">
         <app-post-thumbnail [post]="post"></app-post-thumbnail>
       </div>
+
     </mat-card-content>
   </mat-card>
   <mat-paginator *ngIf="postList" class = "paginator" [length]="postList.length

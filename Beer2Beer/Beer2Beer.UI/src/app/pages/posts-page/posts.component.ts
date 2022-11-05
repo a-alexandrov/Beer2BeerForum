@@ -22,9 +22,13 @@ export class PostsComponent implements OnInit {
   dataSource !: MatTableDataSource<Post>;
   query: string = "";
   keyword: string = "";
+  minComments:string="";
+  maxComments:string="";
 
   queryForm = new FormGroup({
     keyword: new FormControl(''),
+    minComments:new FormControl(''),
+    maxComments:new FormControl('')
   });
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -38,8 +42,6 @@ export class PostsComponent implements OnInit {
   getPosts() {
 
     this.ConstructQueryString();
-
-    console.log(this.query);
 
     return this.postsService.get(this.query)
       .pipe(takeUntil(this.notifier))
@@ -64,15 +66,27 @@ export class PostsComponent implements OnInit {
     return this.pageEvent;
   }
   ConstructQueryString() {
-    this.query = "";
 
-    this.keyword = this.queryForm.value.keyword ?? ""
+    this.query="";
+    this.keyword = this.queryForm.value.keyword ?? "";
+    this.minComments = this.queryForm.value.minComments??"";
+    this.maxComments = this.queryForm.value.maxComments??"";
 
-    if (this.keyword != "") {
-      this.query += "?keyword=" + this.keyword;
+    var queryParam:string[]=[];
+
+    if(this.keyword){
+      queryParam.push("keyword="+this.keyword);
+    }
+    if(this.minComments){
+      queryParam.push("minComments="+this.minComments);
+    }
+    if(this.maxComments){
+      queryParam.push("maxComments="+this.maxComments);
     }
 
-    console.log(this.query);
+    if (queryParam) {
+      this.query += "?" + queryParam.join('&');
+    }
   }
 
   ngOnDestroy(): void {
