@@ -21,6 +21,11 @@ export class PostEditPageComponent implements OnInit {
   postContent:string="";
   postTitle:string="";
   avatarImage: any;
+  editorRole!: string;
+  minTitleLen: number = 16;
+  maxTitleLen: number = 64;
+  minContentLen: number = 32;
+  maxContentLen: number = 8192;
 
   postEditForm = new FormGroup({
     title: new FormControl('',Validators.required),
@@ -36,7 +41,7 @@ export class PostEditPageComponent implements OnInit {
   ngOnInit(): void {
     this.postId = parseInt(this.activatedRoute.snapshot.paramMap.get('id')??"");
     this.getPost();
-    
+    this.editorRole = this.auth.getRole();
   }
 
   getPost(){
@@ -45,7 +50,7 @@ export class PostEditPageComponent implements OnInit {
       .pipe(takeUntil(this.notifier))
       .subscribe((p) => {
 
-        if(p.userID!=this.auth.getID()){
+        if(p.userID!=this.auth.getID() && this.editorRole !== 'Admin'){
           this.router.navigate(['']);
           return;
         }

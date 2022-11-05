@@ -22,7 +22,7 @@ export class PostTagsComponent implements OnInit {
     const value = event.value;
   
     if ((value || '').trim()) {
-      this.tags.push(value);
+      this.tags.push(value.toLowerCase());
     }
   
     if (input) {
