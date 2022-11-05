@@ -3,7 +3,6 @@ using Beer2Beer.Data.Contracts;
 using Beer2Beer.DTO;
 using Beer2Beer.Models;
 using Beer2Beer.Services;
-using Beer2Beer.Services.CustomExceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MockQueryable.Moq;
 using Moq;

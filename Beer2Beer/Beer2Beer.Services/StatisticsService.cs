@@ -1,12 +1,8 @@
-﻿using AutoMapper;
-using Beer2Beer.Data.Contracts;
+﻿using Beer2Beer.Data.Contracts;
 using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Services

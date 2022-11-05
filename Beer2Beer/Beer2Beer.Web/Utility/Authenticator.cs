@@ -2,13 +2,11 @@
 using Beer2Beer.Services.Contracts;
 using Beer2Beer.Web.Utility.Contracts;
 using Beer2Beer.Web.Utility.Enums;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;

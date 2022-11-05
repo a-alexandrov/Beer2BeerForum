@@ -1,11 +1,9 @@
 ﻿using Beer2Beer.DTO;
 using Beer2Beer.Services.Contracts;
-using Beer2Beer.Services.CustomExceptions;
 using Beer2Beer.Web.Utility.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Beer2Beer.Web.Controllers
@@ -17,13 +15,11 @@ namespace Beer2Beer.Web.Controllers
     {
         private readonly IUserService userService;
         private readonly ICustomHasher customHasher;
-        private readonly IAuthenticator authenticator;
 
-        public UserController(IUserService userService, ICustomHasher customHasher, IAuthenticator authenticator)
+        public UserController(IUserService userService, ICustomHasher customHasher)
         {
             this.userService = userService;
             this.customHasher = customHasher;
-            this.authenticator = authenticator;
         }
 
         [HttpGet]

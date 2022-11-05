@@ -5,7 +5,6 @@ using Beer2Beer.Models;
 using Beer2Beer.Services.Contracts;
 using Beer2Beer.Services.CustomExceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
