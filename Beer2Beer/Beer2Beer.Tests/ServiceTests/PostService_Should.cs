@@ -213,7 +213,7 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
 
             var sut = new PostService(dbContextMock.Object, mapper);
-            var result = await sut.DeletePost(1,1);
+            var result = await sut.DeletePost(1,1,"User");
 
             Assert.AreEqual(result.ID, post.ID);
         }
