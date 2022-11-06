@@ -66,6 +66,7 @@ namespace Beer2Beer.Web.Controllers
         }
 
         [HttpPut]
+        [Route("like")]
         public async Task<IActionResult> LikePost([FromBody] PostLikeDto likeDto)
         {
             return new OkObjectResult(await this.postService.LikePost(likeDto));

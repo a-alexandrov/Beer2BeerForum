@@ -1,5 +1,6 @@
 <div class="container-main" *ngIf="post">
     <app-post [post]="post" [avatarImage]="avatarImage"></app-post>
+    <app-add-comment [postId]="post.id"></app-add-comment>
     <ng-container *ngIf="post.comments">
         <h3>POST COMMENTS:</h3>
         

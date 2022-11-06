@@ -1,1 +1,18 @@
-<p>add-comment works!</p>
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <mat-icon fontIcon="add_comment" aria-hidden="false"></mat-icon>
+            ADD COMMENT
+        </mat-panel-title>
+        <mat-panel-description>
+            Click here to add a comment to the post.
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="commentForm" (ngSubmit)="submit()">
+        <mat-form-field appearance="fill">
+            <mat-label for="content">Comment</mat-label>
+            <textarea matInput id="content" formControlName="content" style="width: 100%;"></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary">POST</button>
+    </form>
+</mat-expansion-panel>
