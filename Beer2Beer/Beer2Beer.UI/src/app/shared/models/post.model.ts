@@ -1,5 +1,6 @@
 
 import { Comment } from './comment.model';
+import { Like } from './like.model';
 
 export class Post {
     constructor(
@@ -14,6 +15,7 @@ export class Post {
         public postLikes: number = 0,
         public postDislikes: number = 0,
         public commentsCount: number = 0,
+        public likes: Like[] = [],
         public tags: string[] = [],
         public comments: Comment[] = []) {
     }
