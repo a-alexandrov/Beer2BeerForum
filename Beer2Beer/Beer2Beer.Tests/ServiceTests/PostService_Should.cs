@@ -259,28 +259,5 @@ namespace Beer2Beer.Tests.ServiceTests.UserServiceTests
 
             Assert.IsTrue(result.Count == 0);
         }
-
-        [TestMethod]
-        public async Task LikePost_Should_Like_When_ParamAreValid()
-        {
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<MappingProfile>());
-            var mapper = new Mapper(config);
-
-            var dbContextMock = new Mock<IBeer2BeerDbContext>();
-            var query = TestHelper.TestHelper.EmptyQuery;
-
-
-            var post = TestHelper.TestHelper.Post;
-            var posts = new List<Post> { post};
-            var mock = posts.AsQueryable().BuildMockDbSet();
-            dbContextMock.Setup(x => x.Set<Post>()).Returns(mock.Object);
-            dbContextMock.Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>())).ReturnsAsync(1);
-
-            var sut = new PostService(dbContextMock.Object, mapper);
-            var likeDto = new PostLikeDto { UserId = 1, PostId = 1, IsLiked = true };
-            var result = await sut.LikePost(likeDto);
-
-            dbContextMock.Verify(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once());
-        }
     }
 }
