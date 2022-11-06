@@ -65,6 +65,12 @@ namespace Beer2Beer.Web.Controllers
             return new OkObjectResult(await this.postService.UpdatePost(postDto, loginID, role));
         }
 
+        [HttpPut]
+        public async Task<IActionResult> LikePost([FromBody] PostLikeDto likeDto)
+        {
+            return new OkObjectResult(await this.postService.LikePost(likeDto));
+        }
+
         [HttpDelete]
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {

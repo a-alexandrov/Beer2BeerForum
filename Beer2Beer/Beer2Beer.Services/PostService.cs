@@ -66,6 +66,7 @@ namespace Beer2Beer.Services
         {
             var post = await this.context.Set<Post>()
                 .Where(p => !p.IsDeleted)
+                .Include(p => p.Likes)
                 .Include(u => u.User)
                 .Include(p => p.TagPosts)
                     .ThenInclude(tp => tp.Tag)
@@ -82,6 +83,7 @@ namespace Beer2Beer.Services
         public async Task<List<PostDto>> GetPosts(PostQueryParameters parameters)
         {
             var posts = await this.FilterBy(parameters)
+                .Include(p => p.Likes)
                 .Include(p => p.TagPosts)
                     .ThenInclude(tp => tp.Tag)
                 .Include(p => p.Comments)
