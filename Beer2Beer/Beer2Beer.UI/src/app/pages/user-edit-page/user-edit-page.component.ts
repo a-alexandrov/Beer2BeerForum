@@ -38,7 +38,7 @@ export class UserEditPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
-    if (parseInt(this.userId) != this.auth.getID()) {
+    if (!this.auth.isAdmin() && this.userId !== this.auth.getID()) {
       this.router.navigate(['/not-found'])
     }
     this.getUser();
