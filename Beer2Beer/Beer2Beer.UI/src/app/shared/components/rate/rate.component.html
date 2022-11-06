@@ -1,8 +1,8 @@
-    <button mat-raised-button color="primary">
-        <mat-icon fontIcon="thumb_up" aria-hidden="false"></mat-icon>
-        LIKE
-    </button>
-    <button mat-raised-button color="warn" >
-        <mat-icon fontIcon="thumb_down" aria-hidden="false"></mat-icon>
-        DISLIKE
-    </button>
+<button mat-raised-button color="primary" (click)="onClick(true)" [disabled]="isLiked === true">
+    <mat-icon fontIcon="thumb_up" aria-hidden="false"></mat-icon>
+    LIKE
+</button>
+<button mat-raised-button color="warn" (click)="onClick(false)" [disabled]="isLiked === false">
+    <mat-icon fontIcon="thumb_down" aria-hidden="false"></mat-icon>
+    DISLIKE
+</button>
