@@ -1,6 +1,29 @@
+
 <div>
-    <button *ngIf="!userIsLogged()"mat-raised-button [routerLink]="['/login']"color="basic">Login</button>
-    <button *ngIf="!userIsLogged()"mat-raised-button [routerLink]="['/register']"color="basic">Register</button>
-    <button *ngIf="userIsLogged()" mat-raised-button (click)="logout()"[routerLink]="['/login']" color="basic">Logout</button>
-    <button mat-raised-button (click)="debug()" color="primary">ShowActiveUser</button>
+    <button mat-raised-button color="basic" (click)="goToPath('')">
+        <mat-icon fontIcon="home" aria-hidden="false"> </mat-icon>
+        HOME
+    </button>
+    <button mat-raised-button color="basic" (click)="goToPath('/posts')">
+        <mat-icon fontIcon="pages" aria-hidden="false"> </mat-icon>
+        POSTS
+    </button>
+    <button *ngIf="!userIsLogged()"mat-raised-button color="basic" (click) = "goToPath('/login')">
+        <mat-icon fontIcon="login" aria-hidden="false">
+        </mat-icon>
+        LOGIN
+    </button>
+    <button *ngIf="!userIsLogged()"mat-raised-button color="basic" (click) = "goToPath('/register')">
+        <mat-icon fontIcon="app_registration" aria-hidden="false"> </mat-icon>
+        REGISTER
+    </button>
+    <button *ngIf="userIsLogged()" mat-raised-button color="basic" (click)="showProfile()">
+        <mat-icon fontIcon="home" aria-hidden="false"> </mat-icon>
+        PROFILE
+    </button>
+    <button *ngIf="userIsLogged()" mat-raised-button (click)="logout()" color="basic">
+        <mat-icon fontIcon="logout" aria-hidden="false">
+        </mat-icon>  
+        LOGOUT
+    </button>
 </div>
