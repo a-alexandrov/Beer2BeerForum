@@ -1,3 +1,9 @@
-.fill{
-    width: 100%;
+mat-form-field{
+    width: 100% !important;
+}
+button{
+    width: 100% !important;
+}
+mat-icon{
+    margin-right: 5px;
 }

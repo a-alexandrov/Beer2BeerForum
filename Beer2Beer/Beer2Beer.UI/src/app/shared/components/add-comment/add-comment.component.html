@@ -1,7 +1,7 @@
 <mat-expansion-panel hideToggle>
     <mat-expansion-panel-header>
         <mat-panel-title>
-            <mat-icon fontIcon="add_comment" aria-hidden="false"></mat-icon>
+            <mat-icon fontIcon="add_comment" aria-hidden="false" class="custom-icon"></mat-icon>
             ADD COMMENT
         </mat-panel-title>
         <mat-panel-description>
@@ -11,8 +11,11 @@
     <form [formGroup]="commentForm" (ngSubmit)="submit()">
         <mat-form-field appearance="fill">
             <mat-label for="content">Comment</mat-label>
-            <textarea matInput id="content" formControlName="content" style="width: 100%;"></textarea>
+            <textarea matInput id="content" formControlName="content"></textarea>
         </mat-form-field>
-        <button mat-raised-button color="primary">POST</button>
+        <button mat-raised-button color="primary">
+            <mat-icon fontIcon="add_comment" aria-hidden="false" class="custom-icon"></mat-icon>
+            POST
+        </button>
     </form>
 </mat-expansion-panel>
