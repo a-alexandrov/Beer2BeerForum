@@ -4,6 +4,8 @@ import { Post } from '../../shared/models/post.model';
 import { PostUpdate } from 'src/app/shared/models/post-update.model';
 import { Observable } from 'rxjs';
 import { PostCreate } from 'src/app/shared/models/post-create.model';
+import { PostLike } from 'src/app/shared/models/post-like.model';
+import { LikesDto } from 'src/app/shared/models/post-likes';
 
 @Injectable({ providedIn: "root" })
 export class PostsService {
@@ -41,6 +43,10 @@ export class PostsService {
 
     post(post: PostCreate): Observable<Post> {
         return this.httpClient.post<Post>(this.apiPath, post);
+    }
+
+    likePost(postLike: PostLike): Observable<LikesDto>{
+        return this.httpClient.put<LikesDto>(`${this.apiPath}/like`, postLike);
     }
     
     delete(id:number):Observable<Post>{
