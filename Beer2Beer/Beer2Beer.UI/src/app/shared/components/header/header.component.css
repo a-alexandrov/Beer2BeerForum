@@ -1,21 +1,25 @@
 .header{
     background-color:#FAFAFA;
-    text-align: center;
+
     font-size: 38pt;
     border-color: #D2D2D2;
     border-style: solid;
     border-width: 3px 3px 6px ;
-    grid-template-columns: auto;
-    width: 85%;
-    min-width: 600px;
     margin:auto;
     padding:20px;
-    margin-bottom:20px;
+    margin-bottom:30px;
+    width: 85%;
+    min-width: 600px;
+
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     display: grid;
-    grid-template-columns: 180px auto;
     border-radius: 10px;
-    margin-top: 10px;
+
+    grid-template-areas:
+    'none toolbar'
+    'birichko title'
+    'counter description';
+    grid-template-columns: 180px auto;
 }
 #forum-title{
     color: rgb(159, 85, 14);
@@ -23,21 +27,29 @@
     margin:auto;
     padding:auto;
     line-height: 50px;
+    grid-area:title;
 }
 #forum-description{
     font-size: 18pt;
     text-align: center;
     margin:auto;
     padding:auto;
+    grid-area:description;
 }
 #counter{
     padding:auto;
     margin:auto;
+    grid-area:counter;
 }
 .example-spacer {
     flex: 1 1 auto;
   }
 .toolbar{
     margin-bottom: 10px;
+    grid-area:toolbar;
+}
+
+#birichko{
+    grid-area:birichko
 }
 

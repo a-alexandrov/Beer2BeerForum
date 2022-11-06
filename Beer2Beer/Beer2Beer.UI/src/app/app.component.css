@@ -5,4 +5,5 @@ body {
     height: auto;
     background-image: url("../../src/assets/images/beerBackground.jpg");
     background-size: cover;
+    padding:60px;
 }
