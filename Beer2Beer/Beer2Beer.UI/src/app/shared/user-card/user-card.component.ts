@@ -3,6 +3,7 @@ import { User } from '../models/user.model';
 import { Imageservice } from 'src/app/core/services/image.service';
 import { Router } from '@angular/router';
 import { SafeUrl } from '@angular/platform-browser';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
   selector: 'app-user-card',
@@ -13,7 +14,11 @@ import { SafeUrl } from '@angular/platform-browser';
 export class UserCardComponent {
   @Input() user!: User;
 
-  constructor(public readonly imageService: Imageservice, private router: Router) { }
+  constructor(public readonly imageService: Imageservice, private router: Router, private auth: AuthenticationService) { }
+
+  checkValidUser(){
+    return this.auth.isAdmin()||this.auth.getID() == this.user.id
+  }
 
   onClick(){
     const route = "/user/edit/" + this.user.id;

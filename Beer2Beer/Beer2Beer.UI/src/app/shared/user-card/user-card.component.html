@@ -5,7 +5,7 @@
             <mat-card-title >{{user.username}}</mat-card-title>
             <mat-card-subtitle>Role: {{user.isAdmin ? "Admin" : "User"}}</mat-card-subtitle>
             <mat-card-actions class="end-button">
-                <button mat-button (click)="onClick()" >EDIT PROFILE</button>
+                <button mat-button (click)="onClick()" *ngIf="checkValidUser()">EDIT PROFILE</button>
             </mat-card-actions>
         </mat-card-header>
     

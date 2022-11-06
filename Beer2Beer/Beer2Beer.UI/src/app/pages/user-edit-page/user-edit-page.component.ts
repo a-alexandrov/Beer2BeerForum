@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/shared/models/user.model';
@@ -33,12 +33,17 @@ export class UserEditPageComponent implements OnInit {
     public readonly imageService: Imageservice,
     private dialog: MatDialog,
     private auth: AuthenticationService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
     this.userId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (parseInt(this.userId) != this.auth.getID()) {
+      this.router.navigate([''])
+    }
     this.getUser();
   }
+
 
   getUser(){
     this.userService

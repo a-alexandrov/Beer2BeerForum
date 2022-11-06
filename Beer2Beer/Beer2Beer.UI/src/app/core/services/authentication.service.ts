@@ -45,8 +45,8 @@ export class AuthenticationService {
     return false;
   }
   
-  getID(){
-    return this.getToken()?this.getToken().UserID:null;
+  getID() : number{
+    return (this.getToken()?this.getToken().UserID:null);
   }
 
   getExpiryTime(){
