@@ -18,6 +18,7 @@ export class AuthenticationService {
 
   logout(){
     localStorage.removeItem('token');
+    this.router.navigate([''])
   }
 //refactor get token,decode token, etc
   getToken(){
