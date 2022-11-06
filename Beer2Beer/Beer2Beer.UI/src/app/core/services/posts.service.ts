@@ -42,4 +42,8 @@ export class PostsService {
     post(post: PostCreate): Observable<Post> {
         return this.httpClient.post<Post>(this.apiPath, post);
     }
+    
+    delete(id:number):Observable<Post>{
+        return this.httpClient.delete<Post>(`${this.apiPath}?postId=${id}`)
+    }
 }

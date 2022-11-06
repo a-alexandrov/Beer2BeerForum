@@ -8,11 +8,15 @@
             <mat-card-subtitle>Posted On: {{post.createdOn.substring(0,10)}}</mat-card-subtitle>
         </span>
         
+        <div class="edit-button" *ngIf="isDeletable()">
+            <button mat-button (click)="deletePost()">DELETE</button>
+        </div>
+
         <div class="edit-button" *ngIf="isEditable()">
-            <button mat-button (click)="editPost()">EDIT POST</button>
+            <button mat-button (click)="editPost()">EDIT</button>
         </div>
         <div class="end-button">
-            <button mat-button (click)="onClick()">VIEW POST</button>
+            <button mat-button (click)="viewPost()">VIEW</button>
         </div>
     </mat-card-header>
 </mat-card>

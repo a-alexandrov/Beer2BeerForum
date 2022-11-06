@@ -3,6 +3,8 @@ import { Post } from '../../models/post.model';
 import { Imageservice } from 'src/app/core/services/image.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
+import { PostsService } from 'src/app/core/services/posts.service';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -13,17 +15,21 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
 
 
 export class PostThumbnailComponent implements OnInit {
+  notifier = new Subject<void>;
 
   @Input () post: Post = new Post;
   
 
-  constructor(public readonly imageService: Imageservice, private router: Router,private auth:AuthenticationService) { }
+  constructor(public readonly imageService: Imageservice,
+     private router: Router,
+     private auth:AuthenticationService,
+     private postService:PostsService) { }
 
   ngOnInit(): void {
 
   }
 
-  onClick(){
+  viewPost(){
     var route = "/post/" + this.post.id;
     this.router.navigate([route]);
   }
@@ -31,6 +37,14 @@ export class PostThumbnailComponent implements OnInit {
   editPost(){
     var route = "/post/edit/"+this.post.id;
     this.router.navigate([route]);
+  }
+
+  deletePost(){
+    var route = this.router.url;
+    console.log(route);
+    this.postService.delete(this.post.id)
+    .pipe(takeUntil(this.notifier))
+    .subscribe(()=>window.location.reload());
   }
   
   clickProfile(){
@@ -49,4 +63,19 @@ export class PostThumbnailComponent implements OnInit {
     }
     return false;
   }
+
+  isDeletable():boolean{
+
+    if(this.auth.isLogged()){
+
+      if(this.auth.getID()==this.post.userID||
+      this.auth.isAdmin()){
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+
 }
