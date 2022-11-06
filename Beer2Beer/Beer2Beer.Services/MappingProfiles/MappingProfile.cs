@@ -17,6 +17,17 @@ namespace Beer2Beer.Services.MappingProfiles
 
             CreateMap<UserDisplayDto, User>();
 
+            CreateMap<User, UserLoginDto>();
+            CreateMap<UserLoginDto, User>();
+
+            CreateMap<User, UserRegisterDto>()
+                .ForMember(d => d.Password, d => d.MapFrom(u => u.PasswordHash));
+            CreateMap<UserRegisterDto, User>()
+                .ForMember(u => u.PasswordHash, u => u.MapFrom(d => d.Password));
+
+            CreateMap<User, UserUpdateDto>();
+            CreateMap<UserUpdateDto, User>();
+
             CreateMap<Post, PostDto>()
                 .ForMember(d => d.Tags, d => d.MapFrom(p => p.TagPosts))
                 .ForMember(d => d.AvatarImage, d => d.MapFrom(p => p.User.AvatarImage))
@@ -25,22 +36,13 @@ namespace Beer2Beer.Services.MappingProfiles
             CreateMap<PostDto, Post>()
                 .ForMember(p => p.TagPosts, p => p.MapFrom(d => d.Tags));
 
-            CreateMap<Comment, CommentInPostDTO>();
-            CreateMap<CommentInPostDTO, Comment>();
-
             CreateMap<Post, PostCreateDto>();
             CreateMap<PostCreateDto, Post>();
 
-            CreateMap<User, UserLoginDto>();
-            CreateMap<UserLoginDto, User>();
+            CreateMap<Post, LikesDto>();
 
-            CreateMap<User, UserRegisterDto>()
-                .ForMember(d=>d.Password,d=>d.MapFrom(u=>u.PasswordHash));
-            CreateMap<UserRegisterDto, User>()
-                .ForMember(u=>u.PasswordHash,u=>u.MapFrom(d=>d.Password));
-
-            CreateMap<User, UserUpdateDto>();
-            CreateMap<UserUpdateDto, User>();
+            CreateMap<Comment, CommentInPostDTO>();
+            CreateMap<CommentInPostDTO, Comment>();
 
             CreateMap<Comment, CommentFullDto>();
             CreateMap<CommentFullDto, Comment>();

@@ -104,6 +104,48 @@ namespace Beer2Beer.Services
             return mapper.Map<PostDto>(postToAdd);
         }
 
+        public async Task<LikesDto> LikePost(PostLikeDto likeDto)
+        {
+            var post = await this.context.Set<Post>()
+                .Where(p => !p.IsDeleted)
+                .Include(p => p.Likes)
+                .FirstOrDefaultAsync(post => post.ID == likeDto.PostId);
+
+            var like = post.Likes.Where(l => l.UserId == likeDto.UserId).FirstOrDefault();
+
+            
+            if (like != null && likeDto.IsLiked != like.IsLiked)
+            {
+                like.IsLiked = likeDto.IsLiked;
+
+                if (likeDto.IsLiked)
+                {
+                    post.PostDislikes--;
+                    post.PostDislikes++;
+                }
+                else
+                {
+                    post.PostDislikes++;
+                    post.PostDislikes--;
+                }
+            }
+            else if(like == null)
+            {
+                var newLike = new Like
+                {
+                    UserId = likeDto.UserId,
+                    PostID = post.ID,
+                    IsLiked = like.IsLiked
+                };
+
+                this.context.Set<Like>().Add(newLike);
+                post.Likes.Add(newLike);
+            }
+
+            await this.context.SaveChangesAsync();
+            return this.mapper.Map<LikesDto>(post);
+        }
+
         public async Task<PostDto> UpdatePost(PostUpdateDto dto, int loginID, string role)
         {
             if(role != "Admin")
