@@ -36,6 +36,7 @@ import { PostEditPageComponent } from './pages/post-edit-page/post-edit-page.com
 import { PostCreatePageComponent } from './pages/post-create-page/post-create-page.component';
 import { PostTagsComponent } from './shared/components/post-tags/post-tags.component';
 import { AddCommentComponent } from './shared/components/add-comment/add-comment.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { AddCommentComponent } from './shared/components/add-comment/add-comment
     PostCreatePageComponent,
     PostTagsComponent,
     AddCommentComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule, 

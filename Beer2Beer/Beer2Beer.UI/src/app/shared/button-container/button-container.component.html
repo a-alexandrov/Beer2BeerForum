@@ -24,7 +24,7 @@
     </button>
     
     <button *ngIf="userIsLogged()" mat-raised-button color="accent" (click)="showProfile()">
-        <mat-icon fontIcon="home" aria-hidden="false"> </mat-icon>
+        <mat-icon fontIcon="account_circle" aria-hidden="false"> </mat-icon>
         PROFILE
     </button>
     <button *ngIf="userIsLogged()" mat-raised-button (click)="logout()" color="warn">

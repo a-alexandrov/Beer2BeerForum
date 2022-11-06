@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AdminService } from 'src/app/core/services/admin.service';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/shared/models/user.model';
 
@@ -13,9 +15,12 @@ export class AdminPageComponent implements OnInit, OnDestroy {
   notifier = new Subject<void>;
   users!: User[]
 
-  constructor(private readonly userService: UserService, private readonly adminService: AdminService) { }
+  constructor(private readonly userService: UserService, private readonly adminService: AdminService, private readonly auth: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
+    if (!this.auth.isAdmin()) {
+      this.router.navigate(['/not-found'])
+    }
     this.getUsers();
   }
 
