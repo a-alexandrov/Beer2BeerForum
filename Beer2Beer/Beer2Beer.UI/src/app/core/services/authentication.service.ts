@@ -38,7 +38,7 @@ export class AuthenticationService {
     return this.getToken()?this.getToken().UserRole:null;
   }
 
-  isAdmin():boolean{
+  isAdmin(): boolean {
     if(this.getRole()=="Admin"){
       return true;
     }
