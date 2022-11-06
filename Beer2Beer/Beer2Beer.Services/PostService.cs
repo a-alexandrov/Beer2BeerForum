@@ -168,9 +168,10 @@ namespace Beer2Beer.Services
 
         public async Task<PostDto> DeletePost(int postID,int loginID)
         {
-            this.ValidateOwnership(postID, loginID);
 
             var postToRemove = this.context.Set<Post>().FirstOrDefault(post => post.ID == postID);
+
+            this.ValidateOwnership(postToRemove.UserID, loginID);
 
             IsPostNull(postToRemove);
             postToRemove.IsDeleted = true;
