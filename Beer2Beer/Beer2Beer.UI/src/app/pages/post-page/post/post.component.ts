@@ -15,7 +15,7 @@ export class PostComponent {
   @Input() avatarImage!: any;
 
   // TODO: fix auth.getID
-  currentUserId: number = parseInt(this.auth.getID());
+  currentUserId: number = this.auth.getID();
   userId !: number;
   userLike: boolean | undefined;
 
