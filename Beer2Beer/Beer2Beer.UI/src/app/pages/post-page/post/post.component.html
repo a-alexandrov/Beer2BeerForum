@@ -13,7 +13,7 @@
             <p class="post-like-dislike" > likes: {{post.postLikes}} dislikes: {{post.postDislikes}}</p>
         </mat-card-content>
     <mat-card-footer>
-        <app-rate></app-rate>
+        <app-rate (likeChangeEvent)="onLikeChange($event)" [isLiked]="userLike"></app-rate>
     </mat-card-footer>
     </mat-card>
 </div>
