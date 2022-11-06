@@ -9,5 +9,8 @@
                         [avatarImage]="imageService.getImageFromByteArray(comment.user.avatarImage, comment.user.imageType)">
                     </app-comment>
                 </div>
+
+                <app-add-comment [postId]="post.id"></app-add-comment>
+                
     </ng-container>
 </div>
