@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { retry } from 'rxjs-compat/operator/retry';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -23,7 +24,9 @@ export class ButtonContainerComponent implements OnInit {
   debug(){
     this.auth.showActiveUser();
   }
-  
+  userIsAdmin(){
+    return this.auth.isAdmin();
+  }
   userIsLogged(){
     return this.auth.isLogged();
   }
