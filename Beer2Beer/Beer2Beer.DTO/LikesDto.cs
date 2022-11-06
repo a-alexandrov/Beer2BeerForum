@@ -5,6 +5,10 @@ namespace Beer2Beer.DTO
 {
     public class LikesDto
     {
-        public List<Like> PostLikes { get; set; }
+        public List<Like> Likes { get; set; }
+
+        public int PostLikes { get; set; }
+
+        public int PostDislikes { get; set; }
     }
 }

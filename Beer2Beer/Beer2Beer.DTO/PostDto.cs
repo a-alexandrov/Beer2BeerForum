@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Beer2Beer.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Beer2Beer.DTO
@@ -26,6 +27,8 @@ namespace Beer2Beer.DTO
         public int PostDislikes { get; set; }
 
         public int CommentsCount { get; set; }
+
+        public List<Like> Likes { get; set; } = new List<Like>();
 
         public List<string> Tags { get; set; }
 

@@ -123,28 +123,39 @@ namespace Beer2Beer.Services
                 if (likeDto.IsLiked)
                 {
                     post.PostDislikes--;
-                    post.PostDislikes++;
+                    post.PostLikes++;
                 }
                 else
                 {
                     post.PostDislikes++;
-                    post.PostDislikes--;
+                    post.PostLikes--;
                 }
             }
-            else if(like == null)
+            else if (like == null)
             {
                 var newLike = new Like
                 {
                     UserId = likeDto.UserId,
                     PostID = post.ID,
-                    IsLiked = like.IsLiked
+                    IsLiked = likeDto.IsLiked
                 };
 
                 this.context.Set<Like>().Add(newLike);
                 post.Likes.Add(newLike);
+
+                if (likeDto.IsLiked)
+                {
+                    post.PostLikes++;
+                }
+                else
+                {
+                    post.PostDislikes++;
+                }
             }
 
+            this.context.Set<Post>().Update(post);
             await this.context.SaveChangesAsync();
+
             return this.mapper.Map<LikesDto>(post);
         }
 

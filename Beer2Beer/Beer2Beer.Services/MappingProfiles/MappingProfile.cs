@@ -39,7 +39,10 @@ namespace Beer2Beer.Services.MappingProfiles
             CreateMap<Post, PostCreateDto>();
             CreateMap<PostCreateDto, Post>();
 
-            CreateMap<Post, LikesDto>();
+            CreateMap<Post, LikesDto>()
+                .ForMember(p => p.Likes, d => d.MapFrom(p => p.Likes))
+                .ForMember(p => p.PostLikes, d => d.MapFrom(p => p.PostLikes))
+                .ForMember(p => p.PostDislikes, d => d.MapFrom(p => p.PostDislikes));
 
             CreateMap<Comment, CommentInPostDTO>();
             CreateMap<CommentInPostDTO, Comment>();
