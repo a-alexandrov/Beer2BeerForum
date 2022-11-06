@@ -61,6 +61,14 @@ export class PostEditPageComponent implements OnInit {
         this.avatarImage=this.imageService.getImageFromByteArray(p.avatarImage,p.imageType)
       });
   }
+
+  deletePost(){
+    this.postService.delete(this.post.id)
+    .pipe(takeUntil(this.notifier))
+    .subscribe(()=>this.router.navigate(['/']));
+  }
+
+
   ngOnDestroy(): void {
     this.notifier.next();
     this.notifier.complete();
@@ -81,5 +89,21 @@ export class PostEditPageComponent implements OnInit {
     this.postService.put(postUpdate).pipe(takeUntil(this.notifier)).subscribe(()=>this.router.navigate([route]));
     
   }
+
+  isDeletable():boolean{
+
+    if(this.auth.isLogged()){
+
+      if(this.post){
+        if(this.auth.getID()==this.post.userID||
+        this.auth.isAdmin()){
+          return true;
+        }
+      }
+      
+    }
+    return false;
+  }
+  
 
 }

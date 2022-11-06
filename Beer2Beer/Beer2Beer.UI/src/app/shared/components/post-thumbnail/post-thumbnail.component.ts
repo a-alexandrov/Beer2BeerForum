@@ -40,8 +40,6 @@ export class PostThumbnailComponent implements OnInit {
   }
 
   deletePost(){
-    var route = this.router.url;
-    console.log(route);
     this.postService.delete(this.post.id)
     .pipe(takeUntil(this.notifier))
     .subscribe(()=>window.location.reload());
