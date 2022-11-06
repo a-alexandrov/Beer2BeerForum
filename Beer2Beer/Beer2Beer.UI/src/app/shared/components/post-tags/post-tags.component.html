@@ -9,7 +9,7 @@
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
         </mat-chip>
         <input [disabled]="disableEdit"
-               placeholder="Add Tags"
+               placeholder="Tags: " 
                [matChipInputFor]="taglist"
                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
                (matChipInputTokenEnd)="add($event)" />
