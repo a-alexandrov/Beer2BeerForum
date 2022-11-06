@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 
 @Component({
@@ -7,8 +8,9 @@ import { AuthenticationService } from 'src/app/core/services/authentication.serv
   styleUrls: ['./button-container.component.css']
 })
 export class ButtonContainerComponent implements OnInit {
+  
 
-  constructor(private auth:AuthenticationService) { }
+  constructor(private auth:AuthenticationService, private readonly router:Router) { }
 
   ngOnInit(): void {
   }
@@ -24,6 +26,13 @@ export class ButtonContainerComponent implements OnInit {
   
   userIsLogged(){
     return this.auth.isLogged();
+  }
+  goToPath(path : string){
+    this.router.navigate([path]);
+  }
+  showProfile(){
+    let path = "/user/"+ this.auth.getID();
+    this.goToPath(path)
   }
 
 }
