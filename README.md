@@ -18,7 +18,11 @@ We are using C# Web API, together with Entity Framework (Microsoft SQL Server) t
 The backend and frontend part of the application are deployed separetely
 
 1. Backend
-For this part you will need Visual Studio 2022. Open the Beer2Beer.sln fil and make sure to run Beer2Beer.Web using IIS Express. From there the Swagger (OpenAPI) documentation will be shown on this 
+For this part you will need Visual Studio 2022. Open the Beer2Beer.sln file and make sure to set Beer2Beer.Data as a startup poject and from the Package Manager Console set the Default project to Beer2Beer.Data. Run the following command:
+```bash
+  update-database
+```
+From there run Beer2Beer.Web using IIS Express. Swagger (OpenAPI) documentation will be shown on this 
 url:
 
 ```bash
