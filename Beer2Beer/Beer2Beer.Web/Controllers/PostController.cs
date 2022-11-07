@@ -76,7 +76,8 @@ namespace Beer2Beer.Web.Controllers
         public async Task<IActionResult> DeletePost([FromQuery] int postId)
         {
             var loginID = await this.authenticator.GetCurrentUserID(this.User);
-            return new OkObjectResult(await this.postService.DeletePost(postId,loginID));
+            var role = this.User.Claims.FirstOrDefault(i => i.Type == "UserRole").Value;
+            return new OkObjectResult(await this.postService.DeletePost(postId,loginID,role));
         }
     }
 }

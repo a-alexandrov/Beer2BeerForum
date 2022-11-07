@@ -221,12 +221,15 @@ namespace Beer2Beer.Services
             return mapper.Map<PostDto>(post);
         }
 
-        public async Task<PostDto> DeletePost(int postID,int loginID)
+        public async Task<PostDto> DeletePost(int postID,int loginID,string role)
         {
 
             var postToRemove = this.context.Set<Post>().FirstOrDefault(post => post.ID == postID);
 
-            this.ValidateOwnership(postToRemove.UserID, loginID);
+            if (role != "Admin")
+            {
+                this.ValidateOwnership(postToRemove.UserID, loginID);
+            }
 
             IsPostNull(postToRemove);
             postToRemove.IsDeleted = true;
