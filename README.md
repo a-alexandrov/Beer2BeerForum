@@ -11,7 +11,7 @@ Design and implement a Forum System, where the users can create posts, add
 comments, and upvote/downvote the things that they like or dislike the most.
 Choose what your forum will be about and stick with it. This is a forum for everyone that likes beers :).
 
-We are using C# Web API, together with Entity Framework (Microsoft SQL Server) to create the backend of the forum. The frontend is developed with Angular JS.
+We are using C# Web API, together with Entity Framework (Microsoft SQL Server) to create the backend of the forum. The frontend is developed with Angular 14.
 
 ## Deployment - Local Run
 
